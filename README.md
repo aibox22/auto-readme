@@ -19,7 +19,7 @@ English | [简体中文](README_CN.md)
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/lintaojlu/ai-readme">
+  <a href="https://github.com/thu-ailab/ai-readme">
     <img src="images/logo.png" alt="Logo" height="100">
   </a>
 
@@ -28,14 +28,14 @@ English | [简体中文](README_CN.md)
   <p align="center">
     🚀 AI-Powered README Generator: Automatically creates Markdown, logos, badges, and more. Never waste hours on docs again!
     <br />
-    <a href="https://github.com/lintaojlu/ai-readme"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/thu-ailab/ai-readme"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/lintaojlu/ai-readme">View Demo</a>
+    <a href="https://github.com/thu-ailab/ai-readme">View Demo</a>
     &middot;
-    <a href="https://github.com/lintaojlu/ai-readme/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="https://github.com/thu-ailab/ai-readme/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
-    <a href="https://github.com/lintaojlu/ai-readme/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/thu-ailab/ai-readme/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
 
@@ -111,7 +111,7 @@ This is an example of how you may give instructions on setting up your project l
 
 1. Clone the repo
    ```bash
-   git clone https://github.com/lintaojlu/ai-readme.git
+   git clone https://github.com/thu-ailab/ai-readme.git
    ```
 2. Navigate to the project directory
    ```bash
@@ -158,7 +158,7 @@ This will:
 - [ ] Multi-language Support
 - [ ] Enhanced AI Descriptions for Project Features
 
-See the [open issues](https://github.com/lintaojlu/ai-readme/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/thu-ailab/ai-readme/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -182,8 +182,8 @@ Don't forget to give the project a star! Thanks again!
 
 ### Top contributors:
 
-<a href="https://github.com/lintaojlu/ai-readme/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=lintaojlu/ai-readme" alt="contrib.rocks image" />
+<a href="https://github.com/thu-ailab/ai-readme/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=thu-ailab/ai-readme" alt="contrib.rocks image" />
 </a>
 
 
@@ -192,7 +192,7 @@ Don't forget to give the project a star! Thanks again!
 ## 🎗 License
 
 Copyright © 2024-2025 [ai-readme][ai-readme]. <br />
-Released under the [MIT][license_url] license.
+Released under the [MIT][license-url] license.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -203,7 +203,7 @@ Released under the [MIT][license_url] license.
 
 Email: lintaothu@foxmail.com
 
-Project Link: [https://github.com/lintaojlu/ai-readme](https://github.com/lintaojlu/ai-readme)
+Project Link: [https://github.com/thu-ailab/ai-readme](https://github.com/thu-ailab/ai-readme)
 
 QQ Group: 2161023585 (Welcome to join our QQ Group to discuss and get help!)
 
@@ -212,19 +212,19 @@ QQ Group: 2161023585 (Welcome to join our QQ Group to discuss and get help!)
 
 
 <!-- REFERENCE LINKS -->
-[ai-readme]: https://github.com/lintaojlu/ai-readme
+[ai-readme]: https://github.com/thu-ailab/ai-readme
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[contributors-shield]: https://img.shields.io/github/contributors/lintaojlu/ai-readme.svg?style=for-the-badge
-[contributors-url]: https://github.com/lintaojlu/ai-readme/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/lintaojlu/ai-readme.svg?style=for-the-badge
-[forks-url]: https://github.com/lintaojlu/ai-readme/network/members
-[stars-shield]: https://img.shields.io/github/stars/lintaojlu/ai-readme.svg?style=for-the-badge
-[stars-url]: https://github.com/lintaojlu/ai-readme/stargazers
-[issues-shield]: https://img.shields.io/github/issues/lintaojlu/ai-readme.svg?style=for-the-badge
-[issues-url]: https://github.com/lintaojlu/ai-readme/issues
-[license-shield]: https://img.shields.io/github/license/lintaojlu/ai-readme.svg?style=for-the-badge
-[license-url]: https://github.com/lintaojlu/ai-readme/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/thu-ailab/ai-readme.svg?style=for-the-badge
+[contributors-url]: https://github.com/thu-ailab/ai-readme/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/thu-ailab/ai-readme.svg?style=for-the-badge
+[forks-url]: https://github.com/thu-ailab/ai-readme/network/members
+[stars-shield]: https://img.shields.io/github/stars/thu-ailab/ai-readme.svg?style=for-the-badge
+[stars-url]: https://github.com/thu-ailab/ai-readme/stargazers
+[issues-shield]: https://img.shields.io/github/issues/thu-ailab/ai-readme.svg?style=for-the-badge
+[issues-url]: https://github.com/thu-ailab/ai-readme/issues
+[license-shield]: https://img.shields.io/github/license/thu-ailab/ai-readme.svg?style=for-the-badge
+[license-url]: https://github.com/thu-ailab/ai-readme/blob/master/LICENSE.txt
 [Python]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
 [Python-url]: https://www.python.org/
 [OpenAI]: https://img.shields.io/badge/OpenAI-000000?style=for-the-badge&logo=openai&logoColor=white
