@@ -1,12 +1,12 @@
 
+<a id="readme-top"></a>
+
 <!-- PROJECT SHIELDS -->
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![project_license][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 
 
 <!-- PROJECT LOGO -->
@@ -85,7 +85,6 @@ AI-Powered README Generator is an AI-powered tool that automatically generates c
 
 - [![Python][Python]][Python-url]
 - [![OpenAI][OpenAI]][OpenAI-url]
-- [![Flask][Flask]][Flask-url]
 - [![Rich][Rich]][Rich-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -100,10 +99,6 @@ This is an example of how you may give instructions on setting up your project l
 ### Prerequisites
 
 - Python 3.7+
-- Install dependencies with pip:
-  ```bash
-  pip install -e .
-  ```
 
 ### Installation
 
@@ -115,11 +110,11 @@ This is an example of how you may give instructions on setting up your project l
    ```bash
    cd ai-readme
    ```
-3. Install dependencies
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Set up your environment variables by creating a `.env` file and adding your OpenAI API key.
+3. install aireadme package (it makes you able to use the `aireadme` command in your terminal):
+    ```bash
+    pip install -e .
+    ```
+4. Set up your environment variables by editing `source.env` file and adding your LLM API key.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -128,13 +123,22 @@ This is an example of how you may give instructions on setting up your project l
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Once installed, you can use the `aireadme` tool from the command line. To generate your README, run the following:
+Once installed, you can use the `aireadme` package in the command line. To generate your README, run the following:
+```bash
+aireadme
+```
 
+Or you can run the python script directly:
 ```bash
 python src/aireadme/cli.py --project-path /path/to/your/project --output-dir /path/to/output
 ```
 
-This will generate a `README.md`, along with other project documentation such as a `requirements.txt` and a project logo (optional).
+This will:
+1. generate a `project_structure.txt` file, which contains the project structure.
+2. generate a `script_description.json` file, which contains the description of the scripts in the project.
+3. generate a `requirements.txt` file, which contains the requirements of the project.
+4. generate a `logo.png` file, which contains the logo of the project.
+5. generate a `README.md` file, which contains the README of the project.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -143,9 +147,8 @@ This will generate a `README.md`, along with other project documentation such as
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Logo Generation Feature
+- [ ] Prompt Engineering for Logo Generation
 - [ ] Multi-language Support
-- [ ] CI/CD Integration for Auto-Publishing Documentation
 - [ ] Enhanced AI Descriptions for Project Features
 
 See the [open issues](https://github.com/lintaojlu/ai-readme/issues) for a full list of proposed features (and known issues).
@@ -179,9 +182,10 @@ Don't forget to give the project a star! Thanks again!
 
 
 <!-- LICENSE -->
-## License
+## 🎗 License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Copyright © 2024-2025 [ai-readme][ai-readme]. <br />
+Released under the [MIT][license_url] license.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -190,23 +194,18 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Lintao - [@lintaothu](https://twitter.com/lintaothu) - lintaothu@foxmail.com
+Email: lintaothu@foxmail.com
 
 Project Link: [https://github.com/lintaojlu/ai-readme](https://github.com/lintaojlu/ai-readme)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+QQ Group: 2161023585 (Welcome to join our QQ Group to discuss and get help!)
 
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-- OpenAI for their powerful language models.
-- The contributors to the project for their valuable feedback and contributions.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+<!-- REFERENCE LINKS -->
+[ai-readme]: https://github.com/lintaojlu/ai-readme
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [contributors-shield]: https://img.shields.io/github/contributors/lintaojlu/ai-readme.svg?style=for-the-badge
@@ -219,8 +218,6 @@ Project Link: [https://github.com/lintaojlu/ai-readme](https://github.com/lintao
 [issues-url]: https://github.com/lintaojlu/ai-readme/issues
 [license-shield]: https://img.shields.io/github/license/lintaojlu/ai-readme.svg?style=for-the-badge
 [license-url]: https://github.com/lintaojlu/ai-readme/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/lintaothu
 [Python]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
 [Python-url]: https://www.python.org/
 [OpenAI]: https://img.shields.io/badge/OpenAI-000000?style=for-the-badge&logo=openai&logoColor=white
