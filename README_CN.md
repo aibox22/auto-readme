@@ -174,7 +174,7 @@ python src/aireadme/cli.py --project-path /path/to/your/project --output-dir /pa
 ## 🎗 许可证
 
 版权所有 © 2024-2025 [ai-readme][ai-readme]。<br />
-基于[MIT][license_url]许可证发布。
+基于[MIT][license-url]许可证发布。
 
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
