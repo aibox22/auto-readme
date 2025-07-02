@@ -1,6 +1,13 @@
 
 <a id="readme-top"></a>
 
+<!-- LANGUAGE SWITCH -->
+<div align="center">
+  
+English | [简体中文](README_CN.md)
+
+</div>
+
 <!-- PROJECT SHIELDS -->
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
@@ -16,7 +23,7 @@
     <img src="images/logo.png" alt="Logo" height="100">
   </a>
 
-<h3 align="center">AI-Powered README Generator</h3>
+<h3 align="center">AI-README</h3>
 
   <p align="center">
     🚀 AI-Powered README Generator: Automatically creates Markdown, logos, badges, and more. Never waste hours on docs again!
