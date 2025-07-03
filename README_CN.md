@@ -101,7 +101,7 @@ AI智能README生成器是一个基于AI的工具，可以自动为您的项目�
 
 1. 使用 pip 安装软件包：
    ```bash
-   pip install aireadme
+   pip install ai-readme-tools
    ```
 
 ### 配置
