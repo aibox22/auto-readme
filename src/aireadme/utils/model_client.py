@@ -91,7 +91,8 @@ class ModelClient:
             return response.choices[0].message.content
             
         except Exception as e:
-            return f"Error occurred while getting answer: {str(e)}"
+            self.console.print(f"[red]Error occurred while getting answer: {e}[/red]")
+            raise
     
     def get_image(self, prompt: str, model: Optional[str] = None) -> Dict[str, Union[str, bytes, None]]:
         """
@@ -136,11 +137,8 @@ class ModelClient:
             }
             
         except Exception as e:
-            return {
-                "url": None,
-                "content": None,
-                "error": f"Error occurred while generating image: {str(e)}"
-            }
+            self.console.print(f"[red]Error occurred while generating image: {e}[/red]")
+            raise
     
     def _download_image_with_retry(self, image_url: str, max_retries: int = 3) -> Optional[bytes]:
         """

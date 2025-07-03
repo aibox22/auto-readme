@@ -39,8 +39,12 @@ Return only the logo design description focusing on geometric elements and color
 """
         
         # Get logo description
-        logo_description = model_client.get_answer(description_prompt)
-        
+        try:
+            logo_description = model_client.get_answer(description_prompt)
+        except Exception as e:
+            console.print(f"[red]Failed to get logo description: {e}[/red]")
+            return None
+
         # Step 2: Generate image using logo description
         image_prompt = f"{logo_description} Don't include any text in the image."
         console.print(f"[cyan]Image Prompt: {image_prompt}[/cyan]")
@@ -48,13 +52,13 @@ Return only the logo design description focusing on geometric elements and color
         
         # Call text-to-image API to generate logo with high quality settings
         console.print(f"[cyan]Using high-quality image generation (quality: hd, size: 1024x1024)[/cyan]")
-        image_result = model_client.get_image(image_prompt)
-        
-        if "error" in image_result:
-            console.print(f"[red]Image generation failed: {image_result['error']}[/red]")
+        try:
+            image_result = model_client.get_image(image_prompt)
+        except Exception as e:
+            console.print(f"[red]Image generation failed: {e}[/red]")
             return None
         
-        if not image_result["content"]:
+        if not image_result or not image_result.get("content"):
             console.print("[red]Image content is empty, generation failed[/red]")
             return None
         

@@ -14,103 +14,131 @@ console = Console()
 
 # Global cache for the loaded config
 _config_cache: Optional[Dict[str, str]] = None
+_config_sources: Optional[Dict[str, str]] = None
+
 
 
 def load_config() -> Dict[str, str]:
-    """Load configuration from environment variables or a global config file."""
-    config = {}
-    config_file_path = os.path.expanduser("~/.aireadme/config.json")
+    """
+    Load configuration from a global config file and override with environment variables.
+    Keys from the config file are normalized to lowercase for internal consistency.
+    """
+    global _config_cache, _config_sources
+    if _config_cache is not None:
+        return _config_cache
 
+    config = {}
+    sources = {}
     # First, try to load from the global config file
-    if os.path.exists(config_file_path):
-        with open(config_file_path, 'r') as f:
+    if CONFIG_FILE.exists():
+        with open(CONFIG_FILE, 'r') as f:
             try:
                 file_config = json.load(f)
-                config.update(file_config)
-            except json.JSONDecodeError:
-                # Handle empty or invalid JSON file
+                # Normalize keys to lowercase
+                config = {k.lower(): v for k, v in file_config.items()}
+                for key in config:
+                    sources[key] = str(CONFIG_FILE)
+            except json.JSONDecodeError as e:
+                console.print(Panel(f"[bold red]Error parsing config file:[/] {CONFIG_FILE}\n[bold]Reason:[/] {e}", 
+                                    title="[bold yellow]Configuration Error[/bold yellow]", expand=False, border_style="red"))
+                exit()
+            except AttributeError:
+                # Handle cases where the file content is not a dictionary
                 pass
 
-    # Then, override with any environment variables
-    config["llm_api_key"] = os.getenv("LLM_API_KEY", config.get("llm_api_key"))
-    config["llm_base_url"] = os.getenv("LLM_BASE_URL", config.get("llm_base_url"))
-    config["llm_model_name"] = os.getenv("LLM_MODEL_NAME", config.get("llm_model_name"))
-    config["t2i_api_key"] = os.getenv("T2I_API_KEY", config.get("t2i_api_key"))
-    config["t2i_base_url"] = os.getenv("T2I_BASE_URL", config.get("t2i_base_url"))
-    config["t2i_model_name"] = os.getenv("T2I_MODEL_NAME", config.get("t2i_model_name"))
+    # Define mapping from ENV var name (uppercase) to internal config key (lowercase)
+    env_map = {
+        "LLM_API_KEY": "llm_api_key",
+        "LLM_BASE_URL": "llm_base_url",
+        "LLM_MODEL_NAME": "llm_model_name",
+        "T2I_API_KEY": "t2i_api_key",
+        "T2I_BASE_URL": "t2i_base_url",
+        "T2I_MODEL_NAME": "t2i_model_name",
+        "GITHUB_USERNAME": "github_username",
+        "TWITTER_HANDLE": "twitter_handle",
+        "LINKEDIN_USERNAME": "linkedin_username",
+        "EMAIL": "email",
+    }
 
-    # Load personal info, defaulting to what's in the config file or empty strings
-    config["github_username"] = os.getenv("GITHUB_USERNAME", config.get("github_username", ""))
-    config["twitter_handle"] = os.getenv("TWITTER_HANDLE", config.get("twitter_handle", ""))
-    config["linkedin_username"] = os.getenv("LINKEDIN_USERNAME", config.get("linkedin_username", ""))
-    config["email"] = os.getenv("EMAIL", config.get("email", ""))
+    # Load from environment, overriding file config if an env var is set
+    for env_var, config_key in env_map.items():
+        env_value = os.getenv(env_var)
+        if env_value is not None:
+            config[config_key] = env_value
+            sources[config_key] = f"Environment Variable ({env_var})"
+    
+    # Set defaults for personal info if not provided
+    personal_info_keys = ["github_username", "twitter_handle", "linkedin_username", "email"]
+    for key in personal_info_keys:
+        if key not in config:
+            config[key] = ""
 
-    return config
+    _config_cache = config
+    _config_sources = sources
+    return _config_cache
 
 def validate_config():
-    """Validate that required configurations are present."""
+    """Validate that required configurations are present and provide detailed guidance if not."""
     config = load_config()
-    required_vars = {
-        "LLM_API_KEY": "Your Large Language Model API key",
-        "T2I_API_KEY": "Your Text-to-Image Model API key",
-    }
-    missing_vars = []
-    for var, desc in required_vars.items():
-        if var not in config:
-            missing_vars.append((var, desc))
+    required_keys = ["llm_api_key", "t2i_api_key"]
+    missing_keys = [key for key in required_keys if not config.get(key)]
 
-    if missing_vars:
-        CONFIG_DIR.mkdir(exist_ok=True) # Ensure the directory exists for the example
-        message = "[bold red]Missing Required Configuration[/bold red]\n\n"
-        message += "Please set the following environment variables, or create a config file at `~/.aireadme/config.json`.\n\n"
-        for var, desc in missing_vars:
-            message += f"- [bold cyan]{var}[/bold cyan]: {desc}\n"
-        message += "\n[bold]Option 1: Set Environment Variables[/bold]\n"
-        message += "[green]export LLM_API_KEY='your_llm_api_key'\nexport T2I_API_KEY='your_t2i_api_key'[/green]\n\n"
-        message += "[bold]Option 2: Create JSON Config File[/bold] (~/.aireadme/config.json)\n"
-        message += f"[green]{{\n  \"LLM_API_KEY\": \"your_llm_api_key\",\n  \"T2I_API_KEY\": \"your_t2i_api_key\"\n}}[/green]"
+    if missing_keys:
+        console.print(Panel("[bold yellow]Missing required API keys. Let's set them up.[/bold yellow]", title="Configuration Required", expand=False))
+        
+        # Interactive input for missing keys
+        for key in missing_keys:
+            config[key] = console.input(f"Please enter your [bold cyan]{key}[/bold cyan]: ").strip()
 
-        console.print(Panel(message, title="Configuration Error", expand=False))
-        exit()
+        # Save to config file
+        CONFIG_DIR.mkdir(exist_ok=True)
+        with open(CONFIG_FILE, 'w') as f:
+            # Load existing config to update it, not overwrite
+            try:
+                with open(CONFIG_FILE, 'r') as f_read:
+                    existing_config = json.load(f_read)
+            except (FileNotFoundError, json.JSONDecodeError):
+                existing_config = {}
+            
+            existing_config.update({k.upper(): v for k, v in config.items() if v}) # Save keys in uppercase
+            json.dump(existing_config, f, indent=2)
+        
+        console.print(f"[green]✔ Configuration saved to [bold cyan]{CONFIG_FILE}[/bold cyan][/green]")
+        
+        # Reload config to ensure it's up-to-date
+        global _config_cache
+        _config_cache = None
+        load_config()
+
+
+def get_config_sources() -> Dict[str, str]:
+    """Returns the sources of the configuration values."""
+    global _config_sources
+    if _config_sources is None:
+        load_config()
+    return _config_sources
 
 
 def get_llm_config() -> Dict[str, Union[str, int, float]]:
     config = load_config()
     return {
-        "model": config.get("LLM_MODEL_NAME", "gpt-3.5-turbo"),
-        "base_url": config.get("LLM_BASE_URL", "https://api.openai.com/v1"),
-        "api_key": config.get("LLM_API_KEY"),
-        "max_tokens": int(config.get("LLM_MAX_TOKENS", 1024)),
-        "temperature": float(config.get("LLM_TEMPERATURE", 0.7)),
+        "model_name": config.get("llm_model_name", "gpt-3.5-turbo"),
+        "base_url": config.get("llm_base_url", "https://api.openai.com/v1"),
+        "api_key": config.get("llm_api_key"),
+        "max_tokens": int(config.get("llm_max_tokens", 1024)),
+        "temperature": float(config.get("llm_temperature", 0.7)),
     }
 
 
 def get_t2i_config() -> Dict[str, Union[str, int, float]]:
     config = load_config()
     return {
-        "model": config.get("T2I_MODEL_NAME", "dall-e-3"),
-        "base_url": config.get("T2I_BASE_URL", "https://api.openai.com/v1"),
-        "api_key": config.get("T2I_API_KEY"),
-        "size": config.get("T2I_IMAGE_SIZE", "1024x1024"),
-        "quality": config.get("T2I_IMAGE_QUALITY", "standard"),
+        "model_name": config.get("t2i_model_name", "dall-e-3"),
+        "base_url": config.get("t2i_base_url", "https://api.openai.com/v1"),
+        "api_key": config.get("t2i_api_key"),
+        "size": config.get("t2i_image_size", "1024x1024"),
+        "quality": config.get("t2i_image_quality", "standard"),
     }
-
-
-def validate_config():
-    """
-    Validate if configuration is complete
-    """
-    llm_config = get_llm_config()
-    t2i_config = get_t2i_config()
-    
-    if not llm_config["api_key"]:
-        raise ValueError("LLM_API_KEY environment variable not set")
-    
-    if not t2i_config["api_key"]:
-        raise ValueError("T2I_API_KEY environment variable not set")
-    
-    print("Configuration validation passed")
-    return True
 
 
 # Keep original default configurations for use by other modules
@@ -148,6 +176,7 @@ def get_readme_template_path():
 
 if __name__ == "__main__":
     # Test configuration loading
+    validate_config()
     print("=== LLM Configuration ===")
     llm_config = get_llm_config()
     for key, value in llm_config.items():
@@ -161,5 +190,10 @@ if __name__ == "__main__":
     print("\n=== Configuration Validation ===")
     try:
         validate_config()
+        print("Configuration validation passed")
+    except SystemExit:
+        # The validate_config function calls exit(), so we catch it to allow the script to continue
+        # In a real run, the program would terminate here.
+        pass
     except ValueError as e:
         print(f"Configuration validation failed: {e}")
