@@ -36,5 +36,5 @@ aireadme = ["*.md"]
 aireadme = "aireadme.utils.cli:main"
 
 [project.urls]
-"Homepage" = "https://github.com/lintaojlu/auto_readme"
-"Bug Tracker" = "https://github.com/lintaojlu/auto_readme/issues"
+"Homepage" = "https://github.com/thu-ailab/ai-readme"
+"Bug Tracker" = "https://github.com/thu-ailab/ai-readme/issues"
