@@ -109,17 +109,31 @@ class ModelClient:
             # Use specified model or default text-to-image model from config
             model_name = model or self.t2i_config["model_name"]
             
-            # Generate image request parameters
+            # Generate image request parameters - start with basic params
             generate_params = {
                 "model": model_name,
                 "prompt": prompt,
-                "n": 1,
-                "size": self.image_size
+                "n": 1
             }
             
-            # Add quality parameter if model supports it
-            if model_name.startswith("dall-e"):
-                generate_params["quality"] = self.quality
+            # Add size parameter - different providers may have different parameter names
+            base_url = self.t2i_config.get("base_url", "")
+            
+            # For OpenAI and OpenAI-compatible APIs
+            if "openai.com" in base_url or model_name.startswith("dall-e"):
+                generate_params["size"] = self.image_size
+                # Add quality parameter only for dall-e models
+                if model_name.startswith("dall-e"):
+                    generate_params["quality"] = self.quality
+            else:
+                # For other providers (like Doubao/ByteDance), use basic parameters
+                generate_params["size"] = self.image_size
+                
+                # Don't add quality parameter for non-OpenAI providers
+                # as it may cause "InvalidParameter" errors
+            
+            self.console.print(f"[cyan]Generating image with model: {model_name}[/cyan]")
+            self.console.print(f"[cyan]Parameters: {generate_params}[/cyan]")
             
             response = self.t2i_client.images.generate(**generate_params)
             
@@ -128,8 +142,9 @@ class ModelClient:
             # Download image content with retry mechanism
             image_content = self._download_image_with_retry(image_url, max_retries=3)
             
-            self.console.print(f"Image URL: {image_url}")
-            self.console.print(f"Image content size: {len(image_content)} bytes")
+            self.console.print(f"[green]✓ Image URL: {image_url}[/green]")
+            if image_content:
+                self.console.print(f"[green]✓ Image content size: {len(image_content)} bytes[/green]")
             
             return {
                 "url": image_url,
@@ -138,6 +153,9 @@ class ModelClient:
             
         except Exception as e:
             self.console.print(f"[red]Error occurred while generating image: {e}[/red]")
+            # Provide helpful error information
+            self.console.print(f"[yellow]Model used: {model_name}[/yellow]")
+            self.console.print(f"[yellow]Base URL: {self.t2i_config.get('base_url', 'Unknown')}[/yellow]")
             raise
     
     def _download_image_with_retry(self, image_url: str, max_retries: int = 3) -> Optional[bytes]:
