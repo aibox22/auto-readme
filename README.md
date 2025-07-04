@@ -109,19 +109,51 @@ This is an example of how you may give instructions on setting up your project l
 
 ### Installation
 
-1. Clone the repo
+1. Install the package using pip:
    ```bash
-   git clone https://github.com/thu-ailab/ai-readme.git
+   pip install ai-readme-tools
    ```
-2. Navigate to the project directory
-   ```bash
-   cd ai-readme
-   ```
-3. install aireadme package (it makes you able to use the `aireadme` command in your terminal):
-    ```bash
-    pip install -e .
-    ```
-4. Set up your environment variables by editing `source.env` file and adding your LLM API key.
+### Configuration
+
+`ai-readme` requires API keys for both the Language Model (for generating text) and the Text-to-Image model (for generating logos). You can configure these in one of two ways. Environment variables take precedence.
+
+#### 1. Environment Variables (Recommended for CI/CD)
+
+Set the following environment variables in your shell:
+
+```bash
+export LLM_API_KEY="your_llm_api_key"       # Required
+export T2I_API_KEY="your_t2i_api_key"       # Required
+
+# Optional: Specify custom API endpoints and models
+export LLM_BASE_URL="https://api.example.com/v1"
+export T2I_BASE_URL="https://api.example.com/v1"
+export LLM_MODEL_NAME="your-llm-model"
+export T2I_MODEL_NAME="your-t2i-model"
+```
+
+#### 2. Global Config File (Recommended for Local Use)
+
+For convenience, you can create a global configuration file. The tool will automatically look for it.
+
+1.  Create the directory: `mkdir -p ~/.aireadme`
+2.  Create the config file: `~/.aireadme/config.json`
+3.  Add your credentials and any optional settings. You can also include personal information, which will be used as defaults during interactive prompts:
+
+```json
+{
+  "LLM_API_KEY": "your_llm_api_key",
+  "T2I_API_KEY": "your_t2i_api_key",
+  "LLM_BASE_URL": "https://api.example.com/v1",
+  "T2I_BASE_URL": "https://api.example.com/v1",
+  "LLM_MODEL_NAME": "gpt-4",
+    "T2I_MODEL_NAME": "dall-e-3",
+    "github_username": "your_github_username",
+    "twitter_handle": "your_twitter_handle",
+    "linkedin_username": "your_linkedin_username",
+    "email": "your_email@example.com"
+}
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
