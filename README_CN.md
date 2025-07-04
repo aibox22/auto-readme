@@ -1,12 +1,5 @@
 <a id="readme-top"></a>
 
-<!-- 项目徽章 -->
-[![贡献者][contributors-shield]][contributors-url]
-[![分支][forks-shield]][forks-url]
-[![星标][stars-shield]][stars-url]
-[![问题][issues-shield]][issues-url]
-[![许可证][license-shield]][license-url]
-
 <!-- 语言切换 -->
 <div align="center">
   
@@ -14,12 +7,19 @@
 
 </div>
 
+<!-- 新增项目海报 -->
+<div align="center">
+  <img src="images/poster.png" alt="Poster" width="50%">
+</div>
+
+---
+
 <!-- 项目LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/thu-ailab/ai-readme">
+  <!-- <a href="https://github.com/thu-ailab/ai-readme">
     <img src="images/logo.png" alt="Logo" height="100">
-  </a>
+  </a> -->
 
 <h3 align="center">AI-README</h3>
 
@@ -28,7 +28,18 @@
     <br />
     <a href="https://github.com/thu-ailab/ai-readme"><strong>探索文档 »</strong></a>
     <br />
-    <br />
+  </p>
+
+  <!-- 项目徽章 -->
+[![贡献者][contributors-shield]][contributors-url]
+[![分支][forks-shield]][forks-url]
+[![星标][stars-shield]][stars-url]
+[![问题][issues-shield]][issues-url]
+<!-- [![最新版本][release-shield]][release-url]
+![发布日期][release-date-shield] -->
+[![许可证][license-shield]][license-url]
+
+  <p align="center">
     <a href="https://github.com/thu-ailab/ai-readme">查看演示</a>
     &middot;
     <a href="https://github.com/thu-ailab/ai-readme/issues/new?labels=bug&template=bug-report---.md">报告Bug</a>
@@ -193,21 +204,24 @@ QQ群：2161023585（欢迎加入我们的QQ群进行讨论和获取帮助！）
 [ai-readme]: https://github.com/thu-ailab/ai-readme
 
 <!-- MARKDOWN链接和图片 -->
-[contributors-shield]: https://img.shields.io/github/contributors/thu-ailab/ai-readme.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/thu-ailab/ai-readme.svg?style=flat-round
 [contributors-url]: https://github.com/thu-ailab/ai-readme/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/thu-ailab/ai-readme.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/thu-ailab/ai-readme.svg?style=flat-round
 [forks-url]: https://github.com/thu-ailab/ai-readme/network/members
-[stars-shield]: https://img.shields.io/github/stars/thu-ailab/ai-readme.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/thu-ailab/ai-readme.svg?style=flat-round
 [stars-url]: https://github.com/thu-ailab/ai-readme/stargazers
-[issues-shield]: https://img.shields.io/github/issues/thu-ailab/ai-readme.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/thu-ailab/ai-readme.svg?style=flat-round
 [issues-url]: https://github.com/thu-ailab/ai-readme/issues
-[license-shield]: https://img.shields.io/github/license/thu-ailab/ai-readme.svg?style=for-the-badge
+[release-shield]: https://img.shields.io/github/v/release/thu-ailab/ai-readme?style=flat-round
+[release-url]: https://github.com/thu-ailab/ai-readme/releases
+[release-date-shield]: https://img.shields.io/github/release-date/thu-ailab/ai-readme?color=9cf&style=flat-round
+[license-shield]: https://img.shields.io/github/license/thu-ailab/ai-readme.svg?style=flat-round
 [license-url]: https://github.com/thu-ailab/ai-readme/blob/master/LICENSE.txt
-[Python]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
+[Python]: https://img.shields.io/badge/Python-3776AB?style=flat-round&logo=python&logoColor=white
 [Python-url]: https://www.python.org/
-[OpenAI]: https://img.shields.io/badge/OpenAI-000000?style=for-the-badge&logo=openai&logoColor=white
+[OpenAI]: https://img.shields.io/badge/OpenAI-000000?style=flat-round&logo=openai&logoColor=white
 [OpenAI-url]: https://openai.com/
-[Flask]: https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white
+[Flask]: https://img.shields.io/badge/Flask-000000?style=flat-round&logo=flask&logoColor=white
 [Flask-url]: https://flask.palletsprojects.com/
-[Rich]: https://img.shields.io/badge/Rich-000000?style=for-the-badge&logo=rich&logoColor=white
+[Rich]: https://img.shields.io/badge/Rich-000000?style=flat-round&logo=rich&logoColor=white
 [Rich-url]: https://rich.readthedocs.io/ 

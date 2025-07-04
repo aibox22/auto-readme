@@ -8,20 +8,19 @@ English | [简体中文](README_CN.md)
 
 </div>
 
-<!-- PROJECT SHIELDS -->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![project_license][license-shield]][license-url]
+<!-- PROJECT POSTER -->
+<div align="center">
+  <img src="images/poster.png" alt="Poster" width="50%">
+</div>
 
+---
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/thu-ailab/ai-readme">
+  <!-- <a href="https://github.com/thu-ailab/ai-readme">
     <img src="images/logo.png" alt="Logo" height="100">
-  </a>
+  </a> -->
 
 <h3 align="center">AI-README</h3>
 
@@ -30,7 +29,18 @@ English | [简体中文](README_CN.md)
     <br />
     <a href="https://github.com/thu-ailab/ai-readme"><strong>Explore the docs »</strong></a>
     <br />
-    <br />
+  </p>
+
+  <!-- PROJECT SHIELDS -->
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+<!-- [![Latest Release][release-shield]][release-url]
+![Release Date][release-date-shield] -->
+[![License][license-shield]][license-url]
+
+  <p align="center">
     <a href="https://github.com/thu-ailab/ai-readme">View Demo</a>
     &middot;
     <a href="https://github.com/thu-ailab/ai-readme/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
@@ -215,21 +225,24 @@ QQ Group: 2161023585 (Welcome to join our QQ Group to discuss and get help!)
 [ai-readme]: https://github.com/thu-ailab/ai-readme
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[contributors-shield]: https://img.shields.io/github/contributors/thu-ailab/ai-readme.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/thu-ailab/ai-readme.svg?style=flat-round
 [contributors-url]: https://github.com/thu-ailab/ai-readme/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/thu-ailab/ai-readme.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/thu-ailab/ai-readme.svg?style=flat-round
 [forks-url]: https://github.com/thu-ailab/ai-readme/network/members
-[stars-shield]: https://img.shields.io/github/stars/thu-ailab/ai-readme.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/thu-ailab/ai-readme.svg?style=flat-round
 [stars-url]: https://github.com/thu-ailab/ai-readme/stargazers
-[issues-shield]: https://img.shields.io/github/issues/thu-ailab/ai-readme.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/thu-ailab/ai-readme.svg?style=flat-round
 [issues-url]: https://github.com/thu-ailab/ai-readme/issues
-[license-shield]: https://img.shields.io/github/license/thu-ailab/ai-readme.svg?style=for-the-badge
+[release-shield]: https://img.shields.io/github/v/release/thu-ailab/ai-readme?style=flat-round
+[release-url]: https://github.com/thu-ailab/ai-readme/releases
+[release-date-shield]: https://img.shields.io/github/release-date/thu-ailab/ai-readme?color=9cf&style=flat-round
+[license-shield]: https://img.shields.io/github/license/thu-ailab/ai-readme.svg?style=flat-round
 [license-url]: https://github.com/thu-ailab/ai-readme/blob/master/LICENSE.txt
-[Python]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
+[Python]: https://img.shields.io/badge/Python-3776AB?style=flat-round&logo=python&logoColor=white
 [Python-url]: https://www.python.org/
-[OpenAI]: https://img.shields.io/badge/OpenAI-000000?style=for-the-badge&logo=openai&logoColor=white
+[OpenAI]: https://img.shields.io/badge/OpenAI-000000?style=flat-round&logo=openai&logoColor=white
 [OpenAI-url]: https://openai.com/
-[Flask]: https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white
+[Flask]: https://img.shields.io/badge/Flask-000000?style=flat-round&logo=flask&logoColor=white
 [Flask-url]: https://flask.palletsprojects.com/
-[Rich]: https://img.shields.io/badge/Rich-000000?style=for-the-badge&logo=rich&logoColor=white
+[Rich]: https://img.shields.io/badge/Rich-000000?style=flat-round&logo=rich&logoColor=white
 [Rich-url]: https://rich.readthedocs.io/
