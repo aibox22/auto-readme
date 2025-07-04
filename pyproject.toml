@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "aireadme"
-version = "0.2.0"
+name = "ai-readme-tools"
+version = "0.2.2"
 authors = [
   { name="stone91", email="m370025263@gmail.com" },
   { name="lintao", email="lint22@mails.tsinghua.edu.cn"},
@@ -36,5 +36,5 @@ aireadme = ["*.md"]
 aireadme = "aireadme.utils.cli:main"
 
 [project.urls]
-"Homepage" = "https://github.com/lintaojlu/auto_readme"
-"Bug Tracker" = "https://github.com/lintaojlu/auto_readme/issues"
+"Homepage" = "https://github.com/thu-ailab/ai-readme"
+"Bug Tracker" = "https://github.com/thu-ailab/ai-readme/issues"

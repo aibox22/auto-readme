@@ -110,19 +110,52 @@ AI智能README生成器是一个基于AI的工具，可以自动为您的项目�
 
 ### 安装
 
-1. 克隆仓库
+1. 使用 pip 安装软件包：
    ```bash
-   git clone https://github.com/thu-ailab/ai-readme.git
+   pip install ai-readme-tools
    ```
-2. 进入项目目录
-   ```bash
-   cd ai-readme
-   ```
-3. 安装aireadme包（这将使您能够在终端中使用`aireadme`命令）：
-    ```bash
-    pip install -e .
-    ```
-4. 通过编辑`source.env`文件并添加您的LLM API密钥来设置环境变量。
+
+### 配置
+
+`ai-readme` 需要语言模型（用于生成文本）和文生图模型（用于生成Logo）的API密钥。您可以通过以下两种方式之一进行配置。环境变量的优先级更高。个人信息也可以在全局文件中设置，以作为交互式会话期间的默认值。
+
+#### 1. 环境变量 (推荐在CI/CD环境中使用)
+
+在您的 shell 中设置以下环境变量：
+
+```bash
+export LLM_API_KEY="your_llm_api_key"       # 必填
+export T2I_API_KEY="your_t2i_api_key"       # 必填
+
+# 可选：指定自定义API端点和模型
+export LLM_BASE_URL="https://api.example.com/v1"
+export T2I_BASE_URL="https://api.example.com/v1"
+export LLM_MODEL_NAME="your-llm-model"
+export T2I_MODEL_NAME="your-t2i-model"
+```
+
+#### 2. 全局配置文件 (推荐在本地使用)
+
+为了方便，您可以创建一个全局配置文件，工具会自动查找它。
+
+1.  创建目录：`mkdir -p ~/.aireadme`
+2.  创建配置文件：`~/.aireadme/config.json`
+3.  添加您的凭据和任何可选设置：
+
+```json
+{
+  "LLM_API_KEY": "在此处填入您的LLM API密钥",
+  "T2I_API_KEY": "在此处填入您的T2I API密钥",
+  "LLM_BASE_URL": "https://api.example.com/v1",
+  "T2I_BASE_URL": "https://api.example.com/v1",
+  "LLM_MODEL_NAME": "your-llm-model",
+    "T2I_MODEL_NAME": "your-t2i-model",
+    "github_username": "您的GitHub用户名",
+    "twitter_handle": "您的Twitter用户名",
+    "linkedin_username": "您的LinkedIn用户名",
+    "email": "您的电子邮箱"
+}
+```
 
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
