@@ -122,8 +122,8 @@ dmypy.json
 ehthumbs.db
 Thumbs.db
 
-# autoreadme_output
-autoreadme_output/
+# readmex_output
+readmex_output/
 output/
 # PyCharm/IntelliJ IDEA
 .idea/

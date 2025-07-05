@@ -17,16 +17,16 @@
 <!-- 项目LOGO -->
 <br />
 <div align="center">
-  <!-- <a href="https://github.com/aibox22/auto-readme">
+  <!-- <a href="https://github.com/aibox22/readmex">
     <img src="images/logo.png" alt="Logo" height="100">
   </a> -->
 
-<h3 align="center">auto-readme</h3>
+<h3 align="center">readmex</h3>
 
   <p align="center">
     🚀 AI智能README生成器：自动创建Markdown文档、Logo、徽章等。再也不用为文档编写而烦恼！
     <br />
-    <a href="https://github.com/aibox22/auto-readme"><strong>探索文档 »</strong></a>
+    <a href="https://github.com/aibox22/readmex"><strong>探索文档 »</strong></a>
     <br />
   </p>
 
@@ -40,11 +40,11 @@
 [![许可证][license-shield]][license-url]
 
   <p align="center">
-    <a href="https://github.com/aibox22/auto-readme">查看演示</a>
+    <a href="https://github.com/aibox22/readmex">查看演示</a>
     &middot;
-    <a href="https://github.com/aibox22/auto-readme/issues/new?labels=bug&template=bug-report---.md">报告Bug</a>
+    <a href="https://github.com/aibox22/readmex/issues/new?labels=bug&template=bug-report---.md">报告Bug</a>
     &middot;
-    <a href="https://github.com/aibox22/auto-readme/issues/new?labels=enhancement&template=feature-request---.md">请求功能</a>
+    <a href="https://github.com/aibox22/readmex/issues/new?labels=enhancement&template=feature-request---.md">请求功能</a>
   </p>
 </div>
 
@@ -77,7 +77,7 @@
 <!-- 关于项目 -->
 ## 关于项目
 
-[![产品截图](images/screenshot.png)](https://example.com)
+[![流程图](images/flow.png)](https://example.com)
 
 AI智能README生成器是一个基于AI的工具，可以自动为您的项目生成全面的Markdown README文件。它能够生成结构良好的文档，包括项目详情、技术栈、设置说明、使用示例、徽章、Logo等。
 
@@ -112,12 +112,12 @@ AI智能README生成器是一个基于AI的工具，可以自动为您的项目�
 
 1. 使用 pip 安装软件包：
    ```bash
-   pip install auto-readme
+   pip install readmex
    ```
 
 ### 配置
 
-`auto-readme` 需要语言模型（用于生成文本）和文生图模型（用于生成Logo）的API密钥。您可以通过以下两种方式之一进行配置。环境变量的优先级更高。个人信息也可以在全局文件中设置，以作为交互式会话期间的默认值。
+`readmex` 需要语言模型（用于生成文本）和文生图模型（用于生成Logo）的API密钥。您可以通过以下两种方式之一进行配置。环境变量的优先级更高。个人信息也可以在全局文件中设置，以作为交互式会话期间的默认值。
 
 #### 1. 环境变量 (推荐在CI/CD环境中使用)
 
@@ -138,8 +138,8 @@ export T2I_MODEL_NAME="your-t2i-model"
 
 为了方便，您可以创建一个全局配置文件，工具会自动查找它。
 
-1.  创建目录：`mkdir -p ~/.autoreadme`
-2.  创建配置文件：`~/.autoreadme/config.json`
+1.  创建目录：`mkdir -p ~/.readmex`
+2.  创建配置文件：`~/.readmex/config.json`
 3.  添加您的凭据和任何可选设置：
 
 ```json
@@ -162,14 +162,14 @@ export T2I_MODEL_NAME="your-t2i-model"
 <!-- 使用示例 -->
 ## 使用方法
 
-安装完成后，您可以在命令行中使用`autoreadme`包。要生成README，请运行以下命令：
+安装完成后，您可以在命令行中使用`readmex`包。要生成README，请运行以下命令：
 ```bash
-autoreadme
+readmex
 ```
 
 或者您可以直接运行Python脚本：
 ```bash
-python src/autoreadme/cli.py --project-path /path/to/your/project --output-dir /path/to/output
+python src/readmex/cli.py --project-path /path/to/your/project --output-dir /path/to/output
 ```
 
 这将会：
@@ -188,7 +188,7 @@ python src/autoreadme/cli.py --project-path /path/to/your/project --output-dir /
 - [ ] 多语言支持
 - [ ] 增强AI对项目功能的描述能力
 
-查看[开放问题](https://github.com/aibox22/auto-readme/issues)以获取提议功能（和已知问题）的完整列表。
+查看[开放问题](https://github.com/aibox22/readmex/issues)以获取提议功能（和已知问题）的完整列表。
 
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
@@ -210,14 +210,14 @@ python src/autoreadme/cli.py --project-path /path/to/your/project --output-dir /
 
 ### 主要贡献者：
 
-<a href="https://github.com/aibox22/auto-readme/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=aibox22/auto-readme" alt="contrib.rocks image" />
+<a href="https://github.com/aibox22/readmex/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=aibox22/readmex" alt="contrib.rocks image" />
 </a>
 
 <!-- 许可证 -->
 ## 🎗 许可证
 
-版权所有 © 2024-2025 [auto-readme][auto-readme]。<br />
+版权所有 © 2024-2025 [readmex][readmex]。<br />
 基于[MIT][license-url]许可证发布。
 
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
@@ -227,29 +227,29 @@ python src/autoreadme/cli.py --project-path /path/to/your/project --output-dir /
 
 邮箱：lintaothu@foxmail.com
 
-项目链接：[https://github.com/aibox22/auto-readme](https://github.com/aibox22/auto-readme)
+项目链接：[https://github.com/aibox22/readmex](https://github.com/aibox22/readmex)
 
 QQ群：2161023585（欢迎加入我们的QQ群进行讨论和获取帮助！）
 
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
 <!-- 参考链接 -->
-[auto-readme]: https://github.com/aibox22/auto-readme
+[readmex]: https://github.com/aibox22/readmex
 
 <!-- MARKDOWN链接和图片 -->
-[contributors-shield]: https://img.shields.io/github/contributors/aibox22/auto-readme.svg?style=flat-round
-[contributors-url]: https://github.com/aibox22/auto-readme/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/aibox22/auto-readme.svg?style=flat-round
-[forks-url]: https://github.com/aibox22/auto-readme/network/members
-[stars-shield]: https://img.shields.io/github/stars/aibox22/auto-readme.svg?style=flat-round
-[stars-url]: https://github.com/aibox22/auto-readme/stargazers
-[issues-shield]: https://img.shields.io/github/issues/aibox22/auto-readme.svg?style=flat-round
-[issues-url]: https://github.com/aibox22/auto-readme/issues
-[release-shield]: https://img.shields.io/github/v/release/aibox22/auto-readme?style=flat-round
-[release-url]: https://github.com/aibox22/auto-readme/releases
-[release-date-shield]: https://img.shields.io/github/release-date/aibox22/auto-readme?color=9cf&style=flat-round
-[license-shield]: https://img.shields.io/github/license/aibox22/auto-readme.svg?style=flat-round
-[license-url]: https://github.com/aibox22/auto-readme/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/aibox22/readmex.svg?style=flat-round
+[contributors-url]: https://github.com/aibox22/readmex/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/aibox22/readmex.svg?style=flat-round
+[forks-url]: https://github.com/aibox22/readmex/network/members
+[stars-shield]: https://img.shields.io/github/stars/aibox22/readmex.svg?style=flat-round
+[stars-url]: https://github.com/aibox22/readmex/stargazers
+[issues-shield]: https://img.shields.io/github/issues/aibox22/readmex.svg?style=flat-round
+[issues-url]: https://github.com/aibox22/readmex/issues
+[release-shield]: https://img.shields.io/github/v/release/aibox22/readmex?style=flat-round
+[release-url]: https://github.com/aibox22/readmex/releases
+[release-date-shield]: https://img.shields.io/github/release-date/aibox22/readmex?color=9cf&style=flat-round
+[license-shield]: https://img.shields.io/github/license/aibox22/readmex.svg?style=flat-round
+[license-url]: https://github.com/aibox22/readmex/blob/master/LICENSE.txt
 [Python]: https://img.shields.io/badge/Python-3776AB?style=flat-round&logo=python&logoColor=white
 [Python-url]: https://www.python.org/
 [OpenAI]: https://img.shields.io/badge/OpenAI-000000?style=flat-round&logo=openai&logoColor=white

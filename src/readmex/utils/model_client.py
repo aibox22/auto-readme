@@ -3,7 +3,7 @@ from rich.console import Console
 import requests
 from openai import OpenAI
 from typing import Optional, Dict, Union
-from autoreadme.config import get_llm_config, get_t2i_config, validate_config
+from readmex.config import get_llm_config, get_t2i_config, validate_config
 
 
 class ModelClient:

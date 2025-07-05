@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "auto-readme"
+name = "readmex"
 version = "0.2.2"
 authors = [
   { name="stone91", email="m370025263@gmail.com" },
@@ -30,11 +30,11 @@ dependencies = [
 where = ["src"]
 
 [tool.setuptools.package-data]
-autoreadme = ["*.md"]
+readmex = ["*.md"]
 
 [project.scripts]
-auto-readme = "autoreadme.utils.cli:main"
+readmex = "readmex.utils.cli:main"
 
 [project.urls]
-"Homepage" = "https://github.com/aibox22/auto-readme"
-"Bug Tracker" = "https://github.com/aibox22/auto-readme/issues"
+"Homepage" = "https://github.com/aibox22/readmex"
+"Bug Tracker" = "https://github.com/aibox22/readmex/issues"
