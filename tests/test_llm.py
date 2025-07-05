@@ -6,7 +6,7 @@ from pathlib import Path
 import sys
 root_dir = Path(__file__).parent.parent
 sys.path.append(str(root_dir))
-from src.aireadme.utils.model_client import ModelClient
+from src.autoreadme.utils.model_client import ModelClient
 
 # 测试 get_answer 方法
 def test_get_answer():

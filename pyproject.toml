@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ai-readme-tools"
+name = "auto-readme"
 version = "0.2.2"
 authors = [
   { name="stone91", email="m370025263@gmail.com" },
@@ -30,11 +30,11 @@ dependencies = [
 where = ["src"]
 
 [tool.setuptools.package-data]
-aireadme = ["*.md"]
+autoreadme = ["*.md"]
 
 [project.scripts]
-aireadme = "aireadme.utils.cli:main"
+auto-readme = "autoreadme.utils.cli:main"
 
 [project.urls]
-"Homepage" = "https://github.com/thu-ailab/ai-readme"
-"Bug Tracker" = "https://github.com/thu-ailab/ai-readme/issues"
+"Homepage" = "https://github.com/aibox22/auto-readme"
+"Bug Tracker" = "https://github.com/aibox22/auto-readme/issues"

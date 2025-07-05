@@ -8,8 +8,8 @@ import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 from rich.console import Console
-from aireadme.config import load_config, get_config_sources
-from aireadme.utils.cli import main
+from autoreadme.config import load_config, get_config_sources
+from autoreadme.utils.cli import main
 
 def test_error_handling():
     """Test the improved error handling with configuration display"""

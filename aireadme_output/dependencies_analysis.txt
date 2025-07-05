@@ -1,0 +1,55 @@
+# Dependencies Analysis Report
+
+## Existing requirements.txt:
+python-dotenv>=0.15.0
+fnmatch>=1.0.0
+numpy>=1.21.0
+openai>=0.11.0
+rich>=10.0.0
+requests>=2.25.0
+pytest>=6.0.0
+
+## Discovered imports (33 unique):
+from aireadme.config import get_llm_config, get_t2i_config, validate_config
+from aireadme.core import aireadme
+from aireadme.utils.file_handler import (
+from aireadme.utils.logo_generator import generate_logo
+from aireadme.utils.model_client import ModelClient
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from dotenv import load_dotenv
+from fnmatch import fnmatch
+from importlib import resources
+from openai import OpenAI
+from pathlib import Path
+from rich.console import Console
+from rich.progress import Progress
+from rich.table import Table
+from src.aireadme.core import aireadme
+from src.aireadme.utils.logo_generator import generate_logo
+from src.aireadme.utils.model_client import ModelClient
+from threading import Lock
+from typing import Dict, Union
+from typing import List, Iterator
+from typing import Optional, Dict, Union
+from unittest.mock import MagicMock, patch
+import argparse
+import json
+import os
+import pytest
+import re
+import requests
+import ssl
+import subprocess
+import sys
+import tempfile
+import time
+
+## Generated requirements.txt:
+python-dotenv>=0.15.0
+fnmatch>=1.0.0
+numpy>=1.21.0
+openai>=0.11.0
+rich>=10.0.0
+requests>=2.25.0
+pytest>=6.0.0
+aireadme>=0.1.0
