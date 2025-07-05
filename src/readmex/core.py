@@ -91,6 +91,76 @@ class readmex:
             f.write(readme_content)
             
         self.console.print(f"[bold green]✅ README generated successfully at {readme_path}[/bold green]")
+        
+        # 智能显示 GitHub 推广信息
+        self._maybe_show_github_promotion()
+
+    def _maybe_show_github_promotion(self):
+        """智能显示 GitHub 推广信息，避免过度打扰用户"""
+        import random
+        import os
+        
+        # 检查用户是否禁用了推广
+        if self.config.get("disable_github_promotion", False):
+            return
+            
+        # 创建使用计数文件路径
+        home_dir = os.path.expanduser("~")
+        readmex_dir = os.path.join(home_dir, ".readmex")
+        usage_file = os.path.join(readmex_dir, "usage_count")
+        
+        try:
+            # 读取使用次数
+            if os.path.exists(usage_file):
+                with open(usage_file, "r") as f:
+                    usage_count = int(f.read().strip())
+            else:
+                usage_count = 0
+                
+            # 更新使用次数
+            usage_count += 1
+            os.makedirs(readmex_dir, exist_ok=True)
+            with open(usage_file, "w") as f:
+                f.write(str(usage_count))
+                
+            # 智能显示逻辑：
+            # 1. 第1次使用时必定显示
+            # 2. 第3次使用时再次显示
+            # 3. 之后每10次使用显示一次
+            # 4. 或者有20%的随机概率显示
+            should_show = (
+                usage_count == 1 or  # 第1次使用
+                usage_count == 3 or  # 第3次使用
+                usage_count % 10 == 0 or  # 每10次使用
+                random.random() < 0.2  # 20%随机概率
+            )
+            
+            if should_show:
+                self._show_github_promotion()
+                
+        except Exception:
+            # 如果文件操作失败，使用简单的随机显示
+            if random.random() < 0.15:  # 15%概率
+                self._show_github_promotion()
+    
+    def _show_github_promotion(self):
+        """显示 GitHub 推广信息"""
+        self.console.print("\n[dim]💡 如果 readmex 对你有帮助，请考虑给我们一个 star！[/dim]")
+        
+        # 询问用户是否要打开 GitHub
+        open_github = self.console.input(
+            "[cyan]是否现在打开 GitHub 仓库？ (y/N): [/cyan]"
+        ).strip().lower()
+        
+        if open_github in ['y', 'yes', '是']:
+            import webbrowser
+            github_url = "https://github.com/aibox22/readmeX"
+            webbrowser.open(github_url)
+            self.console.print(f"[green]✔ 已在浏览器中打开: {github_url}[/green]")
+        elif open_github == 'never':
+            # 如果用户输入 'never'，则禁用推广
+            self.config["disable_github_promotion"] = True
+            self.console.print("[yellow]已禁用 GitHub 推广提示[/yellow]")
 
     def _load_configuration(self):
         """Load configuration from environment variables, config file, or user input."""
