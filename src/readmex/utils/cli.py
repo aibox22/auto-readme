@@ -2,17 +2,17 @@ import argparse
 import os
 from rich.console import Console
 from rich.table import Table
-from autoreadme.core import autoreadme
-from autoreadme.config import validate_config, get_config_sources
+from readmex.core import readmex
+from readmex.config import validate_config, get_config_sources
 
 def main():
     """
-    autoreadme command line entry point
+    readmex command line entry point
     Support both command line arguments and interactive interface
     """
     parser = argparse.ArgumentParser(
-        description="autoreadme - AI-driven README documentation generator",
-        epilog="Examples:\n  autoreadme                    # Interactive mode\n  autoreadme .                  # Generate for current directory\n  autoreadme ./my-project       # Generate for specific directory",
+        description="readmex - AI-driven README documentation generator",
+        epilog="Examples:\n  readmex                    # Interactive mode\n  readmex .                  # Generate for current directory\n  readmex ./my-project       # Generate for specific directory",
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument(
@@ -23,7 +23,7 @@ def main():
     parser.add_argument(
         "--version", 
         action="version", 
-        version="autoreadme 0.1.8"
+        version="readmex 0.1.8"
     )
     
     args = parser.parse_args()
@@ -39,7 +39,7 @@ def main():
                 console.print(f"[bold red]Error: Project path '{project_path}' is not a valid directory.[/bold red]")
                 return
         else:
-            console.print("[bold cyan]autoreadme - AI README Generator[/bold cyan]")
+            console.print("[bold cyan]readmex - AI README Generator[/bold cyan]")
             console.print("Please provide the path of project for generating README (press Enter to use the current directory).\n")
             project_input = console.input("[cyan]Project Path[/cyan]: ").strip()
             project_path = os.path.abspath(project_input) if project_input else os.getcwd()
@@ -48,7 +48,7 @@ def main():
                 console.print(f"[bold red]Error: Project path '{project_path}' is not a valid directory.[/bold red]")
                 return
 
-        generator = autoreadme()
+        generator = readmex()
         generator.generate(project_path)
     except KeyboardInterrupt:
         console = Console()
@@ -61,7 +61,7 @@ def main():
         console.print(f"[bold red]An error occurred: {e}[/bold red]")
         
         # Show configuration information to help with debugging
-        from autoreadme.config import load_config
+        from readmex.config import load_config
         try:
             config = load_config()
             sources = get_config_sources()

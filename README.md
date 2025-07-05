@@ -18,16 +18,16 @@ English | [简体中文](README_CN.md)
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <!-- <a href="https://github.com/aibox22/auto-readme">
+  <!-- <a href="https://github.com/aibox22/readmex">
     <img src="images/logo.png" alt="Logo" height="100">
   </a> -->
 
-<h3 align="center">auto-readme</h3>
+<h3 align="center">readmex</h3>
 
   <p align="center">
     🚀 AI-Powered README Generator: Automatically creates Markdown, logos, badges, and more. Never waste hours on docs again!
     <br />
-    <a href="https://github.com/aibox22/auto-readme"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/aibox22/readmex"><strong>Explore the docs »</strong></a>
     <br />
   </p>
 
@@ -41,11 +41,11 @@ English | [简体中文](README_CN.md)
 [![License][license-shield]][license-url]
 
   <p align="center">
-    <a href="https://github.com/aibox22/auto-readme">View Demo</a>
+    <a href="https://github.com/aibox22/readmex">View Demo</a>
     &middot;
-    <a href="https://github.com/aibox22/auto-readme/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="https://github.com/aibox22/readmex/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
-    <a href="https://github.com/aibox22/auto-readme/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/aibox22/readmex/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
 
@@ -82,7 +82,7 @@ English | [简体中文](README_CN.md)
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot](images/screenshot.png)](https://example.com)
+[![Flow Chart](images/flow.png)](https://example.com)
 
 AI-Powered README Generator is an AI-powered tool that automatically generates comprehensive Markdown README files for your projects. It crafts well-structured documentation that includes project details, technology stack, setup instructions, usage examples, badges, logos, and more.
 
@@ -121,11 +121,11 @@ This is an example of how you may give instructions on setting up your project l
 
 1. Install the package using pip:
    ```bash
-   pip install auto-readme
+   pip install readmex
    ```
 ### Configuration
 
-`auto-readme` requires API keys for both the Language Model (for generating text) and the Text-to-Image model (for generating logos). You can configure these in one of two ways. Environment variables take precedence.
+`readmex` requires API keys for both the Language Model (for generating text) and the Text-to-Image model (for generating logos). You can configure these in one of two ways. Environment variables take precedence.
 
 #### 1. Environment Variables (Recommended for CI/CD)
 
@@ -146,8 +146,8 @@ export T2I_MODEL_NAME="your-t2i-model"
 
 For convenience, you can create a global configuration file. The tool will automatically look for it.
 
-1.  Create the directory: `mkdir -p ~/.autoreadme`
-2.  Create the config file: `~/.autoreadme/config.json`
+1.  Create the directory: `mkdir -p ~/.readmex`
+2.  Create the config file: `~/.readmex/config.json`
 3.  Add your credentials and any optional settings. You can also include personal information, which will be used as defaults during interactive prompts:
 
 ```json
@@ -172,14 +172,14 @@ For convenience, you can create a global configuration file. The tool will autom
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Once installed, you can use the `autoreadme` package in the command line. To generate your README, run the following:
+Once installed, you can use the `readmex` package in the command line. To generate your README, run the following:
 ```bash
-autoreadme
+readmex
 ```
 
 Or you can run the python script directly:
 ```bash
-python src/autoreadme/cli.py --project-path /path/to/your/project --output-dir /path/to/output
+python src/readmex/cli.py --project-path /path/to/your/project --output-dir /path/to/output
 ```
 
 This will:
@@ -200,7 +200,7 @@ This will:
 - [ ] Multi-language Support
 - [ ] Enhanced AI Descriptions for Project Features
 
-See the [open issues](https://github.com/aibox22/auto-readme/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/aibox22/readmex/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -224,8 +224,8 @@ Don't forget to give the project a star! Thanks again!
 
 ### Top contributors:
 
-<a href="https://github.com/aibox22/auto-readme/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=aibox22/auto-readme" alt="contrib.rocks image" />
+<a href="https://github.com/aibox22/readmex/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=aibox22/readmex" alt="contrib.rocks image" />
 </a>
 
 
@@ -233,7 +233,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## 🎗 License
 
-Copyright © 2024-2025 [auto-readme][auto-readme]. <br />
+Copyright © 2024-2025 [readmex][readmex]. <br />
 Released under the [MIT][license-url] license.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -245,7 +245,7 @@ Released under the [MIT][license-url] license.
 
 Email: lintaothu@foxmail.com
 
-Project Link: [https://github.com/aibox22/auto-readme](https://github.com/aibox22/auto-readme)
+Project Link: [https://github.com/aibox22/readmex](https://github.com/aibox22/readmex)
 
 QQ Group: 2161023585 (Welcome to join our QQ Group to discuss and get help!)
 
@@ -254,22 +254,22 @@ QQ Group: 2161023585 (Welcome to join our QQ Group to discuss and get help!)
 
 
 <!-- REFERENCE LINKS -->
-[auto-readme]: https://github.com/aibox22/auto-readme
+[readmex]: https://github.com/aibox22/readmex
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[contributors-shield]: https://img.shields.io/github/contributors/aibox22/auto-readme.svg?style=flat-round
-[contributors-url]: https://github.com/aibox22/auto-readme/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/aibox22/auto-readme.svg?style=flat-round
-[forks-url]: https://github.com/aibox22/auto-readme/network/members
-[stars-shield]: https://img.shields.io/github/stars/aibox22/auto-readme.svg?style=flat-round
-[stars-url]: https://github.com/aibox22/auto-readme/stargazers
-[issues-shield]: https://img.shields.io/github/issues/aibox22/auto-readme.svg?style=flat-round
-[issues-url]: https://github.com/aibox22/auto-readme/issues
-[release-shield]: https://img.shields.io/github/v/release/aibox22/auto-readme?style=flat-round
-[release-url]: https://github.com/aibox22/auto-readme/releases
-[release-date-shield]: https://img.shields.io/github/release-date/aibox22/auto-readme?color=9cf&style=flat-round
-[license-shield]: https://img.shields.io/github/license/aibox22/auto-readme.svg?style=flat-round
-[license-url]: https://github.com/aibox22/auto-readme/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/aibox22/readmex.svg?style=flat-round
+[contributors-url]: https://github.com/aibox22/readmex/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/aibox22/readmex.svg?style=flat-round
+[forks-url]: https://github.com/aibox22/readmex/network/members
+[stars-shield]: https://img.shields.io/github/stars/aibox22/readmex.svg?style=flat-round
+[stars-url]: https://github.com/aibox22/readmex/stargazers
+[issues-shield]: https://img.shields.io/github/issues/aibox22/readmex.svg?style=flat-round
+[issues-url]: https://github.com/aibox22/readmex/issues
+[release-shield]: https://img.shields.io/github/v/release/aibox22/readmex?style=flat-round
+[release-url]: https://github.com/aibox22/readmex/releases
+[release-date-shield]: https://img.shields.io/github/release-date/aibox22/readmex?color=9cf&style=flat-round
+[license-shield]: https://img.shields.io/github/license/aibox22/readmex.svg?style=flat-round
+[license-url]: https://github.com/aibox22/readmex/blob/master/LICENSE.txt
 [Python]: https://img.shields.io/badge/Python-3776AB?style=flat-round&logo=python&logoColor=white
 [Python-url]: https://www.python.org/
 [OpenAI]: https://img.shields.io/badge/OpenAI-000000?style=flat-round&logo=openai&logoColor=white

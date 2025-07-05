@@ -6,7 +6,7 @@ from rich.console import Console
 from rich.panel import Panel
 
 # Define the global config path
-CONFIG_DIR = Path.home() / ".autoreadme"
+CONFIG_DIR = Path.home() / ".readmex"
 CONFIG_FILE = CONFIG_DIR / "config.json"
 
 # Initialize console for rich printing
@@ -168,7 +168,7 @@ def get_readme_template_path():
     """Gets the path to the BLANK_README.md template."""
     from importlib import resources
     try:
-        with resources.path('autoreadme', 'BLANK_README.md') as p:
+        with resources.path('readmex', 'BLANK_README.md') as p:
             return str(p)
     except FileNotFoundError:
         raise FileNotFoundError("BLANK_README.md not found in package.")

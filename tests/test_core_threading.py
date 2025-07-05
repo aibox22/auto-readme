@@ -13,11 +13,11 @@ import sys
 root_dir = Path(__file__).parent.parent
 sys.path.append(str(root_dir))
 
-from src.autoreadme.core import autoreadme
+from src.readmex.core import readmex
 
 
 class TestCoreThreading:
-    """测试 autoreadme 的多线程功能"""
+    """测试 readmex 的多线程功能"""
 
     def test_multithreaded_script_descriptions(self):
         """测试多线程脚本描述生成"""
@@ -40,8 +40,8 @@ class TestCoreThreading:
                 with open(filepath, 'w', encoding='utf-8') as f:
                     f.write(content)
             
-            # 创建 autoreadme 实例并模拟 model_client
-            craft = autoreadme(project_dir=temp_dir)
+            # 创建 readmex 实例并模拟 model_client
+            craft = readmex(project_dir=temp_dir)
             
             # Mock model_client.get_answer 方法
             def mock_get_answer(prompt):
@@ -114,7 +114,7 @@ class TestCoreThreading:
             with open(os.path.join(temp_dir, "README.md"), 'w') as f:
                 f.write("# Test Project")
             
-            craft = autoreadme(project_dir=temp_dir)
+            craft = readmex(project_dir=temp_dir)
             
             descriptions = craft._generate_script_descriptions(max_workers=3)
             
@@ -136,7 +136,7 @@ class TestCoreThreading:
             with open(test_file, 'w', encoding='utf-8') as f:
                 f.write("print('test')")
             
-            craft = autoreadme(project_dir=temp_dir)
+            craft = readmex(project_dir=temp_dir)
             
             # Mock model_client.get_answer 抛出异常
             def mock_get_answer_error(prompt):

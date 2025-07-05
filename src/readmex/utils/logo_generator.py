@@ -1,6 +1,6 @@
 import os
 from rich.console import Console
-from autoreadme.utils.model_client import ModelClient
+from readmex.utils.model_client import ModelClient
 
 def generate_logo(project_dir, descriptions, model_client, console):
     """
