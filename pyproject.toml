@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=45.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "readmex"
-version = "0.2.2"
+version = "0.2.3"
 authors = [
   { name="stone91", email="m370025263@gmail.com" },
   { name="lintao", email="lint22@mails.tsinghua.edu.cn"},
