@@ -8,7 +8,7 @@ import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 from rich.console import Console
-from aireadme.utils.model_client import ModelClient
+from autoreadme.utils.model_client import ModelClient
 
 def test_image_generation():
     """Test the fixed image generation functionality"""

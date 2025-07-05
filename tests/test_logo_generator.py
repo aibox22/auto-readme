@@ -11,8 +11,8 @@ import sys
 
 root_dir = Path(__file__).parent.parent
 sys.path.append(str(root_dir))
-from src.aireadme.utils.logo_generator import generate_logo
-from src.aireadme.utils.model_client import ModelClient
+from src.autoreadme.utils.logo_generator import generate_logo
+from src.autoreadme.utils.model_client import ModelClient
 
 
 class TestLogoGenerator:
@@ -133,9 +133,9 @@ class TestLogoGenerator:
         with tempfile.TemporaryDirectory() as temp_dir:
             descriptions = """
             {
-              "aireadme/core.py": "aireadme核心类，负责协调整个README生成流程",
-              "aireadme/utils/model_client.py": "模型客户端，支持LLM问答和AI文生图功能",
-              "aireadme/utils/logo_generator.py": "Logo生成器，根据项目描述生成专业的项目Logo"
+              "autoreadme/core.py": "autoreadme核心类，负责协调整个README生成流程",
+              "autoreadme/utils/model_client.py": "模型客户端，支持LLM问答和AI文生图功能",
+              "autoreadme/utils/logo_generator.py": "Logo生成器，根据项目描述生成专业的项目Logo"
             }
             """
 

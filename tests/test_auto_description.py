@@ -15,15 +15,15 @@ def test_method_exists():
     
     try:
         # Import the core module
-        from aireadme.core import aireadme
+        from autoreadme.core import autoreadme
         
         # Check if the method exists
-        if hasattr(aireadme, '_generate_project_description'):
+        if hasattr(autoreadme, '_generate_project_description'):
             print("✅ _generate_project_description method exists")
             
             # Check method signature
             import inspect
-            sig = inspect.signature(aireadme._generate_project_description)
+            sig = inspect.signature(autoreadme._generate_project_description)
             params = list(sig.parameters.keys())
             
             expected_params = ['self', 'structure', 'dependencies', 'descriptions']
@@ -53,7 +53,7 @@ def test_code_changes():
     
     try:
         # Read the core.py file to verify changes
-        core_file_path = os.path.join(os.path.dirname(__file__), 'src', 'aireadme', 'core.py')
+        core_file_path = os.path.join(os.path.dirname(__file__), 'src', 'autoreadme', 'core.py')
         
         with open(core_file_path, 'r', encoding='utf-8') as f:
             content = f.read()
@@ -85,7 +85,7 @@ def test_workflow_logic():
     print("\n=== Testing Workflow Logic ===")
     
     try:
-        core_file_path = os.path.join(os.path.dirname(__file__), 'src', 'aireadme', 'core.py')
+        core_file_path = os.path.join(os.path.dirname(__file__), 'src', 'autoreadme', 'core.py')
         
         with open(core_file_path, 'r', encoding='utf-8') as f:
             content = f.read()

@@ -15,7 +15,7 @@ def test_new_methods_exist():
     
     try:
         # Read the core.py file to check for method definitions
-        core_file_path = os.path.join(os.path.dirname(__file__), 'src', 'aireadme', 'core.py')
+        core_file_path = os.path.join(os.path.dirname(__file__), 'src', 'autoreadme', 'core.py')
         
         with open(core_file_path, 'r', encoding='utf-8') as f:
             content = f.read()
@@ -49,7 +49,7 @@ def test_generate_method_integration():
     
     try:
         # Read the core.py file to check for auto-generation calls
-        core_file_path = os.path.join(os.path.dirname(__file__), 'src', 'aireadme', 'core.py')
+        core_file_path = os.path.join(os.path.dirname(__file__), 'src', 'autoreadme', 'core.py')
         
         with open(core_file_path, 'r', encoding='utf-8') as f:
             content = f.read()
@@ -94,7 +94,7 @@ def test_user_interface_updates():
     print("\n=== Testing User Interface Updates ===")
     
     try:
-        core_file_path = os.path.join(os.path.dirname(__file__), 'src', 'aireadme', 'core.py')
+        core_file_path = os.path.join(os.path.dirname(__file__), 'src', 'autoreadme', 'core.py')
         
         with open(core_file_path, 'r', encoding='utf-8') as f:
             content = f.read()
@@ -126,7 +126,7 @@ def test_method_implementations():
     print("\n=== Testing Method Implementations ===")
     
     try:
-        core_file_path = os.path.join(os.path.dirname(__file__), 'src', 'aireadme', 'core.py')
+        core_file_path = os.path.join(os.path.dirname(__file__), 'src', 'autoreadme', 'core.py')
         
         with open(core_file_path, 'r', encoding='utf-8') as f:
             content = f.read()

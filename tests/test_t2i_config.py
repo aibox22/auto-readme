@@ -8,8 +8,8 @@ import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 from rich.console import Console
-from aireadme.config import load_config, get_t2i_config
-from aireadme.utils.model_client import ModelClient
+from autoreadme.config import load_config, get_t2i_config
+from autoreadme.utils.model_client import ModelClient
 
 def test_t2i_config():
     """Test T2I configuration and model compatibility"""

@@ -7,17 +7,17 @@ from threading import Lock
 from rich.console import Console
 from rich.progress import Progress
 from rich.table import Table
-from aireadme.utils.model_client import ModelClient
-from aireadme.utils.file_handler import (
+from autoreadme.utils.model_client import ModelClient
+from autoreadme.utils.file_handler import (
     find_files,
     get_project_structure,
     load_gitignore_patterns,
 )
-from aireadme.utils.logo_generator import generate_logo
-from aireadme.config import load_config
+from autoreadme.utils.logo_generator import generate_logo
+from autoreadme.config import load_config
 from .config import DEFAULT_IGNORE_PATTERNS, SCRIPT_PATTERNS, DOCUMENT_PATTERNS, get_readme_template_path
 
-class aireadme:
+class autoreadme:
     def __init__(self, project_dir=None):
         self.model_client = ModelClient(quality="hd", image_size="1024x1024")  # 确保使用高质量、高分辨率图像生成
         self.console = Console()
@@ -79,7 +79,7 @@ class aireadme:
         # Generate README
         
         # Generate logo
-        from aireadme.utils.logo_generator import generate_logo
+        from autoreadme.utils.logo_generator import generate_logo
         logo_path = generate_logo(self.output_dir, descriptions, self.model_client, self.console)
         
         # Generate README content
@@ -94,7 +94,7 @@ class aireadme:
 
     def _load_configuration(self):
         """Load configuration from environment variables, config file, or user input."""
-        from aireadme.config import load_config, validate_config, CONFIG_FILE
+        from autoreadme.config import load_config, validate_config, CONFIG_FILE
         
         try:
             # First, validate and load existing configuration
@@ -108,7 +108,7 @@ class aireadme:
             
             # Set output directory if project_dir is available
             if self.project_dir:
-                self.output_dir = os.path.join(self.project_dir, "aireadme_output")
+                self.output_dir = os.path.join(self.project_dir, "autoreadme_output")
                 os.makedirs(self.output_dir, exist_ok=True)
                 self.console.print(f"[green]✔ Configuration loaded from {CONFIG_FILE}[/green]")
                 self.console.print(f"[green]✔ Output directory: {self.output_dir}[/green]")
@@ -121,7 +121,7 @@ class aireadme:
         """
         Interactive input for basic information: project path and output directory
         """
-        self.console.print("[bold cyan]aireadme - AI README Generator[/bold cyan]")
+        self.console.print("[bold cyan]autoreadme - AI README Generator[/bold cyan]")
         self.console.print("Please configure basic information (press Enter to use default values)\n")
 
         # Get project path
@@ -160,8 +160,8 @@ class aireadme:
         else:
             output_base = current_dir
 
-        # Create aireadme_output subdirectory under output directory
-        self.output_dir = os.path.join(output_base, "aireadme_output")
+        # Create autoreadme_output subdirectory under output directory
+        self.output_dir = os.path.join(output_base, "autoreadme_output")
 
         # Create output directory
         try:
@@ -546,7 +546,7 @@ Return only the requirements.txt content, one package per line in format: packag
             max_workers (int): Maximum number of threads, default is 3
         """
         self.console.print("Generating script and document descriptions...")
-        from aireadme.config import SCRIPT_PATTERNS, DOCUMENT_PATTERNS, DEFAULT_IGNORE_PATTERNS
+        from autoreadme.config import SCRIPT_PATTERNS, DOCUMENT_PATTERNS, DEFAULT_IGNORE_PATTERNS
         gitignore_patterns = load_gitignore_patterns(self.project_dir)
         ignore_patterns = DEFAULT_IGNORE_PATTERNS + gitignore_patterns
         # 将脚本模式和文档模式合并，以便生成更全面的文件描述

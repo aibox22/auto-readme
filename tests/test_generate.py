@@ -8,16 +8,16 @@ import sys
 import os
 sys.path.insert(0, 'src')
 
-from aireadme.core import aireadme
+from autoreadme.core import autoreadme
 from rich.console import Console
 
 def test_generate():
     console = Console()
-    console.print("[bold cyan]Testing aireadme generate method...[/bold cyan]")
+    console.print("[bold cyan]Testing autoreadme generate method...[/bold cyan]")
     
     try:
         # Create generator instance
-        generator = aireadme()
+        generator = autoreadme()
         
         # Test with current directory
         current_dir = os.getcwd()
