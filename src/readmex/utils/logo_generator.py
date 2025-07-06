@@ -15,7 +15,7 @@ def generate_logo(project_dir, descriptions, model_client, console):
     Returns:
         str: Generated logo image path, returns None if failed
     """
-    console.print("Generating project logo...")
+    console.print("[cyan]🤖 Generating project logo...[/cyan]")
     try:
         # Create images directory
         images_dir = os.path.join(project_dir, "images")

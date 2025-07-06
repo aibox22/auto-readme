@@ -17,6 +17,7 @@ from .utils.dependency_analyzer import DependencyAnalyzer
 from readmex.utils.logo_generator import generate_logo
 from readmex.utils.language_analyzer import LanguageAnalyzer
 from readmex.config import load_config
+
 from .config import (
     DEFAULT_IGNORE_PATTERNS,
     SCRIPT_PATTERNS,
@@ -101,11 +102,7 @@ class readmex:
                 structure, dependencies, descriptions
             )
 
-        # Generate README
-
         # Generate logo
-        from readmex.utils.logo_generator import generate_logo
-
         logo_path = generate_logo(
             self.output_dir, descriptions, self.model_client, self.console
         )
@@ -498,9 +495,16 @@ class readmex:
         return dependency_analyzer.analyze_project_dependencies(output_dir=self.output_dir)
     
     def _get_project_structure(self):
-        self.console.print("Generating project structure...")
+        self.console.print("[cyan]🤖 Generating project structure...[/cyan]")
         ignore_patterns = load_gitignore_patterns(self.project_dir)
+        ignore_patterns = DEFAULT_IGNORE_PATTERNS + ignore_patterns
+        self.console.print(f"Ignore patterns: {ignore_patterns}")
         structure = get_project_structure(self.project_dir, ignore_patterns)
+        
+        # 打印项目结构到控制台
+        self.console.print("[bold green]📁 Project Structure:[/bold green]")
+        self.console.print(structure)
+        
         structure_path = os.path.join(self.output_dir, "project_structure.txt")
         with open(structure_path, "w", encoding="utf-8") as f:
             f.write(structure)
@@ -516,17 +520,31 @@ class readmex:
         Args:
             max_workers (int): Maximum number of threads, default is 3
         """
-        self.console.print("Generating script and document descriptions...")
+        self.console.print("[cyan]🤖 Generating script and document descriptions...[/cyan]")
         from readmex.config import (
             SCRIPT_PATTERNS,
             DOCUMENT_PATTERNS,
             DEFAULT_IGNORE_PATTERNS,
         )
 
+        # 获取 gitignore 文件中的忽略模式
         gitignore_patterns = load_gitignore_patterns(self.project_dir)
         ignore_patterns = DEFAULT_IGNORE_PATTERNS + gitignore_patterns
-        # 将脚本模式和文档模式合并，以便生成更全面的文件描述
-        all_patterns = SCRIPT_PATTERNS + DOCUMENT_PATTERNS
+        self.console.print(f"Ignore patterns: {ignore_patterns}")
+        
+                 # 获取主要语言的文件扩展名模式，并生成对应的文件模式
+        language_patterns = []
+        if self.primary_language and self.primary_language in self.language_analyzer.language_mapping:
+            extensions = self.language_analyzer.language_mapping[self.primary_language]
+            language_patterns = [f"*{ext}" for ext in extensions]
+        
+        # 如果没有检测到主要语言，使用默认的脚本模式，即 *.py
+        if not language_patterns:
+            language_patterns = SCRIPT_PATTERNS
+        
+        # 将主要语言模式和文档模式合并，以便生成更全面的文件描述
+        all_patterns = language_patterns + DOCUMENT_PATTERNS
+        self.console.print(f"Read patterns: {all_patterns}")
         filepaths = list(find_files(self.project_dir, all_patterns, ignore_patterns))
 
         if not filepaths:
@@ -849,7 +867,7 @@ Return only the additional information text, no explanations."""
     def _generate_readme_content(
         self, structure, dependencies, descriptions, logo_path
     ):
-        self.console.print("Generating README content...")
+        self.console.print("[cyan]🤖 Generating README content...[/cyan]")
         try:
             template_path = get_readme_template_path()
             with open(template_path, "r", encoding="utf-8") as f:

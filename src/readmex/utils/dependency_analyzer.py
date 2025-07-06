@@ -89,7 +89,7 @@ class DependencyAnalyzer:
             Generated dependency file content
         """
         lang_config = self.config["languages"][self.primary_language]
-        self.console.print(f"Generating {self.primary_language} project dependencies...")
+        self.console.print(f"[cyan]🤖 Generating {self.primary_language} project dependencies...[/cyan]")
 
         # Check if existing dependency files exist
         existing_dependencies = self._get_existing_dependencies()
@@ -154,6 +154,7 @@ class DependencyAnalyzer:
             if existing_dependencies:
                 generated_dependencies = existing_dependencies
 
+        self.console.print(f"Generated dependencies: {generated_dependencies}")
         # Save generated dependency files to output folder
         if output_dir:
             self._save_dependency_files(
