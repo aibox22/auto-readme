@@ -1030,12 +1030,40 @@ Return only the additional information text, no explanations."""
             )
 
         # 根据语言选择不同的提示词
-        if self.config["project_language"] == "cn":
-            prompt = f"""你是一个README.md生成器，请用中文生成README文件。你只需要返回README.md文件内容，不要输出任何其他内容。"""
-        else:
-            prompt = f"""You are a readme.md generator, please generate in English. You need to return the readme text directly without any other speech"""
+        if self.config["readme_language"] == "cn":
+            prompt = f"""你是一个README.md生成器，请用中文撰写README文件。你只需要返回README.md文件内容，不要输出任何其他内容。
+            基于以下模板，请生成一个完整的README.md文件。
+            根据用户提供的信息，填充任何缺失的信息。
+            使用用户提供的信息来增强内容，特别是：
+            - 项目描述和概述
+            - 入口文件信息
+            - 功能部分
+            - 任何用户提供的信息
 
-        prompt += f"""
+            **模板:**
+            {template}
+
+            **项目结构:**
+            ```
+            {structure}
+            ```
+
+            **依赖:**
+            ```
+            {dependencies}
+            ```
+
+            **脚本描述:**
+            {descriptions}
+
+            **额外项目信息:**
+            {additional_info}
+
+            请确保最终的README文件结构良好、专业，并适当包含所有用户提供的信息。
+            再次强调，你需要生成由中文撰写的README.md文件，不要输出任何其他内容。
+            """
+        elif self.config["readme_language"] == "en":
+            prompt = f"""You are a readme.md generator, please generate in English. You need to return the readme text directly without any other speech
             Based on the following template, please generate a complete README.md file. 
             Fill in any missing information based on the project context provided.
 
@@ -1066,6 +1094,10 @@ Return only the additional information text, no explanations."""
 
             Please ensure the final README is well-structured, professional, and incorporates all the user-provided information appropriately.
         """
+        else:
+            # TODO: 支持其他语言
+            pass
+            
         readme = self.model_client.get_answer(prompt)
         self.console.print("[green]✔ README content generated.[/green]")
 
