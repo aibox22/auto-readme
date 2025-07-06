@@ -80,7 +80,7 @@ English | [简体中文](README_CN.md)
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## 📖 About The Project
 
 [![Flow Chart](images/flow.png)](https://example.com)
 
@@ -109,7 +109,7 @@ AI-Powered README Generator is an AI-powered tool that automatically generates c
 
 
 <!-- GETTING STARTED -->
-## Getting Started
+## 🚀 Getting Started
 
 This is an example of how you may give instructions on setting up your project locally. To get a local copy up and running follow these simple steps.
 
@@ -170,7 +170,7 @@ For convenience, you can create a global configuration file. The tool will autom
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## 💻 Usage
 
 Once installed, you can use the `readmex` package in the command line. To generate your README, run the following:
 ```bash
@@ -194,7 +194,7 @@ This will:
 
 
 <!-- ROADMAP -->
-## Roadmap
+## 🗺️ Roadmap
 
 - [ ] Prompt Engineering for Logo Generation
 - [ ] Multi-language Support
@@ -207,7 +207,7 @@ See the [open issues](https://github.com/aibox22/readmex/issues) for a full list
 
 
 <!-- CONTRIBUTING -->
-## Contributing
+## 🤝 Contributing
 
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -241,7 +241,7 @@ Released under the [MIT][license-url] license.
 
 
 <!-- CONTACT -->
-## Contact
+## 📧 Contact
 
 Email: lintaothu@foxmail.com
 
