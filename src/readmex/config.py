@@ -168,7 +168,7 @@ def get_readme_template_path():
     """Gets the path to the BLANK_README.md template."""
     from importlib import resources
     try:
-        with resources.path('readmex', 'BLANK_README.md') as p:
+        with resources.path('readmex', 'templates', 'BLANK_README.md') as p:
             return str(p)
     except FileNotFoundError:
         raise FileNotFoundError("BLANK_README.md not found in package.")

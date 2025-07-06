@@ -23,7 +23,8 @@ class DependencyAnalyzer:
             console: Rich console object for output
         """
         self.project_dir = project_dir
-        self.primary_language = primary_language.lower()
+        # 安全处理可能为 None 的 primary_language 参数
+        self.primary_language = (primary_language or "python").lower()
         self.model_client = model_client
         self.console = console or Console()
         
@@ -400,6 +401,11 @@ class DependencyAnalyzer:
         Returns:
             True if language was set successfully, False if not supported
         """
+        # 安全处理可能为 None 的 language 参数
+        if language is None:
+            self.console.print(f"[red]Language cannot be None[/red]")
+            return False
+            
         language = language.lower()
         if language in self.config["languages"]:
             self.primary_language = language

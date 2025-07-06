@@ -13,6 +13,7 @@ from readmex.utils.file_handler import (
     get_project_structure,
     load_gitignore_patterns,
 )
+from .utils.dependency_analyzer import DependencyAnalyzer
 from readmex.utils.logo_generator import generate_logo
 from readmex.utils.language_analyzer import LanguageAnalyzer
 from readmex.config import load_config
@@ -68,13 +69,13 @@ class readmex:
         self._get_user_info()
         self._get_project_meta_info()
 
+        # Analyze project languages first to determine primary language
+        self._analyze_project_languages()
+
         # Analyze project
         structure = self._get_project_structure()
         dependencies = self._get_project_dependencies()
         descriptions = self._get_script_descriptions()
-
-        # Analyze project languages
-        self._analyze_project_languages()
 
         # Auto-generate project description if empty
         if not self.config["project_description"]:
@@ -482,21 +483,8 @@ class readmex:
                     or default_value
                 )
 
-    def _get_project_structure(self):
-        self.console.print("Generating project structure...")
-        ignore_patterns = load_gitignore_patterns(self.project_dir)
-        structure = get_project_structure(self.project_dir, ignore_patterns)
-        structure_path = os.path.join(self.output_dir, "project_structure.txt")
-        with open(structure_path, "w", encoding="utf-8") as f:
-            f.write(structure)
-        self.console.print(
-            f"[green]✔ Project structure saved to: {structure_path}[/green]"
-        )
-        return structure
-
     def _get_project_dependencies(self):
         """Use DependencyAnalyzer to analyze project dependencies"""
-        from .utils.dependency_analyzer import DependencyAnalyzer
         
         # Create dependency analyzer instance with primary language
         dependency_analyzer = DependencyAnalyzer(
@@ -508,6 +496,18 @@ class readmex:
         
         # Analyze project dependencies and return result
         return dependency_analyzer.analyze_project_dependencies(output_dir=self.output_dir)
+    
+    def _get_project_structure(self):
+        self.console.print("Generating project structure...")
+        ignore_patterns = load_gitignore_patterns(self.project_dir)
+        structure = get_project_structure(self.project_dir, ignore_patterns)
+        structure_path = os.path.join(self.output_dir, "project_structure.txt")
+        with open(structure_path, "w", encoding="utf-8") as f:
+            f.write(structure)
+        self.console.print(
+            f"[green]✔ Project structure saved to: {structure_path}[/green]"
+        )
+        return structure
 
     def _get_script_descriptions(self, max_workers=5):
         """
