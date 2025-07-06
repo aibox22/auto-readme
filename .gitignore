@@ -126,3 +126,4 @@ Thumbs.db
 *output*/
 # PyCharm/IntelliJ IDEA
 .idea/
+.vscode/launch.json
