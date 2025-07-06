@@ -498,9 +498,10 @@ class readmex:
         """Use DependencyAnalyzer to analyze project dependencies"""
         from .utils.dependency_analyzer import DependencyAnalyzer
         
-        # Create dependency analyzer instance
+        # Create dependency analyzer instance with primary language
         dependency_analyzer = DependencyAnalyzer(
             project_dir=self.project_dir,
+            primary_language=self.primary_language,
             model_client=self.model_client,
             console=self.console
         )
