@@ -509,7 +509,7 @@ class readmex:
         )
         return structure
 
-    def _get_script_descriptions(self, max_workers=5):
+    def _get_script_descriptions(self, max_workers=10):
         """
         Generate script descriptions using multithreading
 

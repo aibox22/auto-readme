@@ -30,7 +30,7 @@ dependencies = [
 where = ["src"]
 
 [tool.setuptools.package-data]
-readmex = ["*.md"]
+readmex = ["**/*.md", "**/*.json", "**/*.png"]
 
 [project.scripts]
 readmex = "readmex.utils.cli:main"
