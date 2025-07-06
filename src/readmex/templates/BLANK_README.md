@@ -98,6 +98,24 @@ English | [简体中文](README_CN.md)
 ### Built With
 
 {{built_with_section}}
+for example:
+* [![React][React.js]][React-url]
+* [![Vue][Vue.js]][Vue-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+### 📁 Project Structure
+
+<details>
+<summary>Click to expand project structure</summary>
+
+```
+{{project_structure}}
+```
+
+</details>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
