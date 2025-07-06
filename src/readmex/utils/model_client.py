@@ -4,6 +4,7 @@ import requests
 from openai import OpenAI
 from typing import Optional, Dict, Union
 from readmex.config import get_llm_config, get_t2i_config, validate_config
+import time
 
 
 class ModelClient:
@@ -64,35 +65,53 @@ class ModelClient:
             api_key=self.t2i_config["api_key"],
         )
     
-    def get_answer(self, question: str, model: Optional[str] = None) -> str:
+    def get_answer(self, question: str, model: Optional[str] = None, max_retries: int = 3) -> str:
         """
-        Get answer to question using LLM
+        Get answer using LLM (with retry mechanism)
         
         Args:
             question: User question
             model: Specify model to use, if not specified use default model from config
+            max_retries: Maximum retry attempts
             
         Returns:
             LLM answer
         """
-        try:
-            # Use specified model or default LLM model from config
-            model_name = model or self.llm_config["model_name"]
-            
-            response = self.llm_client.chat.completions.create(
-                model=model_name,
-                messages=[
-                    {"role": "user", "content": question}
-                ],
-                max_tokens=self.max_tokens,
-                temperature=self.temperature
-            )
-            
-            return response.choices[0].message.content
-            
-        except Exception as e:
-            self.console.print(f"[red]Error occurred while getting answer: {e}[/red]")
-            raise
+        # Use specified model or default LLM model from config
+        model_name = model or self.llm_config["model_name"]
+        
+        for attempt in range(max_retries):
+            try:
+                response = self.llm_client.chat.completions.create(
+                    model=model_name,
+                    messages=[
+                        {"role": "user", "content": question}
+                    ],
+                    max_tokens=self.max_tokens,
+                    temperature=self.temperature,
+                    timeout=60
+                )
+                
+                answer = response.choices[0].message.content
+                return answer
+                
+            except Exception as e:
+                error_msg = str(e)
+                self.console.print(f"[red]LLM request error (attempt {attempt + 1}/{max_retries}): {error_msg}[/red]")
+                
+                # Provide detailed error information
+                self.console.print(f"[yellow]Model used: {model_name}[/yellow]")
+                self.console.print(f"[yellow]Base URL: {self.llm_config.get('base_url', 'Unknown')}[/yellow]")
+                
+                # If this is the last attempt, raise exception
+                if attempt == max_retries - 1:
+                    self.console.print(f"[red]All retry attempts failed, giving up request[/red]")
+                    raise Exception(f"LLM request failed after {max_retries} retries: {error_msg}")
+                else:
+                    # Exponential backoff delay
+                    delay = 2 ** attempt
+                    self.console.print(f"[yellow]Waiting {delay} seconds before retry...[/yellow]")
+                    time.sleep(delay)
     
     def get_image(self, prompt: str, model: Optional[str] = None) -> Dict[str, Union[str, bytes, None]]:
         """

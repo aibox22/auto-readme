@@ -1,0 +1,269 @@
+{
+  "languages": {
+    "python": {
+      "dependency_files": ["requirements.txt", "pyproject.toml", "setup.py", "Pipfile"],
+      "file_extensions": ["*.py"],
+      "import_patterns": [
+        {
+          "pattern": "^import\\s+([a-zA-Z_][a-zA-Z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z0-9_]*)*)",
+          "format": "import {module}",
+          "group": 1
+        },
+        {
+          "pattern": "^from\\s+([a-zA-Z_][a-zA-Z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z0-9_]*)*)\\s+import\\s+(.+)",
+          "format": "from {module} import {items}",
+          "group": 1,
+          "items_group": 2
+        }
+      ],
+      "prompt_template": "Based on the following import statements from a Python project, generate a requirements.txt file with appropriate package versions.\n\nImport statements found:\n{imports}\n\nExisting requirements.txt (if any):\n{existing}\n\nPlease generate a complete requirements.txt file that includes:\n1. Only external packages (not built-in Python modules)\n2. Reasonable version specifications (use >= for flexibility)\n3. Common packages with their typical versions\n4. Merge with existing requirements if provided\n\nReturn only the requirements.txt content, one package per line in format: package>=version"
+    },
+    "javascript": {
+      "dependency_files": ["package.json", "yarn.lock", "package-lock.json"],
+      "file_extensions": ["*.js", "*.jsx", "*.ts", "*.tsx"],
+      "import_patterns": [
+        {
+          "pattern": "^import\\s+.*?from\\s+['\"]([^'\"]+)['\"]",
+          "format": "import from '{module}'",
+          "group": 1
+        },
+        {
+          "pattern": "^const\\s+.*?=\\s+require\\(['\"]([^'\"]+)['\"]\\)",
+          "format": "require('{module}')",
+          "group": 1
+        },
+        {
+          "pattern": "^import\\s+['\"]([^'\"]+)['\"]",
+          "format": "import '{module}'",
+          "group": 1
+        }
+      ],
+      "prompt_template": "Based on the following import statements from a JavaScript/TypeScript project, generate a package.json dependencies section.\n\nImport statements found:\n{imports}\n\nExisting package.json (if any):\n{existing}\n\nPlease generate dependencies that include:\n1. Only external packages (not relative imports)\n2. Reasonable version specifications (use ^ for flexibility)\n3. Common packages with their typical versions\n4. Merge with existing dependencies if provided\n\nReturn only the dependencies object in JSON format."
+    },
+    "java": {
+      "dependency_files": ["pom.xml", "build.gradle", "gradle.properties"],
+      "file_extensions": ["*.java"],
+      "import_patterns": [
+        {
+          "pattern": "^import\\s+([a-zA-Z_][a-zA-Z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z0-9_]*)*);",
+          "format": "import {module}",
+          "group": 1
+        },
+        {
+          "pattern": "^import\\s+static\\s+([a-zA-Z_][a-zA-Z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z0-9_]*)*);",
+          "format": "import static {module}",
+          "group": 1
+        }
+      ],
+      "prompt_template": "Based on the following import statements from a Java project, generate Maven dependencies or Gradle dependencies.\n\nImport statements found:\n{imports}\n\nExisting build file (if any):\n{existing}\n\nPlease generate dependencies that include:\n1. Only external packages (not java.* or javax.* built-in packages)\n2. Common libraries with their typical versions\n3. Merge with existing dependencies if provided\n\nReturn the dependencies in Maven XML format or Gradle format as appropriate."
+    },
+    "go": {
+      "dependency_files": ["go.mod", "go.sum"],
+      "file_extensions": ["*.go"],
+      "import_patterns": [
+        {
+          "pattern": "^import\\s+\"([^\"]+)\"",
+          "format": "import \"{module}\"",
+          "group": 1
+        },
+        {
+          "pattern": "^import\\s+[a-zA-Z_][a-zA-Z0-9_]*\\s+\"([^\"]+)\"",
+          "format": "import \"{module}\"",
+          "group": 1
+        }
+      ],
+      "prompt_template": "Based on the following import statements from a Go project, generate a go.mod file.\n\nImport statements found:\n{imports}\n\nExisting go.mod (if any):\n{existing}\n\nPlease generate dependencies that include:\n1. Only external packages (not standard library)\n2. Reasonable version specifications\n3. Common packages with their typical versions\n4. Merge with existing dependencies if provided\n\nReturn only the go.mod content."
+    },
+    "rust": {
+      "dependency_files": ["Cargo.toml", "Cargo.lock"],
+      "file_extensions": ["*.rs"],
+      "import_patterns": [
+        {
+          "pattern": "^use\\s+([a-zA-Z_][a-zA-Z0-9_]*(?:::[a-zA-Z_][a-zA-Z0-9_]*)*)",
+          "format": "use {module}",
+          "group": 1
+        },
+        {
+          "pattern": "^extern\\s+crate\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
+          "format": "extern crate {module}",
+          "group": 1
+        }
+      ],
+      "prompt_template": "Based on the following use statements from a Rust project, generate a Cargo.toml dependencies section.\n\nUse statements found:\n{imports}\n\nExisting Cargo.toml (if any):\n{existing}\n\nPlease generate dependencies that include:\n1. Only external crates (not std library)\n2. Reasonable version specifications\n3. Common crates with their typical versions\n4. Merge with existing dependencies if provided\n\nReturn only the [dependencies] section of Cargo.toml."
+    },
+    "csharp": {
+      "dependency_files": ["*.csproj", "packages.config", "*.sln"],
+      "file_extensions": ["*.cs"],
+      "import_patterns": [
+        {
+          "pattern": "^using\\s+([a-zA-Z_][a-zA-Z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z0-9_]*)*);",
+          "format": "using {module}",
+          "group": 1
+        }
+      ],
+      "prompt_template": "Based on the following using statements from a C# project, generate NuGet package references.\n\nUsing statements found:\n{imports}\n\nExisting project file (if any):\n{existing}\n\nPlease generate package references that include:\n1. Only external packages (not System.* built-in namespaces)\n2. Reasonable version specifications\n3. Common packages with their typical versions\n4. Merge with existing dependencies if provided\n\nReturn the PackageReference elements in XML format."
+    },
+    "php": {
+      "dependency_files": ["composer.json", "composer.lock"],
+      "file_extensions": ["*.php"],
+      "import_patterns": [
+        {
+          "pattern": "^use\\s+([a-zA-Z_\\\\][a-zA-Z0-9_\\\\]*);",
+          "format": "use {module}",
+          "group": 1
+        },
+        {
+          "pattern": "^require_once\\s+['\"]([^'\"]+)['\"]",
+          "format": "require_once '{module}'",
+          "group": 1
+        },
+        {
+          "pattern": "^include_once\\s+['\"]([^'\"]+)['\"]",
+          "format": "include_once '{module}'",
+          "group": 1
+        }
+      ],
+      "prompt_template": "Based on the following use/require statements from a PHP project, generate a composer.json dependencies section.\n\nStatements found:\n{imports}\n\nExisting composer.json (if any):\n{existing}\n\nPlease generate dependencies that include:\n1. Only external packages (not built-in PHP classes)\n2. Reasonable version specifications (use ^ for flexibility)\n3. Common packages with their typical versions\n4. Merge with existing dependencies if provided\n\nReturn only the require section in JSON format."
+    },
+    "ruby": {
+      "dependency_files": ["Gemfile", "Gemfile.lock", "*.gemspec"],
+      "file_extensions": ["*.rb"],
+      "import_patterns": [
+        {
+          "pattern": "^require\\s+['\"]([^'\"]+)['\"]",
+          "format": "require '{module}'",
+          "group": 1
+        },
+        {
+          "pattern": "^require_relative\\s+['\"]([^'\"]+)['\"]",
+          "format": "require_relative '{module}'",
+          "group": 1
+        }
+      ],
+      "prompt_template": "Based on the following require statements from a Ruby project, generate a Gemfile.\n\nRequire statements found:\n{imports}\n\nExisting Gemfile (if any):\n{existing}\n\nPlease generate gem dependencies that include:\n1. Only external gems (not built-in Ruby libraries)\n2. Reasonable version specifications\n3. Common gems with their typical versions\n4. Merge with existing dependencies if provided\n\nReturn only the Gemfile content."
+    },
+    "matlab": {
+      "dependency_files": ["requirements.txt", "toolbox_dependencies.txt", "*.prj"],
+      "file_extensions": ["*.m", "*.mlx", "*.mlapp"],
+      "import_patterns": [
+        {
+          "pattern": "^addpath\\(['\"]([^'\"]+)['\"]\\)",
+          "format": "addpath('{module}')",
+          "group": 1
+        },
+        {
+          "pattern": "^import\\s+([a-zA-Z_][a-zA-Z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z0-9_]*)*)",
+          "format": "import {module}",
+          "group": 1
+        },
+        {
+          "pattern": "^toolbox\\s*\\(['\"]([^'\"]+)['\"]\\)",
+          "format": "toolbox('{module}')",
+          "group": 1
+        }
+      ],
+      "prompt_template": "Based on the following import/addpath statements from a MATLAB project, generate a toolbox dependencies file.\n\nStatements found:\n{imports}\n\nExisting dependencies (if any):\n{existing}\n\nPlease generate dependencies that include:\n1. Only external toolboxes and packages (not built-in MATLAB functions)\n2. Common MATLAB toolboxes with their names\n3. Third-party packages from File Exchange or GitHub\n4. Merge with existing dependencies if provided\n\nReturn only the dependencies list, one per line."
+    },
+    "c": {
+      "dependency_files": ["Makefile", "CMakeLists.txt", "configure.ac", "*.pc"],
+      "file_extensions": ["*.c", "*.h"],
+      "import_patterns": [
+        {
+          "pattern": "^#include\\s*<([^>]+)>",
+          "format": "#include <{module}>",
+          "group": 1
+        },
+        {
+          "pattern": "^#include\\s*['\"]([^'\"]+)['\"]",
+          "format": "#include \"{module}\"",
+          "group": 1
+        }
+      ],
+      "prompt_template": "Based on the following #include statements from a C project, generate build dependencies.\n\nInclude statements found:\n{imports}\n\nExisting build file (if any):\n{existing}\n\nPlease generate dependencies that include:\n1. Only external libraries (not standard C library headers)\n2. Common C libraries like OpenSSL, zlib, curl, etc.\n3. System libraries that need to be linked\n4. Merge with existing dependencies if provided\n\nReturn the dependencies in Makefile format or CMake format as appropriate."
+    },
+    "cpp": {
+      "dependency_files": ["Makefile", "CMakeLists.txt", "conanfile.txt", "vcpkg.json"],
+      "file_extensions": ["*.cpp", "*.cxx", "*.cc", "*.hpp", "*.hxx", "*.h"],
+      "import_patterns": [
+        {
+          "pattern": "^#include\\s*<([^>]+)>",
+          "format": "#include <{module}>",
+          "group": 1
+        },
+        {
+          "pattern": "^#include\\s*['\"]([^'\"]+)['\"]",
+          "format": "#include \"{module}\"",
+          "group": 1
+        }
+      ],
+      "prompt_template": "Based on the following #include statements from a C++ project, generate build dependencies.\n\nInclude statements found:\n{imports}\n\nExisting build file (if any):\n{existing}\n\nPlease generate dependencies that include:\n1. Only external libraries (not standard C++ library headers)\n2. Common C++ libraries like Boost, Qt, OpenCV, etc.\n3. System libraries that need to be linked\n4. Merge with existing dependencies if provided\n\nReturn the dependencies in CMake format or Conan format as appropriate."
+    }
+  },
+  "default_language": "python",
+  "builtin_modules": {
+    "python": [
+      "os", "sys", "re", "json", "urllib", "http", "datetime", "time", "math", 
+      "random", "collections", "itertools", "functools", "operator", "pathlib",
+      "typing", "abc", "contextlib", "copy", "pickle", "sqlite3", "csv", 
+      "configparser", "logging", "unittest", "threading", "multiprocessing",
+      "asyncio", "socket", "email", "html", "xml", "base64", "hashlib",
+      "hmac", "secrets", "uuid", "decimal", "fractions", "statistics",
+      "io", "tempfile", "shutil", "glob", "fnmatch", "linecache", "fileinput"
+    ],
+    "javascript": [
+      "fs", "path", "os", "crypto", "util", "events", "stream", "buffer",
+      "url", "querystring", "http", "https", "net", "dns", "cluster",
+      "child_process", "readline", "repl", "vm", "assert", "console"
+    ],
+    "java": [
+      "java.lang", "java.util", "java.io", "java.net", "java.nio", "java.text",
+      "java.time", "java.math", "java.security", "java.sql", "javax.sql",
+      "javax.swing", "javax.awt", "javax.crypto", "javax.xml"
+    ],
+    "go": [
+      "fmt", "os", "io", "net", "http", "time", "strings", "strconv", "math",
+      "sort", "sync", "context", "encoding", "crypto", "database", "log",
+      "flag", "path", "regexp", "runtime", "testing", "unsafe", "reflect"
+    ],
+    "rust": [
+      "std", "core", "alloc", "proc_macro", "test"
+    ],
+    "csharp": [
+      "System", "System.Collections", "System.IO", "System.Net", "System.Text",
+      "System.Threading", "System.Linq", "System.Data", "System.Xml",
+      "System.Drawing", "System.Windows", "Microsoft"
+    ],
+    "php": [
+      "DateTime", "PDO", "Exception", "stdClass", "Closure", "Generator",
+      "ReflectionClass", "SplFileInfo", "ArrayIterator", "RecursiveDirectoryIterator"
+    ],
+    "ruby": [
+      "json", "yaml", "csv", "uri", "net", "open", "time", "date", "digest",
+      "base64", "fileutils", "pathname", "tempfile", "logger", "benchmark"
+    ],
+    "matlab": [
+      "abs", "acos", "asin", "atan", "atan2", "ceil", "cos", "exp", "floor",
+      "log", "log10", "max", "min", "mod", "rand", "randn", "round", "sin",
+      "sqrt", "tan", "zeros", "ones", "eye", "size", "length", "numel",
+      "find", "sort", "unique", "sum", "mean", "std", "var", "plot", "figure",
+      "subplot", "xlabel", "ylabel", "title", "legend", "grid", "hold",
+      "disp", "fprintf", "sprintf", "input", "load", "save", "clear", "clc",
+      "who", "whos", "exist", "which", "path", "cd", "pwd", "dir", "ls",
+      "mkdir", "rmdir", "delete", "copyfile", "movefile", "isdir", "isfile"
+    ],
+    "c": [
+      "stdio.h", "stdlib.h", "string.h", "math.h", "time.h", "ctype.h",
+      "assert.h", "errno.h", "float.h", "limits.h", "locale.h", "setjmp.h",
+      "signal.h", "stdarg.h", "stddef.h", "unistd.h", "sys/types.h",
+      "sys/stat.h", "fcntl.h", "dirent.h", "pthread.h"
+    ],
+    "cpp": [
+      "iostream", "vector", "string", "algorithm", "memory", "utility",
+      "functional", "iterator", "numeric", "map", "set", "unordered_map",
+      "unordered_set", "queue", "stack", "deque", "list", "array", "tuple",
+      "chrono", "thread", "mutex", "condition_variable", "future", "atomic",
+      "regex", "random", "typeinfo", "exception", "stdexcept", "cassert",
+      "cmath", "cstdlib", "cstring", "ctime", "cctype", "climits", "cfloat"
+    ]
+  }
+} 

@@ -75,7 +75,7 @@
 </details>
 
 <!-- 关于项目 -->
-## 关于项目
+## 📖 关于项目
 
 [![流程图](images/flow.png)](https://example.com)
 
@@ -100,7 +100,7 @@ AI智能README生成器是一个基于AI的工具，可以自动为您的项目�
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
 <!-- 快速开始 -->
-## 快速开始
+## 🚀 快速开始
 
 以下是在本地设置项目的示例说明。要获取本地副本并运行，请按照以下简单步骤操作。
 
@@ -160,7 +160,7 @@ export T2I_MODEL_NAME="your-t2i-model"
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
 <!-- 使用示例 -->
-## 使用方法
+## 💻 使用方法
 
 安装完成后，您可以在命令行中使用`readmex`包。要生成README，请运行以下命令：
 ```bash
@@ -182,7 +182,7 @@ python src/readmex/cli.py --project-path /path/to/your/project --output-dir /pat
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
 <!-- 路线图 -->
-## 路线图
+## 🗺️ 路线图
 
 - [ ] Logo生成的提示工程优化
 - [ ] 多语言支持
@@ -193,7 +193,7 @@ python src/readmex/cli.py --project-path /path/to/your/project --output-dir /pat
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
 <!-- 贡献 -->
-## 贡献
+## 🤝 贡献
 
 贡献让开源社区成为了一个学习、启发和创造的绝佳场所。您所做的任何贡献都是**非常感谢**的。
 
@@ -223,7 +223,7 @@ python src/readmex/cli.py --project-path /path/to/your/project --output-dir /pat
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
 <!-- 联系方式 -->
-## 联系方式
+## 📧 联系方式
 
 邮箱：lintaothu@foxmail.com
 
