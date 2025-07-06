@@ -597,11 +597,7 @@ class readmex:
                 for future in as_completed(future_to_filepath):
                     filepath = future_to_filepath[future]
                     try:
-                        success = future.result()
-                        if success:
-                            self.console.print(
-                                f"[dim]✓ {os.path.relpath(filepath, self.project_dir)}[/dim]"
-                            )
+                        future.result()
                         progress.update(task, advance=1)
                     except Exception as e:
                         self.console.print(f"[red]Exception for {filepath}: {e}[/red]")
