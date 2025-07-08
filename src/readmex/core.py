@@ -42,6 +42,7 @@ class readmex:
             "twitter_handle": "",
             "linkedin_username": "",
             "email": "",
+            "readme_language": "",
             "project_description": "",
             "entry_file": "",
             "key_features": "",
@@ -77,6 +78,9 @@ class readmex:
         structure = self._get_project_structure()
         dependencies = self._get_project_dependencies()
         descriptions = self._get_script_descriptions()
+        # Default readme language is English
+        if not self.config["readme_language"]:
+            self.config["readme_language"] = "en"
 
         # Auto-generate project description if empty
         if not self.config["project_description"]:
@@ -290,6 +294,21 @@ class readmex:
             "Please provide additional information about your project (press Enter to skip):\n"
         )
 
+        # Project language
+        while True:
+            readme_language = self.console.input(
+                "[cyan]Project Language[/cyan] (cn/en, or press Enter to use default language: en): [/cyan]"
+            ).strip().lower()
+            
+            if not readme_language:
+                readme_language = "en"
+                break
+            elif readme_language in ["cn", "en"]:
+                break
+            else:
+                self.console.print("[red]Invalid language! Please enter 'cn' or 'en'[/red]")
+        self.config["readme_language"] = readme_language
+        
         # Project description
         user_description = self.console.input(
             "[cyan]Project Description[/cyan] (brief summary of what this project does, press Enter to auto-generate): "
@@ -349,6 +368,23 @@ class readmex:
         self.console.print(
             "Please provide additional project information (or press Enter to use defaults):"
         )
+
+        # Project language
+        while True:
+            readme_language = self.console.input(
+                "[cyan]Project Language (cn/en, or press Enter to use default language: en): [/cyan]"
+            ).strip().lower()
+            
+            if not readme_language:
+                readme_language = "en"
+                break
+            elif readme_language in ["cn", "en"]:
+                break
+            else:
+                self.console.print("[red]Invalid language! Please enter 'cn' or 'en'[/red]")
+        self.config["readme_language"] = readme_language
+
+        # Project description
         user_description = self.console.input(
             "[cyan]Project Description (press Enter to auto-generate): [/cyan]"
         ).strip()
@@ -993,37 +1029,75 @@ Return only the additional information text, no explanations."""
                 f"**Additional Information:** {self.config['additional_info']}\n"
             )
 
-        prompt = f"""You are a readme.md generator. You need to return the readme text directly without any other speech.
-        Based on the following template, please generate a complete README.md file. 
-        Fill in any missing information based on the project context provided.
+        # 根据语言选择不同的提示词
+        if self.config["readme_language"] == "cn":
+            prompt = f"""你是一个README.md生成器，请用中文撰写README文件。你只需要返回README.md文件内容，不要输出任何其他内容。
+            基于以下模板，请生成一个完整的README.md文件。
+            根据用户提供的信息，填充任何缺失的信息。
+            使用用户提供的信息来增强内容，特别是：
+            - 项目描述和概述
+            - 入口文件信息
+            - 功能部分
+            - 任何用户提供的信息
 
-        Use the additional project information provided by the user to enhance the content, especially for:
-        - Project description and overview
-        - Entry file information
-        - Features section
-        - Any additional information provided by the user
+            **模板:**
+            {template}
 
-        **Template:**
-        {template}
+            **项目结构:**
+            ```
+            {structure}
+            ```
 
-        **Project Structure:**
-        ```
-        {structure}
-        ```
+            **依赖:**
+            ```
+            {dependencies}
+            ```
 
-        **Dependencies:**
-        ```
-        {dependencies}
-        ```
+            **脚本描述:**
+            {descriptions}
 
-        **Script Descriptions:**
-        {descriptions}
+            **额外项目信息:**
+            {additional_info}
 
-        **Additional Project Information:**
-        {additional_info}
+            请确保最终的README文件结构良好、专业，并适当包含所有用户提供的信息。
+            再次强调，你需要生成由中文撰写的README.md文件，不要输出任何其他内容。
+            """
+        elif self.config["readme_language"] == "en":
+            prompt = f"""You are a readme.md generator, please generate in English. You need to return the readme text directly without any other speech
+            Based on the following template, please generate a complete README.md file. 
+            Fill in any missing information based on the project context provided.
 
-        Please ensure the final README is well-structured, professional, and incorporates all the user-provided information appropriately.
+            Use the additional project information provided by the user to enhance the content, especially for:
+            - Project description and overview
+            - Entry file information
+            - Features section
+            - Any additional information provided by the user
+
+            **Template:**
+            {template}
+
+            **Project Structure:**
+            ```
+            {structure}
+            ```
+
+            **Dependencies:**
+            ```
+            {dependencies}
+            ```
+
+            **Script Descriptions:**
+            {descriptions}
+
+            **Additional Project Information:**
+            {additional_info}
+
+            Please ensure the final README is well-structured, professional, and incorporates all the user-provided information appropriately.
         """
+        else:
+            # TODO: 支持其他语言
+            pass
+            
         readme = self.model_client.get_answer(prompt)
         self.console.print("[green]✔ README content generated.[/green]")
 
