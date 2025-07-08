@@ -167,9 +167,9 @@ export T2I_MODEL_NAME="your-t2i-model"
 readmex
 ```
 
-或者您可以直接运行Python脚本：
+或者您可以直接运行Python：
 ```bash
-python src/readmex/cli.py --project-path /path/to/your/project --output-dir /path/to/output
+python -m readmex
 ```
 
 这将会：
