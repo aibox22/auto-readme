@@ -179,7 +179,7 @@ readmex
 
 Or you can run the python script directly:
 ```bash
-python src/readmex/cli.py --project-path /path/to/your/project --output-dir /path/to/output
+python -m readmex
 ```
 
 This will:
