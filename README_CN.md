@@ -24,7 +24,7 @@
 <h3 align="center">readmex</h3>
 
   <p align="center">
-    🚀 AI智能README生成器：自动创建Markdown文档、Logo、徽章等。再也不用为文档编写而烦恼！
+    🚀 AI智能README生成器：自动为任何仓库创建精美的README和交互式Wiki！可以完全本地化运行，使用你自己的模型。
     <br />
     <a href="https://github.com/aibox22/readmex"><strong>探索文档 »</strong></a>
     <br />
@@ -75,7 +75,7 @@
 </details>
 
 <!-- 关于项目 -->
-## 关于项目
+## 📖 关于项目
 
 [![流程图](images/flow.png)](https://example.com)
 
@@ -100,7 +100,7 @@ AI智能README生成器是一个基于AI的工具，可以自动为您的项目�
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
 <!-- 快速开始 -->
-## 快速开始
+## 🚀 快速开始
 
 以下是在本地设置项目的示例说明。要获取本地副本并运行，请按照以下简单步骤操作。
 
@@ -170,7 +170,7 @@ export LOCAL_EMBEDDING="true"                         # 可选，使用本地嵌
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
 <!-- 使用示例 -->
-## 使用方法
+## 💻 使用方法
 
 有三种方式运行 `readmex` 工具：
 
@@ -232,7 +232,7 @@ readmex --help
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
 <!-- 路线图 -->
-## 路线图
+## 🗺️ 路线图
 
 - [ ] Logo生成的提示工程优化
 - [ ] 多语言支持
@@ -243,7 +243,7 @@ readmex --help
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
 <!-- 贡献 -->
-## 贡献
+## 🤝 贡献
 
 贡献让开源社区成为了一个学习、启发和创造的绝佳场所。您所做的任何贡献都是**非常感谢**的。
 
@@ -273,13 +273,18 @@ readmex --help
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
 <!-- 联系方式 -->
-## 联系方式
+## 📧 联系方式
 
 邮箱：lintaothu@foxmail.com
 
 项目链接：[https://github.com/aibox22/readmex](https://github.com/aibox22/readmex)
 
 QQ群：2161023585（欢迎加入我们的QQ群进行讨论和获取帮助！）
+
+<div align="center">
+  <img src="images/group_qr.png" alt="QQ群二维码" width="200">
+  <p><em>扫描二维码加入我们的QQ群</em></p>
+</div>
 
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
@@ -308,3 +313,12 @@ QQ群：2161023585（欢迎加入我们的QQ群进行讨论和获取帮助！）
 [Flask-url]: https://flask.palletsprojects.com/
 [Rich]: https://img.shields.io/badge/Rich-000000?style=flat-round&logo=rich&logoColor=white
 [Rich-url]: https://rich.readthedocs.io/
+
+<!-- 星标历史 -->
+## ⭐ 星标历史
+
+<div align="center">
+  <a href="https://star-history.com/#aibox22/readmex&Date">
+    <img src="https://api.star-history.com/svg?repos=aibox22/readmex&type=Date" alt="Star History Chart" width="800">
+  </a>
+</div>

@@ -126,7 +126,7 @@ ehthumbs.db
 Thumbs.db
 
 # readmex_output
-readmex_output/
-output/
+*output*/
 # PyCharm/IntelliJ IDEA
 .idea/
+.vscode/launch.json

@@ -189,6 +189,9 @@ def get_embedding_config() -> Dict[str, Union[str, bool]]:
 # Keep original default configurations for use by other modules
 DEFAULT_IGNORE_PATTERNS = [
     ".git",
+    ".github",
+    ".cursor",
+    ".cursorrules",
     ".vscode",
     "__pycache__",
     "*.pyc",
@@ -203,7 +206,8 @@ DEFAULT_IGNORE_PATTERNS = [
     "__init__.py",      # 根目录下的 __init__.py
     "*/__init__.py",    # 一级子目录下的 __init__.py
     "*/*/__init__.py",  # 二级子目录下的 __init__.py
-    ".idea"
+    ".idea",
+    "*output*"
 ]
 
 # Patterns for script files to be described by the LLM
@@ -215,7 +219,7 @@ def get_readme_template_path():
     """Gets the path to the BLANK_README.md template."""
     from importlib import resources
     try:
-        with resources.path('readmex', 'BLANK_README.md') as p:
+        with resources.files('readmex.templates').joinpath('BLANK_README.md') as p:
             return str(p)
     except FileNotFoundError:
         raise FileNotFoundError("BLANK_README.md not found in package.")

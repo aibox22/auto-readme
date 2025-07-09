@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "readmex"
-version = "0.2.4"
+version = "0.2.5"
 authors = [
   { name="stone91", email="m370025263@gmail.com" },
   { name="lintao", email="lint22@mails.tsinghua.edu.cn"},
@@ -32,7 +32,7 @@ dependencies = [
 where = ["src"]
 
 [tool.setuptools.package-data]
-readmex = ["*.md"]
+readmex = ["**/*.md", "**/*.json", "**/*.png"]
 
 [project.scripts]
 readmex = "readmex.utils.cli:main"
