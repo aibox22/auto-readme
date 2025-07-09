@@ -54,6 +54,10 @@ def load_config() -> Dict[str, str]:
         "T2I_API_KEY": "t2i_api_key",
         "T2I_BASE_URL": "t2i_base_url",
         "T2I_MODEL_NAME": "t2i_model_name",
+        "EMBEDDING_API_KEY": "embedding_api_key",
+        "EMBEDDING_BASE_URL": "embedding_base_url",
+        "EMBEDDING_MODEL_NAME": "embedding_model_name",
+        "LOCAL_EMBEDDING": "local_embedding",
         "GITHUB_USERNAME": "github_username",
         "TWITTER_HANDLE": "twitter_handle",
         "LINKEDIN_USERNAME": "linkedin_username",
@@ -72,6 +76,17 @@ def load_config() -> Dict[str, str]:
     for key in personal_info_keys:
         if key not in config:
             config[key] = ""
+    
+    # Set defaults for embedding config if not provided
+    embedding_defaults = {
+        "embedding_model_name": "text-embedding-3-small",
+        "embedding_base_url": "https://api.openai.com/v1",
+        "embedding_api_key": "",
+        "local_embedding": "true"
+    }
+    for key, default_value in embedding_defaults.items():
+        if key not in config:
+            config[key] = default_value
 
     _config_cache = config
     _config_sources = sources
@@ -92,15 +107,34 @@ def validate_config():
 
         # Save to config file
         CONFIG_DIR.mkdir(exist_ok=True)
+        
+        # Load existing config to update it, not overwrite
+        try:
+            with open(CONFIG_FILE, 'r') as f_read:
+                existing_config = json.load(f_read)
+        except (FileNotFoundError, json.JSONDecodeError):
+            # Create a complete config template with all possible keys
+            existing_config = {
+                "LLM_API_KEY": "",
+                "LLM_BASE_URL": "https://api.openai.com/v1",
+                "LLM_MODEL_NAME": "gpt-3.5-turbo",
+                "T2I_API_KEY": "",
+                "T2I_BASE_URL": "https://api.openai.com/v1",
+                "T2I_MODEL_NAME": "dall-e-3",
+                "EMBEDDING_API_KEY": "",
+                "EMBEDDING_BASE_URL": "https://api.openai.com/v1",
+                "EMBEDDING_MODEL_NAME": "text-embedding-3-small",
+                "LOCAL_EMBEDDING": "true",
+                "GITHUB_USERNAME": "",
+                "TWITTER_HANDLE": "",
+                "LINKEDIN_USERNAME": "",
+                "EMAIL": ""
+            }
+        
+        # Update with user input
+        existing_config.update({k.upper(): v for k, v in config.items() if v}) # Save keys in uppercase
+        
         with open(CONFIG_FILE, 'w') as f:
-            # Load existing config to update it, not overwrite
-            try:
-                with open(CONFIG_FILE, 'r') as f_read:
-                    existing_config = json.load(f_read)
-            except (FileNotFoundError, json.JSONDecodeError):
-                existing_config = {}
-            
-            existing_config.update({k.upper(): v for k, v in config.items() if v}) # Save keys in uppercase
             json.dump(existing_config, f, indent=2)
         
         console.print(f"[green]✔ Configuration saved to [bold cyan]{CONFIG_FILE}[/bold cyan][/green]")
@@ -141,12 +175,25 @@ def get_t2i_config() -> Dict[str, Union[str, int, float]]:
     }
 
 
+def get_embedding_config() -> Dict[str, Union[str, bool]]:
+    """获取embedding模型配置"""
+    config = load_config()
+    return {
+        "model_name": config.get("embedding_model_name", "text-embedding-3-small"),
+        "base_url": config.get("embedding_base_url", "https://api.openai.com/v1"),
+        "api_key": config.get("embedding_api_key"),
+        "local_embedding": config.get("local_embedding", "true").lower() == "true",
+    }
+
+
 # Keep original default configurations for use by other modules
 DEFAULT_IGNORE_PATTERNS = [
     ".git",
     ".vscode",
     "__pycache__",
     "*.pyc",
+    "*.md",
+    "website/*",
     ".DS_Store",
     "build",
     "dist",
