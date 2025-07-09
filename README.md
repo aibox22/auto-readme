@@ -25,7 +25,7 @@ English | [简体中文](README_CN.md)
 <h3 align="center">readmex</h3>
 
   <p align="center">
-    🚀 AI-Powered README Generator: Automatically creates Markdown, logos, badges, and more. Never waste hours on docs again!
+    🚀 AI-Powered README Generator: Automatically creates beautiful READMEs and interactive wikis for any repository! Can run all in local with your own models.
     <br />
     <a href="https://github.com/aibox22/readmex"><strong>Explore the docs »</strong></a>
     <br />
@@ -249,6 +249,10 @@ Project Link: [https://github.com/aibox22/readmex](https://github.com/aibox22/re
 
 QQ Group: 2161023585 (Welcome to join our QQ Group to discuss and get help!)
 
+<div align="center">
+  <img src="images/group_qr.png" alt="QQ Group QR Code" width="200">
+  <p><em>Scan QR code to join our QQ Group</em></p>
+</div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -278,3 +282,12 @@ QQ Group: 2161023585 (Welcome to join our QQ Group to discuss and get help!)
 [Flask-url]: https://flask.palletsprojects.com/
 [Rich]: https://img.shields.io/badge/Rich-000000?style=flat-round&logo=rich&logoColor=white
 [Rich-url]: https://rich.readthedocs.io/
+
+<!-- STAR HISTORY -->
+## ⭐ Star History
+
+<div align="center">
+  <a href="https://star-history.com/#aibox22/readmex&Date">
+    <img src="https://api.star-history.com/svg?repos=aibox22/readmex&type=Date" alt="Star History Chart" width="800">
+  </a>
+</div>
