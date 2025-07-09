@@ -132,6 +132,12 @@ export LLM_BASE_URL="https://api.example.com/v1"
 export T2I_BASE_URL="https://api.example.com/v1"
 export LLM_MODEL_NAME="your-llm-model"
 export T2I_MODEL_NAME="your-t2i-model"
+
+# 可选：RAG（检索增强生成）的嵌入模型配置
+export EMBEDDING_API_KEY="your_embedding_api_key"     # 可选，用于Web嵌入模型
+export EMBEDDING_BASE_URL="https://api.example.com/v1" # 可选，用于Web嵌入模型
+export EMBEDDING_MODEL_NAME="text-embedding-3-small"   # 可选，嵌入模型名称
+export LOCAL_EMBEDDING="true"                         # 可选，使用本地嵌入模型（默认：true）
 ```
 
 #### 2. 全局配置文件 (推荐在本地使用)
@@ -149,11 +155,15 @@ export T2I_MODEL_NAME="your-t2i-model"
   "LLM_BASE_URL": "https://api.example.com/v1",
   "T2I_BASE_URL": "https://api.example.com/v1",
   "LLM_MODEL_NAME": "your-llm-model",
-    "T2I_MODEL_NAME": "your-t2i-model",
-    "github_username": "您的GitHub用户名",
-    "twitter_handle": "您的Twitter用户名",
-    "linkedin_username": "您的LinkedIn用户名",
-    "email": "您的电子邮箱"
+  "T2I_MODEL_NAME": "your-t2i-model",
+  "EMBEDDING_API_KEY": "您的嵌入模型API密钥",
+  "EMBEDDING_BASE_URL": "https://api.example.com/v1",
+  "EMBEDDING_MODEL_NAME": "text-embedding-3-small",
+  "LOCAL_EMBEDDING": "true",
+  "github_username": "您的GitHub用户名",
+  "twitter_handle": "您的Twitter用户名",
+  "linkedin_username": "您的LinkedIn用户名",
+  "email": "您的电子邮箱"
 }
 ```
 
@@ -162,14 +172,54 @@ export T2I_MODEL_NAME="your-t2i-model"
 <!-- 使用示例 -->
 ## 💻 使用方法
 
-安装完成后，您可以在命令行中使用`readmex`包。要生成README，请运行以下命令：
+有三种方式运行 `readmex` 工具：
+
+### 方法 1：安装后直接使用（推荐）
+
+安装完成后，您可以在命令行中直接使用 `readmex` 命令：
 ```bash
 readmex
 ```
 
-或者您可以直接运行Python：
+### 方法 2：作为 Python 模块运行
+
+如果您没有安装包或想要使用开发版本：
 ```bash
+# 使用简化的模块调用
 python -m readmex
+
+# 或者使用完整的模块路径
+python -m readmex.utils.cli
+```
+
+### 方法 3：开发者模式（直接运行脚本）
+
+对于开发者或想要直接运行源代码：
+```bash
+python src/readmex/utils/cli.py
+```
+
+### 命令行选项
+
+所有运行方式都支持以下选项：
+```bash
+# 基本用法
+readmex
+
+# 指定项目路径和输出目录
+readmex --project-path /path/to/your/project --output-dir /path/to/output
+
+# 生成网站
+readmex --website
+
+# 启动本地服务器
+readmex --serve
+
+# 部署到 GitHub Pages
+readmex --deploy
+
+# 查看帮助
+readmex --help
 ```
 
 这将会：
@@ -271,4 +321,4 @@ QQ群：2161023585（欢迎加入我们的QQ群进行讨论和获取帮助！）
   <a href="https://star-history.com/#aibox22/readmex&Date">
     <img src="https://api.star-history.com/svg?repos=aibox22/readmex&type=Date" alt="Star History Chart" width="800">
   </a>
-</div> 
+</div>

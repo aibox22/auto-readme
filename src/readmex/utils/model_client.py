@@ -10,7 +10,7 @@ import time
 class ModelClient:
     """Model client class for LLM Q&A and text-to-image functionality"""
     
-    def __init__(self, max_tokens: int = 1000, temperature: float = 0.7, 
+    def __init__(self, max_tokens: int = 10000, temperature: float = 0.7, 
                  image_size: str = "1024x1024", quality: str = "hd"):
         """
         Initialize model client
@@ -112,6 +112,19 @@ class ModelClient:
                     delay = 2 ** attempt
                     self.console.print(f"[yellow]Waiting {delay} seconds before retry...[/yellow]")
                     time.sleep(delay)
+    
+    def generate_text(self, prompt: str, model: Optional[str] = None) -> str:
+        """
+        Generate text using LLM (alias for get_answer)
+        
+        Args:
+            prompt: Text prompt
+            model: Specify model to use, if not specified use default model from config
+            
+        Returns:
+            Generated text
+        """
+        return self.get_answer(prompt, model)
     
     def get_image(self, prompt: str, model: Optional[str] = None) -> Dict[str, Union[str, bytes, None]]:
         """

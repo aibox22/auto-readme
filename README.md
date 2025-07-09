@@ -140,6 +140,12 @@ export LLM_BASE_URL="https://api.example.com/v1"
 export T2I_BASE_URL="https://api.example.com/v1"
 export LLM_MODEL_NAME="your-llm-model"
 export T2I_MODEL_NAME="your-t2i-model"
+
+# Optional: Embedding model configuration for RAG (Retrieval-Augmented Generation)
+export EMBEDDING_API_KEY="your_embedding_api_key"     # Optional, for web embedding models
+export EMBEDDING_BASE_URL="https://api.example.com/v1" # Optional, for web embedding models
+export EMBEDDING_MODEL_NAME="text-embedding-3-small"   # Optional, embedding model name
+export LOCAL_EMBEDDING="true"                         # Optional, use local embedding model (default: true)
 ```
 
 #### 2. Global Config File (Recommended for Local Use)
@@ -157,11 +163,15 @@ For convenience, you can create a global configuration file. The tool will autom
   "LLM_BASE_URL": "https://api.example.com/v1",
   "T2I_BASE_URL": "https://api.example.com/v1",
   "LLM_MODEL_NAME": "gpt-4",
-    "T2I_MODEL_NAME": "dall-e-3",
-    "github_username": "your_github_username",
-    "twitter_handle": "your_twitter_handle",
-    "linkedin_username": "your_linkedin_username",
-    "email": "your_email@example.com"
+  "T2I_MODEL_NAME": "dall-e-3",
+  "EMBEDDING_API_KEY": "your_embedding_api_key",
+  "EMBEDDING_BASE_URL": "https://api.example.com/v1",
+  "EMBEDDING_MODEL_NAME": "text-embedding-3-small",
+  "LOCAL_EMBEDDING": "true",
+  "github_username": "your_github_username",
+  "twitter_handle": "your_twitter_handle",
+  "linkedin_username": "your_linkedin_username",
+  "email": "your_email@example.com"
 }
 ```
 
@@ -173,13 +183,58 @@ For convenience, you can create a global configuration file. The tool will autom
 ## 💻 Usage
 
 Once installed, you can use the `readmex` package in the command line. To generate your README, run the following:
+
+### Method 1: Using the installed command (Recommended)
 ```bash
 readmex
 ```
 
-Or you can run the python script directly:
+### Method 2: Running as a Python module
 ```bash
+# Run the package directly
 python -m readmex
+
+# Or run the CLI module specifically
+python -m readmex.utils.cli
+```
+
+### Method 3: Development mode (for contributors)
+```bash
+# From the project root directory
+python src/readmex/utils/cli.py
+```
+
+### Command Line Options
+
+All methods support the same command line arguments:
+
+```bash
+# Interactive mode (default)
+readmex
+
+# Generate for current directory
+readmex .
+
+# Generate for specific directory
+readmex /path/to/your/project
+
+# Generate MkDocs website
+readmex --website
+
+# Generate website and serve locally
+readmex --website --serve
+
+# Deploy to GitHub Pages
+readmex --deploy
+
+# Enable debug mode (skip LLM calls for testing)
+readmex --debug
+
+# Enable silent mode (auto-generate without prompts)
+readmex --silent
+
+# Enable verbose mode (show detailed information)
+readmex --verbose
 ```
 
 This will:

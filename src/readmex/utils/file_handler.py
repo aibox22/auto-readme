@@ -8,29 +8,38 @@ def find_files(
     """Find files matching patterns in a directory, excluding ignored ones."""
     from fnmatch import fnmatch
 
+    def should_ignore_path(path: str, ignore_patterns: List[str]) -> bool:
+        """Check if a path should be ignored based on gitignore patterns."""
+        for pattern in ignore_patterns:
+            # Handle directory patterns (ending with /)
+            if pattern.endswith('/'):
+                dir_pattern = pattern.rstrip('/')
+                # Check if any part of the path matches the directory pattern
+                path_parts = path.split(os.sep)
+                for i in range(len(path_parts)):
+                    # Check if the directory pattern matches at any level
+                    if fnmatch(path_parts[i], dir_pattern):
+                        return True
+                    # Also check if the full path up to this point matches
+                    partial_path = os.sep.join(path_parts[:i+1])
+                    if fnmatch(partial_path, dir_pattern):
+                        return True
+            else:
+                # Regular file/path pattern
+                if fnmatch(path, pattern):
+                    return True
+        return False
+
     for root, dirs, files in os.walk(directory):
-        # 正确处理目录修剪，避免遍历被忽略的目录
-        dirs[:] = [d for d in dirs if not any(
-            fnmatch(os.path.relpath(os.path.join(root, d), directory), ignore) or
-            fnmatch(d, ignore) or
-            fnmatch(os.path.join(os.path.relpath(root, directory), d), ignore)
-            for ignore in ignore_patterns
+        # Correctly handle directory pruning
+        dirs[:] = [d for d in dirs if not should_ignore_path(
+            os.path.relpath(os.path.join(root, d), directory), ignore_patterns
         )]
 
         for basename in files:
             # 获取文件的相对路径
             rel_path = os.path.relpath(os.path.join(root, basename), directory)
-            
-            # 检查文件是否应该被忽略 - 更全面的忽略检查
-            should_ignore = False
-            for ignore in ignore_patterns:
-                if (fnmatch(rel_path, ignore) or 
-                    fnmatch(basename, ignore) or
-                    fnmatch(os.path.join(os.path.relpath(root, directory), basename), ignore)):
-                    should_ignore = True
-                    break
-            
-            if should_ignore:
+            if should_ignore_path(rel_path, ignore_patterns):
                 continue
 
             # 检查文件是否匹配所需的模式
@@ -71,6 +80,29 @@ def _should_ignore_path(path: str, basename: str, ignore_patterns: List[str], is
 
 def get_project_structure(directory: str, ignore_patterns: List[str]) -> str:
     """Generate a string representing the project structure."""
+    from fnmatch import fnmatch
+
+    def should_ignore_path_local(path: str, ignore_patterns: List[str]) -> bool:
+        """Check if a path should be ignored based on gitignore patterns."""
+        for pattern in ignore_patterns:
+            # Handle directory patterns (ending with /)
+            if pattern.endswith('/'):
+                dir_pattern = pattern.rstrip('/')
+                # Check if any part of the path matches the directory pattern
+                path_parts = path.split(os.sep)
+                for i in range(len(path_parts)):
+                    # Check if the directory pattern matches at any level
+                    if fnmatch(path_parts[i], dir_pattern):
+                        return True
+                    # Also check if the full path up to this point matches
+                    partial_path = os.sep.join(path_parts[:i+1])
+                    if fnmatch(partial_path, dir_pattern):
+                        return True
+            else:
+                # Regular file/path pattern
+                if fnmatch(path, pattern):
+                    return True
+        return False
     lines = []
     
     for root, dirs, files in os.walk(directory, topdown=True):
@@ -78,13 +110,8 @@ def get_project_structure(directory: str, ignore_patterns: List[str]) -> str:
         if rel_root == '.':
             rel_root = ''
         
-        # 过滤目录 - 使用新的忽略逻辑
-        filtered_dirs = []
-        for d in dirs:
-            dir_path = os.path.join(rel_root, d) if rel_root else d
-            if not _should_ignore_path(dir_path, d, ignore_patterns, is_dir=True):
-                filtered_dirs.append(d)
-        dirs[:] = filtered_dirs
+        # Filter out ignored directories
+        dirs[:] = [d for d in dirs if not should_ignore_path_local(os.path.join(rel_root, d) if rel_root else d, ignore_patterns)]
         
         # 过滤文件 - 使用新的忽略逻辑
         filtered_files = []

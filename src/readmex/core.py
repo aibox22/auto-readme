@@ -13,12 +13,12 @@ from readmex.utils.file_handler import (
     get_project_structure,
     load_gitignore_patterns,
 )
-from .utils.dependency_analyzer import DependencyAnalyzer
+from readmex.utils.dependency_analyzer import DependencyAnalyzer
 from readmex.utils.logo_generator import generate_logo
 from readmex.utils.language_analyzer import LanguageAnalyzer
 from readmex.config import load_config
 
-from .config import (
+from readmex.config import (
     DEFAULT_IGNORE_PATTERNS,
     SCRIPT_PATTERNS,
     DOCUMENT_PATTERNS,
@@ -27,18 +27,21 @@ from .config import (
 
 
 class readmex:
-    def __init__(self, project_dir=None):
+    def __init__(self, project_dir=None, silent=False, debug=False):
         self.model_client = ModelClient(
             quality="hd", image_size="1024x1024"
         )  # 确保使用高质量、高分辨率图像生成
         self.console = Console()
         self.project_dir = project_dir  # 初始化时设置项目目录
         self.output_dir = None  # 输出目录将在 _get_basic_info 中设置
+        self.silent = silent  # 静默模式，不进行交互式输入
+        self.debug = debug  # 调试模式，不调用大模型
         self.language_analyzer = LanguageAnalyzer()  # Initialize language analyzer
         self.primary_language = None  # Store primary programming language
         self.config = {
             "github_username": "",
             "repo_name": "",
+            "project_title": "",
             "twitter_handle": "",
             "linkedin_username": "",
             "email": "",
@@ -84,38 +87,60 @@ class readmex:
 
         # Auto-generate project description if empty
         if not self.config["project_description"]:
-            self.config["project_description"] = self._generate_project_description(
-                structure, dependencies, descriptions
-            )
-
+            if self.debug:
+                self.config["project_description"] = "A software project with various components and functionality (debug mode)."
+                self.console.print("[yellow]✔ Project description (debug mode): Using default description[/yellow]")
+            else:
+                self.config["project_description"] = self._generate_project_description(
+                    structure, dependencies, descriptions
+                )
+        
         # Auto-generate entry file if empty
         if not self.config["entry_file"]:
-            self.config["entry_file"] = self._generate_entry_file(
-                structure, dependencies, descriptions
-            )
-
+            if self.debug:
+                self.config["entry_file"] = "main.py"
+                self.console.print("[yellow]✔ Entry file (debug mode): main.py[/yellow]")
+            else:
+                self.config["entry_file"] = self._generate_entry_file(
+                    structure, dependencies, descriptions
+                )
+        
         # Auto-generate key features if empty
         if not self.config["key_features"]:
-            self.config["key_features"] = self._generate_key_features(
-                structure, dependencies, descriptions
-            )
-
+            if self.debug:
+                self.config["key_features"] = "Core functionality, Easy to use, Well documented"
+                self.console.print("[yellow]✔ Key features (debug mode): Using default features[/yellow]")
+            else:
+                self.config["key_features"] = self._generate_key_features(
+                    structure, dependencies, descriptions
+                )
+        
         # Auto-generate additional info if empty
         if not self.config["additional_info"]:
-            self.config["additional_info"] = self._generate_additional_info(
-                structure, dependencies, descriptions
-            )
-
+            if self.debug:
+                self.config["additional_info"] = "Additional project information will be available in production mode."
+                self.console.print("[yellow]✔ Additional info (debug mode): Using default info[/yellow]")
+            else:
+                self.config["additional_info"] = self._generate_additional_info(
+                    structure, dependencies, descriptions
+                )
+        
         # Generate logo
-        logo_path = generate_logo(
-            self.output_dir, descriptions, self.model_client, self.console
-        )
-
+        if self.debug:
+            logo_path = None
+            self.console.print("[yellow]✔ Logo generation skipped (debug mode)[/yellow]")
+        else:
+            logo_path = generate_logo(
+                self.output_dir, descriptions, self.model_client, self.console
+            )
+        
         # Generate README content
-        readme_content = self._generate_readme_content(
-            structure, dependencies, descriptions, logo_path
-        )
-
+        if self.debug:
+            readme_content = self._generate_debug_readme_content(structure, dependencies, descriptions, logo_path)
+        else:
+            readme_content = self._generate_readme_content(
+                structure, dependencies, descriptions, logo_path
+            )
         # Save README
         readme_path = os.path.join(self.output_dir, "README.md")
         with open(readme_path, "w", encoding="utf-8") as f:
@@ -176,22 +201,23 @@ class readmex:
     
     def _show_github_promotion(self):
         """显示 GitHub 推广信息"""
-        self.console.print("\n[dim]💡 如果 readmex 对你有帮助，请考虑给我们一个 star！[/dim]")
-        
-        # 询问用户是否要打开 GitHub
-        open_github = self.console.input(
-            "[cyan]是否现在打开 GitHub 仓库？ (y/N): [/cyan]"
-        ).strip().lower()
-        
-        if open_github in ['y', 'yes', '是']:
-            import webbrowser
-            github_url = "https://github.com/aibox22/readmeX"
-            webbrowser.open(github_url)
-            self.console.print(f"[green]✔ 已在浏览器中打开: {github_url}[/green]")
-        elif open_github == 'never':
-            # 如果用户输入 'never'，则禁用推广
-            self.config["disable_github_promotion"] = True
-            self.console.print("[yellow]已禁用 GitHub 推广提示[/yellow]")
+        if not self.silent:
+            self.console.print("\n[dim]💡 如果 readmex 对你有帮助，请考虑给我们一个 star！[/dim]")
+            
+            # 询问用户是否要打开 GitHub
+            open_github = self.console.input(
+                "[cyan]是否现在打开 GitHub 仓库？ (y/N): [/cyan]"
+            ).strip().lower()
+            
+            if open_github in ['y', 'yes', '是']:
+                import webbrowser
+                github_url = "https://github.com/aibox22/readmeX"
+                webbrowser.open(github_url)
+                self.console.print(f"[green]✔ 已在浏览器中打开: {github_url}[/green]")
+            elif open_github == 'never':
+                # 如果用户输入 'never'，则禁用推广
+                self.config["disable_github_promotion"] = True
+                self.console.print("[yellow]已禁用 GitHub 推广提示[/yellow]")
 
     def _load_configuration(self):
         """Load configuration from environment variables, config file, or user input."""
@@ -230,25 +256,30 @@ class readmex:
         """
         Interactive input for basic information: project path and output directory
         """
-        self.console.print("[bold cyan]readmex - AI README Generator[/bold cyan]")
-        self.console.print(
-            "Please configure basic information (press Enter to use default values)\n"
-        )
-
-        # Get project path
-        current_dir = os.getcwd()
-        project_input = self.console.input(
-            f"[cyan]Project Path[/cyan] (default: {current_dir}): "
-        ).strip()
-
-        if project_input:
-            # Handle relative and absolute paths
-            if os.path.isabs(project_input):
-                self.project_dir = project_input
-            else:
-                self.project_dir = os.path.join(current_dir, project_input)
+        if self.silent:
+            # 在静默模式下使用默认值
+            current_dir = os.getcwd()
+            if not self.project_dir:
+                self.project_dir = current_dir
+            self.console.print(f"[green]✔ Project path (silent mode): {self.project_dir}[/green]")
         else:
-            self.project_dir = current_dir
+            self.console.print("[bold cyan]readmex - AI README Generator[/bold cyan]")
+            self.console.print("Please configure basic information (press Enter to use default values)\n")
+
+            # Get project path
+            current_dir = os.getcwd()
+            project_input = self.console.input(
+                f"[cyan]Project Path[/cyan] (default: {current_dir}): "
+            ).strip()
+
+            if project_input:
+                # Handle relative and absolute paths
+                if os.path.isabs(project_input):
+                    self.project_dir = project_input
+                else:
+                    self.project_dir = os.path.join(current_dir, project_input)
+            else:
+                self.project_dir = current_dir
 
         # Check if project path exists
         if not os.path.exists(self.project_dir):
@@ -257,21 +288,27 @@ class readmex:
             )
             exit(1)
 
-        self.console.print(f"[green]✔ Project path: {self.project_dir}[/green]")
+        if not self.silent:
+            self.console.print(f"[green]✔ Project path: {self.project_dir}[/green]")
 
         # Get output directory
-        output_input = self.console.input(
-            f"[cyan]Output Directory[/cyan] (default: {current_dir}): "
-        ).strip()
-
-        if output_input:
-            # Handle relative and absolute paths
-            if os.path.isabs(output_input):
-                output_base = output_input
-            else:
-                output_base = os.path.join(current_dir, output_input)
-        else:
+        if self.silent:
+            # 在静默模式下使用默认输出目录
+            current_dir = os.getcwd()
             output_base = current_dir
+        else:
+            output_input = self.console.input(
+                f"[cyan]Output Directory[/cyan] (default: {current_dir}): "
+            ).strip()
+
+            if output_input:
+                # Handle relative and absolute paths
+                if os.path.isabs(output_input):
+                    output_base = output_input
+                else:
+                    output_base = os.path.join(current_dir, output_input)
+            else:
+                output_base = current_dir
 
         # Create readmex_output subdirectory under output directory
         self.output_dir = os.path.join(output_base, "readmex_output")
@@ -286,85 +323,102 @@ class readmex:
             )
             exit(1)
 
-        self.console.print()  # Empty line separator
-
-        # Get additional project information
-        self.console.print("[bold cyan]Additional Project Information[/bold cyan]")
-        self.console.print(
-            "Please provide additional information about your project (press Enter to skip):\n"
-        )
-
-        # Project language
-        while True:
-            readme_language = self.console.input(
-                "[cyan]Project Language[/cyan] (cn/en, or press Enter to use default language: en): [/cyan]"
-            ).strip().lower()
+        if not self.silent:
+            self.console.print()  # Empty line separator
             
-            if not readme_language:
-                readme_language = "en"
-                break
-            elif readme_language in ["cn", "en"]:
-                break
+            # Get additional project information
+            self.console.print("[bold cyan]Additional Project Information[/bold cyan]")
+            self.console.print(
+                "Please provide additional information about your project (press Enter to skip):\n"
+            )
+
+            # Project language
+            while True:
+                readme_language = self.console.input(
+                    "[cyan]Project Language[/cyan] (cn/en, or press Enter to use default language: en): [/cyan]"
+                ).strip().lower()
+                
+                if not readme_language:
+                    readme_language = "en"
+                    break
+                elif readme_language in ["cn", "en"]:
+                    break
+                else:
+                    self.console.print("[red]Invalid language! Please enter 'cn' or 'en'[/red]")
+            self.config["readme_language"] = readme_language
+            
+            # Project description
+            user_description = self.console.input(
+                "[cyan]Project Description[/cyan] (brief summary of what this project does, press Enter to auto-generate): "
+            ).strip()
+
+            if user_description:
+                self.config["project_description"] = user_description
             else:
-                self.console.print("[red]Invalid language! Please enter 'cn' or 'en'[/red]")
-        self.config["readme_language"] = readme_language
-        
-        # Project description
-        user_description = self.console.input(
-            "[cyan]Project Description[/cyan] (brief summary of what this project does, press Enter to auto-generate): "
-        ).strip()
+                self.console.print(
+                    "[yellow]No description provided, will auto-generate based on project analysis...[/yellow]"
+                )
+                self.config["project_description"] = ""  # Will be generated later
 
-        if user_description:
-            self.config["project_description"] = user_description
+            # Entry file
+            user_entry_file = self.console.input(
+                "[cyan]Entry File[/cyan] (main file to run the project, press Enter to auto-detect): "
+            ).strip()
+
+            if user_entry_file:
+                self.config["entry_file"] = user_entry_file
+            else:
+                self.console.print(
+                    "[yellow]No entry file specified, will auto-detect based on project analysis...[/yellow]"
+                )
+                self.config["entry_file"] = ""  # Will be generated later
+
+            # Features
+            user_features = self.console.input(
+                "[cyan]Key Features[/cyan] (main features or capabilities, press Enter to auto-generate): "
+            ).strip()
+
+            if user_features:
+                self.config["key_features"] = user_features
+            else:
+                self.console.print(
+                    "[yellow]No features specified, will auto-generate based on project analysis...[/yellow]"
+                )
+                self.config["key_features"] = ""  # Will be generated later
+
+            # Additional information
+            user_additional_info = self.console.input(
+                "[cyan]Additional Info[/cyan] (any other important information, press Enter to auto-generate): "
+            ).strip()
+
+            if user_additional_info:
+                self.config["additional_info"] = user_additional_info
+            else:
+                self.console.print(
+                    "[yellow]No additional info specified, will auto-generate based on project analysis...[/yellow]"
+                )
+                self.config["additional_info"] = ""  # Will be generated later
+
+            self.console.print("\n[green]✔ Project information collected![/green]")
+            self.console.print()  # Empty line separator
         else:
-            self.console.print(
-                "[yellow]No description provided, will auto-generate based on project analysis...[/yellow]"
-            )
-            self.config["project_description"] = ""  # Will be generated later
-
-        # Entry file
-        user_entry_file = self.console.input(
-            "[cyan]Entry File[/cyan] (main file to run the project, press Enter to auto-detect): "
-        ).strip()
-
-        if user_entry_file:
-            self.config["entry_file"] = user_entry_file
-        else:
-            self.console.print(
-                "[yellow]No entry file specified, will auto-detect based on project analysis...[/yellow]"
-            )
-            self.config["entry_file"] = ""  # Will be generated later
-
-        # Features
-        user_features = self.console.input(
-            "[cyan]Key Features[/cyan] (main features or capabilities, press Enter to auto-generate): "
-        ).strip()
-
-        if user_features:
-            self.config["key_features"] = user_features
-        else:
-            self.console.print(
-                "[yellow]No features specified, will auto-generate based on project analysis...[/yellow]"
-            )
-            self.config["key_features"] = ""  # Will be generated later
-
-        # Additional information
-        user_additional_info = self.console.input(
-            "[cyan]Additional Info[/cyan] (any other important information, press Enter to auto-generate): "
-        ).strip()
-
-        if user_additional_info:
-            self.config["additional_info"] = user_additional_info
-        else:
-            self.console.print(
-                "[yellow]No additional info specified, will auto-generate based on project analysis...[/yellow]"
-            )
-            self.config["additional_info"] = ""  # Will be generated later
-
-        self.console.print("\n[green]✔ Project information collected![/green]")
-        self.console.print()  # Empty line separator
+            # 在静默模式下，所有配置项都设为空，将自动生成
+            self.config["project_description"] = ""
+            self.config["entry_file"] = ""
+            self.config["key_features"] = ""
+            self.config["additional_info"] = ""
+            self.console.print("[green]✔ Project information will be auto-generated (silent mode)[/green]")
 
     def _get_project_meta_info(self):
+        if self.silent:
+            # 在静默模式下跳过用户交互，使用空值（将自动生成）
+            self.config["project_description"] = ""
+            self.config["entry_file"] = ""
+            self.config["key_features"] = ""
+            self.config["additional_info"] = ""
+            self.console.print("[green]✔ Project meta info will be auto-generated (silent mode)[/green]")
+            return
+            
         self.console.print(
             "Please provide additional project information (or press Enter to use defaults):"
         )
@@ -474,9 +528,11 @@ class readmex:
                         git_username_configured = True
                     repo_name_from_git = github_match.group(2)
                     self.config["repo_name"] = repo_name_from_git
-                    self.console.print(
-                        f"[green]✔ Repository Name (auto-detected): {self.config['repo_name']}[/green]"
-                    )
+                    # Set project_title based on repo_name if not already set
+                    if not self.config.get("project_title"):
+                        self.config["project_title"] = repo_name_from_git
+                    self.console.print(f"[green]✔ Repository Name (auto-detected): {self.config['repo_name']}[/green]")
+                    self.console.print(f"[green]✔ Project Title (auto-detected): {self.config['project_title']}[/green]")
                     return
                 else:
                     self.console.print(
@@ -514,35 +570,38 @@ class readmex:
                         if not repo_name_from_git:
                             repo_name_from_git = url_match.group(2)
                             self.config["repo_name"] = repo_name_from_git
-                            self.console.print(
-                                f"[green]✔ Repository Name (from .git/config): {self.config['repo_name']}[/green]"
-                            )
+                            # Set project_title based on repo_name if not already set
+                            if not self.config.get("project_title"):
+                                self.config["project_title"] = repo_name_from_git
+                            self.console.print(f"[green]✔ Repository Name (from .git/config): {self.config['repo_name']}[/green]")
+                            self.console.print(f"[green]✔ Project Title (from .git/config): {self.config['project_title']}[/green]")
                             return
             except Exception as e:
                 self.console.print(f"[yellow]Could not read .git/config: {e}[/yellow]")
 
-        # Only ask for missing information
+        # Only ask for missing information (skip in silent mode)
         if not git_username_configured:
-            self.console.print(
-                "[yellow]GitHub username not found, please enter manually:[/yellow]"
-            )
-            self.config["github_username"] = (
-                self.console.input(
-                    "[cyan]GitHub Username (default: your-username): [/cyan]"
-                )
-                or "your-username"
-            )
-
+            if self.silent:
+                self.config["github_username"] = "your-username"
+                self.console.print("[green]✔ GitHub Username (silent mode): your-username[/green]")
+            else:
+                self.console.print("[yellow]GitHub username not found, please enter manually:[/yellow]")
+                self.config["github_username"] = self.console.input("[cyan]GitHub Username (default: your-username): [/cyan]") or "your-username"
+        
         if not repo_name_from_git:
-            self.console.print(
-                "[yellow]Repository name not found, please enter manually:[/yellow]"
-            )
-            self.config["repo_name"] = (
-                self.console.input(
-                    "[cyan]Repository Name (default: your-repo): [/cyan]"
-                )
-                or "your-repo"
-            )
+            if self.silent:
+                self.config["repo_name"] = "your-repo"
+                self.config["project_title"] = "your-repo"
+                self.console.print("[green]✔ Repository Name (silent mode): your-repo[/green]")
+                self.console.print("[green]✔ Project Title (silent mode): your-repo[/green]")
+            else:
+                self.console.print("[yellow]Repository name not found, please enter manually:[/yellow]")
+                self.config["repo_name"] = self.console.input("[cyan]Repository Name (default: your-repo): [/cyan]") or "your-repo"
+        
+        # Set project_title based on repo_name if not already set
+        if not self.config.get("project_title"):
+            self.config["project_title"] = self.config["repo_name"]
+            self.console.print(f"[green]✔ Project Title: {self.config['project_title']}[/green]")
 
     def _get_user_info(self):
         # Check which contact information is already configured
@@ -570,19 +629,18 @@ class readmex:
             self.console.print("[green]✔ Contact information (from config):[/green]")
             for field_key, field_name, value in configured_info:
                 self.console.print(f"[green]  {field_name}: {value}[/green]")
-
-        # Only ask for missing information
+        
+        # Only ask for missing information (skip in silent mode)
         if missing_info:
-            self.console.print(
-                "Please enter missing contact information (or press Enter to use defaults):"
-            )
-            for field_key, field_name, default_value in missing_info:
-                self.config[field_key] = (
-                    self.console.input(
-                        f"[cyan]{field_name} (default: {default_value}): [/cyan]"
-                    )
-                    or default_value
-                )
+            if self.silent:
+                # 在静默模式下使用默认值
+                for field_key, field_name, default_value in missing_info:
+                    self.config[field_key] = default_value
+                self.console.print("[green]✔ Contact information (silent mode): using defaults[/green]")
+            else:
+                self.console.print("Please enter missing contact information (or press Enter to use defaults):")
+                for field_key, field_name, default_value in missing_info:
+                    self.config[field_key] = self.console.input(f"[cyan]{field_name} (default: {default_value}): [/cyan]") or default_value
 
     def _get_project_dependencies(self):
         """Use DependencyAnalyzer to analyze project dependencies"""
@@ -997,14 +1055,41 @@ Return only the additional information text, no explanations."""
                 template,
             )
 
-        if logo_path:
-            # Logo 和 README 都在同一个输出目录中，使用相对路径
-            relative_logo_path = os.path.relpath(logo_path, self.output_dir)
-            template = template.replace("images/logo.png", relative_logo_path)
-        else:
+        # 添加详细的logo处理调试信息
+        self.console.print(f"[cyan]DEBUG: Processing logo_path = {logo_path}[/cyan]")
+        self.console.print(f"[cyan]DEBUG: output_dir = {self.output_dir}[/cyan]")
+        
+        try:
+            if logo_path and os.path.exists(logo_path):
+                self.console.print(f"[cyan]DEBUG: Logo file exists, processing relative path...[/cyan]")
+                # Logo 和 README 都在同一个输出目录中，使用相对路径
+                if logo_path is None:
+                    raise ValueError(f"Logo path is None at line {1060}")
+                if self.output_dir is None:
+                    raise ValueError(f"Output directory is None at line {1060}")
+                    
+                relative_logo_path = os.path.relpath(logo_path, self.output_dir)
+                self.console.print(f"[cyan]DEBUG: Relative logo path = {relative_logo_path}[/cyan]")
+                
+                # 替换整个logo img标签，使用新的属性
+                template = re.sub(
+                    r'<img src="images/logo\.png"[^>]*>',
+                    f'<img src="{relative_logo_path}" alt="Logo" width="25%" height="auto">',
+                    template
+                )
+                self.console.print(f"[green]✔ Logo template updated successfully[/green]")
+            else:
+                self.console.print(f"[yellow]WARNING: Logo path does not exist or is None, removing logo references[/yellow]")
+                template = re.sub(r'<img src="images/logo.png".*>', "", template)
+        except Exception as e:
+            self.console.print(f"[red]ERROR in logo processing at line 1058-1066: {type(e).__name__}: {e}[/red]")
+            self.console.print(f"[red]DEBUG: logo_path type = {type(logo_path)}, value = {logo_path}[/red]")
+            self.console.print(f"[red]DEBUG: output_dir type = {type(self.output_dir)}, value = {self.output_dir}[/red]")
+            # 发生错误时移除logo引用
             template = re.sub(r'<img src="images/logo.png".*>', "", template)
+            raise
 
-        # Remove screenshot section
+        # Remove screenshot section completely
         template = re.sub(
             r"\[\[Product Name Screen Shot\]\[product-screenshot\]\]\(https://example.com\)",
             "",
@@ -1012,6 +1097,13 @@ Return only the additional information text, no explanations."""
         )
         template = re.sub(
             r"\[product-screenshot\]: images/screenshot.png", "", template
+        )
+        # Remove any remaining screenshot references
+        template = re.sub(
+            r".*Product Name Screen Shot.*\n?", "", template
+        )
+        template = re.sub(
+            r".*screenshot.*\n?", "", template, flags=re.IGNORECASE
         )
 
         # Prepare additional project information for the prompt
@@ -1029,11 +1121,57 @@ Return only the additional information text, no explanations."""
                 f"**Additional Information:** {self.config['additional_info']}\n"
             )
 
+        # 构建logo处理指导
+        logo_instruction = ""
+        self.console.print(f"[cyan]DEBUG: Building logo instruction, logo_path = {logo_path}[/cyan]")
+        
+        try:
+            if logo_path and os.path.exists(logo_path):
+                self.console.print(f"[cyan]DEBUG: Building logo instruction with existing logo...[/cyan]")
+                if logo_path is None:
+                    raise ValueError(f"Logo path is None at line {1126}")
+                if self.output_dir is None:
+                    raise ValueError(f"Output directory is None at line {1126}")
+                    
+                relative_logo_path = os.path.relpath(logo_path, self.output_dir)
+                self.console.print(f"[cyan]DEBUG: Logo instruction relative path = {relative_logo_path}[/cyan]")
+                
+                logo_instruction = f"""**IMPORTANT LOGO HANDLING INSTRUCTIONS:**
+        - The template contains a project logo image reference: <img src="{relative_logo_path}" alt="Logo" width="25%" height="auto">
+        - You MUST preserve this logo HTML tag exactly as provided in the template
+        - Do NOT modify, remove, or change the logo image path, alt text, width, or height attributes
+        - Do NOT convert the HTML img tag to Markdown image syntax
+        - The logo should remain prominently displayed in the project header section
+        - Keep the logo wrapped in the center-aligned div and link structure
+        """
+                self.console.print(f"[green]✔ Logo instruction built successfully[/green]")
+            else:
+                self.console.print(f"[yellow]WARNING: No logo available, building instruction without logo[/yellow]")
+                logo_instruction = """**LOGO HANDLING:**
+        - No logo is available for this project
+        - Do not add any logo references or placeholder images
+        - Remove any logo-related HTML tags from the template
+        """
+        except Exception as e:
+            self.console.print(f"[red]ERROR in logo instruction building at line 1124-1140: {type(e).__name__}: {e}[/red]")
+            self.console.print(f"[red]DEBUG: logo_path type = {type(logo_path)}, value = {logo_path}[/red]")
+            self.console.print(f"[red]DEBUG: output_dir type = {type(self.output_dir)}, value = {self.output_dir}[/red]")
+            # 发生错误时使用无logo的指导
+            logo_instruction = """**LOGO HANDLING:**
+        - No logo is available for this project
+        - Do not add any logo references or placeholder images
+        - Remove any logo-related HTML tags from the template
+        """
+            raise
+
         # 根据语言选择不同的提示词
         if self.config["readme_language"] == "cn":
             prompt = f"""你是一个README.md生成器，请用中文撰写README文件。你只需要返回README.md文件内容，不要输出任何其他内容。
             基于以下模板，请生成一个完整的README.md文件。
             根据用户提供的信息，填充任何缺失的信息。
+            
+            {logo_instruction}
+            
             使用用户提供的信息来增强内容，特别是：
             - 项目描述和概述
             - 入口文件信息
@@ -1067,6 +1205,8 @@ Return only the additional information text, no explanations."""
             Based on the following template, please generate a complete README.md file. 
             Fill in any missing information based on the project context provided.
 
+            {logo_instruction}
+
             Use the additional project information provided by the user to enhance the content, especially for:
             - Project description and overview
             - Entry file information
@@ -1096,7 +1236,40 @@ Return only the additional information text, no explanations."""
         """
         else:
             # TODO: 支持其他语言
-            pass
+            # 默认使用英文模板
+            prompt = f"""You are a readme.md generator, please generate in English. You need to return the readme text directly without any other speech
+            Based on the following template, please generate a complete README.md file. 
+            Fill in any missing information based on the project context provided.
+
+            {logo_instruction}
+
+            Use the additional project information provided by the user to enhance the content, especially for:
+            - Project description and overview
+            - Entry file information
+            - Features section
+            - Any additional information provided by the user
+
+            **Template:**
+            {template}
+
+            **Project Structure:**
+            ```
+            {structure}
+            ```
+
+            **Dependencies:**
+            ```
+            {dependencies}
+            ```
+
+            **Script Descriptions:**
+            {descriptions}
+
+            **Additional Project Information:**
+            {additional_info}
+
+            Please ensure the final README is well-structured, professional, and incorporates all the user-provided information appropriately.
+        """
             
         readme = self.model_client.get_answer(prompt)
         self.console.print("[green]✔ README content generated.[/green]")
@@ -1162,6 +1335,89 @@ Return only the additional information text, no explanations."""
 
         return readme
 
+    def _generate_debug_readme_content(self, structure, dependencies, descriptions, logo_path):
+        """Generate README content in debug mode without LLM calls"""
+        self.console.print("[yellow]Generating README content (debug mode - no LLM calls)...[/yellow]")
+        try:
+            template_path = get_readme_template_path()
+            with open(template_path, "r", encoding="utf-8") as f:
+                template = f.read()
+        except FileNotFoundError as e:
+            self.console.print(f"[red]Error: {e}[/red]")
+            return ""
+
+        # Replace placeholders with config values
+        for key, value in self.config.items():
+            if value:
+                template = template.replace(f"{{{{{key}}}}}", value)
+            else:
+                # If value is empty, remove the line containing the placeholder
+                template = re.sub(f".*{{{{{key}}}}}.*\n?", "", template)
+
+        if self.config["github_username"] and self.config["repo_name"]:
+            template = template.replace(
+                "github_username/repo_name",
+                f"{self.config['github_username']}/{self.config['repo_name']}",
+            )
+        else:
+            # Remove all github-related badges and links if info is missing
+            template = re.sub(
+                r"\[\[(Contributors|Forks|Stargazers|Issues|project_license)-shield\]\]\[(Contributors|Forks|Stargazers|Issues|project_license)-url\]\n?",
+                "",
+                template,
+            )
+
+        # 添加详细的logo处理调试信息（调试模式）
+        self.console.print(f"[cyan]DEBUG (debug mode): Processing logo_path = {logo_path}[/cyan]")
+        self.console.print(f"[cyan]DEBUG (debug mode): output_dir = {self.output_dir}[/cyan]")
+        
+        try:
+            if logo_path and os.path.exists(logo_path):
+                self.console.print(f"[cyan]DEBUG (debug mode): Logo file exists, processing relative path...[/cyan]")
+                # Logo 和 README 都在同一个输出目录中，使用相对路径
+                if logo_path is None:
+                    raise ValueError(f"Logo path is None at line {1315} (debug mode)")
+                if self.output_dir is None:
+                    raise ValueError(f"Output directory is None at line {1315} (debug mode)")
+                    
+                relative_logo_path = os.path.relpath(logo_path, self.output_dir)
+                self.console.print(f"[cyan]DEBUG (debug mode): Relative logo path = {relative_logo_path}[/cyan]")
+                
+                # 替换整个logo img标签，使用新的属性
+                template = re.sub(
+                    r'<img src="images/logo\.png"[^>]*>',
+                    f'<img src="{relative_logo_path}" alt="Logo" width="25%" height="auto">',
+                    template
+                )
+                self.console.print(f"[green]✔ Logo template updated successfully (debug mode)[/green]")
+            else:
+                self.console.print(f"[yellow]WARNING (debug mode): Logo path does not exist or is None, removing logo references[/yellow]")
+                template = re.sub(r'<img src="images/logo.png".*>', "", template)
+        except Exception as e:
+            self.console.print(f"[red]ERROR in debug mode logo processing at line 1313-1321: {type(e).__name__}: {e}[/red]")
+            self.console.print(f"[red]DEBUG (debug mode): logo_path type = {type(logo_path)}, value = {logo_path}[/red]")
+            self.console.print(f"[red]DEBUG (debug mode): output_dir type = {type(self.output_dir)}, value = {self.output_dir}[/red]")
+            # 发生错误时移除logo引用
+            template = re.sub(r'<img src="images/logo.png".*>', "", template)
+            raise
+
+        # Remove screenshot section
+        template = re.sub(
+            r"\[\[Product Name Screen Shot\]\[product-screenshot\]\]\(https://example.com\)",
+            "",
+            template,
+        )
+        template = re.sub(
+            r"\[product-screenshot\]: images/screenshot.png", "", template
+        )
+
+        # Add debug mode notice
+        debug_notice = "\n> **Note:** This README was generated in debug mode. For AI-enhanced content, run without --debug flag.\n"
+        template = debug_notice + template
+
+        self.console.print("[green]✔ README content generated (debug mode).[/green]")
+        return template
+
     def _analyze_project_languages(self):
         """
         Analyze programming language distribution in the project
@@ -1211,4 +1467,3 @@ Return only the additional information text, no explanations."""
         except Exception as e:
             self.console.print(f"[red]❌ Error during language analysis: {e}[/red]")
             self.primary_language = None
-

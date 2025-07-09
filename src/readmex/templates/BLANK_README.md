@@ -1,17 +1,6 @@
 <a id="readme-top"></a>
 
 <!-- LANGUAGE SWITCH -->
-<div align="center">
-  
-English | [简体中文](README_CN.md)
-
-</div>
-
-<!-- PROJECT POSTER -->
-<div align="center">
-  <img src="images/poster.png" alt="Poster" width="50%">
-</div>
-
 ---
 
 
