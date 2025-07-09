@@ -104,6 +104,81 @@ AI-Powered README Generator is an AI-powered tool that automatically generates c
 - [![OpenAI][OpenAI]][OpenAI-url]
 - [![Rich][Rich]][Rich-url]
 
+### Supported Programming Languages
+
+<details>
+<summary>Click to expand supported languages</summary>
+
+#### Web Development
+- **JavaScript**
+- **TypeScript**
+- **HTML**
+- **CSS**
+- **SCSS**
+- **Sass**
+- **Less**
+- **Stylus**
+- **Pug**
+- **Handlebars**
+- **Mustache**
+- **Twig**
+- **Smarty**
+- **Jinja**
+- **Vue**
+
+#### Programming Languages
+- **Python**
+- **Java**
+- **C**
+- **C++**
+- **C#**
+- **Go**
+- **Rust**
+- **PHP**
+- **Ruby**
+- **Swift**
+- **Kotlin**
+- **Scala**
+- **R**
+- **MATLAB**
+- **Perl**
+- **Lua**
+- **Dart**
+- **F#**
+- **Visual Basic**
+- **Assembly**
+- **Objective-C**
+- **Haskell**
+- **Erlang**
+- **Elixir**
+- **Clojure**
+- **CoffeeScript**
+- **PowerShell**
+- **Shell**
+- **Batch**
+- **Solidity**
+
+#### Build & Configuration
+- **Dockerfile**
+- **Makefile**
+- **CMake**
+- **Gradle**
+- **Maven**
+- **Nix**
+- **Terraform**
+
+#### Data & Documentation
+- **Jupyter**
+- **Protobuf**
+- **GraphQL**
+- **WebAssembly**
+
+#### Editor & IDE
+- **Vim**
+- **Emacs**
+
+</details>
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 

@@ -97,6 +97,81 @@ AI智能README生成器是一个基于AI的工具，可以自动为您的项目�
 - [![OpenAI][OpenAI]][OpenAI-url]
 - [![Rich][Rich]][Rich-url]
 
+### 支持的编程语言
+
+<details>
+<summary>点击展开支持的编程语言</summary>
+
+#### Web开发
+- **JavaScript**
+- **TypeScript**
+- **HTML**
+- **CSS**
+- **SCSS**
+- **Sass**
+- **Less**
+- **Stylus**
+- **Pug**
+- **Handlebars**
+- **Mustache**
+- **Twig**
+- **Smarty**
+- **Jinja**
+- **Vue**
+
+#### 编程语言
+- **Python**
+- **Java**
+- **C**
+- **C++**
+- **C#**
+- **Go**
+- **Rust**
+- **PHP**
+- **Ruby**
+- **Swift**
+- **Kotlin**
+- **Scala**
+- **R**
+- **MATLAB**
+- **Perl**
+- **Lua**
+- **Dart**
+- **F#**
+- **Visual Basic**
+- **Assembly**
+- **Objective-C**
+- **Haskell**
+- **Erlang**
+- **Elixir**
+- **Clojure**
+- **CoffeeScript**
+- **PowerShell**
+- **Shell**
+- **Batch**
+- **Solidity**
+
+#### 构建与配置
+- **Dockerfile**
+- **Makefile**
+- **CMake**
+- **Gradle**
+- **Maven**
+- **Nix**
+- **Terraform**
+
+#### 数据与文档
+- **Jupyter**
+- **Protobuf**
+- **GraphQL**
+- **WebAssembly**
+
+#### 编辑器与IDE
+- **Vim**
+- **Emacs**
+
+</details>
+
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
 <!-- 快速开始 -->
