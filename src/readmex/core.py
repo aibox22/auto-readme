@@ -256,32 +256,12 @@ class readmex:
         """
         Interactive input for basic information: project path and output directory
         """
-<<<<<<< HEAD
         if self.silent:
             # 在静默模式下使用默认值
             current_dir = os.getcwd()
             if not self.project_dir:
                 self.project_dir = current_dir
             self.console.print(f"[green]✔ Project path (silent mode): {self.project_dir}[/green]")
-=======
-        self.console.print("[bold cyan]readmex - AI README Generator[/bold cyan]")
-        self.console.print(
-            "Please configure basic information (press Enter to use default values)\n"
-        )
-
-        # Get project path
-        current_dir = os.getcwd()
-        project_input = self.console.input(
-            f"[cyan]Project Path[/cyan] (default: {current_dir}): "
-        ).strip()
-
-        if project_input:
-            # Handle relative and absolute paths
-            if os.path.isabs(project_input):
-                self.project_dir = project_input
-            else:
-                self.project_dir = os.path.join(current_dir, project_input)
->>>>>>> main4
         else:
             self.console.print("[bold cyan]readmex - AI README Generator[/bold cyan]")
             self.console.print("Please configure basic information (press Enter to use default values)\n")
@@ -345,54 +325,78 @@ class readmex:
 
         if not self.silent:
             self.console.print()  # Empty line separator
-
-<<<<<<< HEAD
+            
             # Get additional project information
             self.console.print("[bold cyan]Additional Project Information[/bold cyan]")
-            self.console.print("Please provide additional information about your project (press Enter to skip):\n")
+            self.console.print(
+                "Please provide additional information about your project (press Enter to skip):\n"
+            )
 
+            # Project language
+            while True:
+                readme_language = self.console.input(
+                    "[cyan]Project Language[/cyan] (cn/en, or press Enter to use default language: en): [/cyan]"
+                ).strip().lower()
+                
+                if not readme_language:
+                    readme_language = "en"
+                    break
+                elif readme_language in ["cn", "en"]:
+                    break
+                else:
+                    self.console.print("[red]Invalid language! Please enter 'cn' or 'en'[/red]")
+            self.config["readme_language"] = readme_language
+            
             # Project description
             user_description = self.console.input(
                 "[cyan]Project Description[/cyan] (brief summary of what this project does, press Enter to auto-generate): "
             ).strip()
-            
+
             if user_description:
                 self.config["project_description"] = user_description
             else:
-                self.console.print("[yellow]No description provided, will auto-generate based on project analysis...[/yellow]")
+                self.console.print(
+                    "[yellow]No description provided, will auto-generate based on project analysis...[/yellow]"
+                )
                 self.config["project_description"] = ""  # Will be generated later
 
             # Entry file
             user_entry_file = self.console.input(
                 "[cyan]Entry File[/cyan] (main file to run the project, press Enter to auto-detect): "
             ).strip()
-            
+
             if user_entry_file:
                 self.config["entry_file"] = user_entry_file
             else:
-                self.console.print("[yellow]No entry file specified, will auto-detect based on project analysis...[/yellow]")
+                self.console.print(
+                    "[yellow]No entry file specified, will auto-detect based on project analysis...[/yellow]"
+                )
                 self.config["entry_file"] = ""  # Will be generated later
 
             # Features
             user_features = self.console.input(
                 "[cyan]Key Features[/cyan] (main features or capabilities, press Enter to auto-generate): "
             ).strip()
-            
+
             if user_features:
                 self.config["key_features"] = user_features
             else:
-                self.console.print("[yellow]No features specified, will auto-generate based on project analysis...[/yellow]")
+                self.console.print(
+                    "[yellow]No features specified, will auto-generate based on project analysis...[/yellow]"
+                )
                 self.config["key_features"] = ""  # Will be generated later
 
             # Additional information
             user_additional_info = self.console.input(
                 "[cyan]Additional Info[/cyan] (any other important information, press Enter to auto-generate): "
             ).strip()
-            
+
             if user_additional_info:
                 self.config["additional_info"] = user_additional_info
             else:
-                self.console.print("[yellow]No additional info specified, will auto-generate based on project analysis...[/yellow]")
+                self.console.print(
+                    "[yellow]No additional info specified, will auto-generate based on project analysis...[/yellow]"
+                )
                 self.config["additional_info"] = ""  # Will be generated later
 
             self.console.print("\n[green]✔ Project information collected![/green]")
@@ -404,83 +408,6 @@ class readmex:
             self.config["key_features"] = ""
             self.config["additional_info"] = ""
             self.console.print("[green]✔ Project information will be auto-generated (silent mode)[/green]")
-=======
-        # Get additional project information
-        self.console.print("[bold cyan]Additional Project Information[/bold cyan]")
-        self.console.print(
-            "Please provide additional information about your project (press Enter to skip):\n"
-        )
-
-        # Project language
-        while True:
-            readme_language = self.console.input(
-                "[cyan]Project Language[/cyan] (cn/en, or press Enter to use default language: en): [/cyan]"
-            ).strip().lower()
-            
-            if not readme_language:
-                readme_language = "en"
-                break
-            elif readme_language in ["cn", "en"]:
-                break
-            else:
-                self.console.print("[red]Invalid language! Please enter 'cn' or 'en'[/red]")
-        self.config["readme_language"] = readme_language
-        
-        # Project description
-        user_description = self.console.input(
-            "[cyan]Project Description[/cyan] (brief summary of what this project does, press Enter to auto-generate): "
-        ).strip()
-
-        if user_description:
-            self.config["project_description"] = user_description
-        else:
-            self.console.print(
-                "[yellow]No description provided, will auto-generate based on project analysis...[/yellow]"
-            )
-            self.config["project_description"] = ""  # Will be generated later
-
-        # Entry file
-        user_entry_file = self.console.input(
-            "[cyan]Entry File[/cyan] (main file to run the project, press Enter to auto-detect): "
-        ).strip()
-
-        if user_entry_file:
-            self.config["entry_file"] = user_entry_file
-        else:
-            self.console.print(
-                "[yellow]No entry file specified, will auto-detect based on project analysis...[/yellow]"
-            )
-            self.config["entry_file"] = ""  # Will be generated later
-
-        # Features
-        user_features = self.console.input(
-            "[cyan]Key Features[/cyan] (main features or capabilities, press Enter to auto-generate): "
-        ).strip()
-
-        if user_features:
-            self.config["key_features"] = user_features
-        else:
-            self.console.print(
-                "[yellow]No features specified, will auto-generate based on project analysis...[/yellow]"
-            )
-            self.config["key_features"] = ""  # Will be generated later
-
-        # Additional information
-        user_additional_info = self.console.input(
-            "[cyan]Additional Info[/cyan] (any other important information, press Enter to auto-generate): "
-        ).strip()
-
-        if user_additional_info:
-            self.config["additional_info"] = user_additional_info
-        else:
-            self.console.print(
-                "[yellow]No additional info specified, will auto-generate based on project analysis...[/yellow]"
-            )
-            self.config["additional_info"] = ""  # Will be generated later
-
-        self.console.print("\n[green]✔ Project information collected![/green]")
-        self.console.print()  # Empty line separator
->>>>>>> main4
 
     def _get_project_meta_info(self):
         if self.silent:
@@ -601,17 +528,11 @@ class readmex:
                         git_username_configured = True
                     repo_name_from_git = github_match.group(2)
                     self.config["repo_name"] = repo_name_from_git
-<<<<<<< HEAD
                     # Set project_title based on repo_name if not already set
                     if not self.config.get("project_title"):
                         self.config["project_title"] = repo_name_from_git
                     self.console.print(f"[green]✔ Repository Name (auto-detected): {self.config['repo_name']}[/green]")
                     self.console.print(f"[green]✔ Project Title (auto-detected): {self.config['project_title']}[/green]")
-=======
-                    self.console.print(
-                        f"[green]✔ Repository Name (auto-detected): {self.config['repo_name']}[/green]"
-                    )
->>>>>>> main4
                     return
                 else:
                     self.console.print(
@@ -649,24 +570,17 @@ class readmex:
                         if not repo_name_from_git:
                             repo_name_from_git = url_match.group(2)
                             self.config["repo_name"] = repo_name_from_git
-<<<<<<< HEAD
                             # Set project_title based on repo_name if not already set
                             if not self.config.get("project_title"):
                                 self.config["project_title"] = repo_name_from_git
                             self.console.print(f"[green]✔ Repository Name (from .git/config): {self.config['repo_name']}[/green]")
                             self.console.print(f"[green]✔ Project Title (from .git/config): {self.config['project_title']}[/green]")
-=======
-                            self.console.print(
-                                f"[green]✔ Repository Name (from .git/config): {self.config['repo_name']}[/green]"
-                            )
->>>>>>> main4
                             return
             except Exception as e:
                 self.console.print(f"[yellow]Could not read .git/config: {e}[/yellow]")
 
         # Only ask for missing information (skip in silent mode)
         if not git_username_configured:
-<<<<<<< HEAD
             if self.silent:
                 self.config["github_username"] = "your-username"
                 self.console.print("[green]✔ GitHub Username (silent mode): your-username[/green]")
@@ -677,7 +591,9 @@ class readmex:
         if not repo_name_from_git:
             if self.silent:
                 self.config["repo_name"] = "your-repo"
+                self.config["project_title"] = "your-repo"
                 self.console.print("[green]✔ Repository Name (silent mode): your-repo[/green]")
+                self.console.print("[green]✔ Project Title (silent mode): your-repo[/green]")
             else:
                 self.console.print("[yellow]Repository name not found, please enter manually:[/yellow]")
                 self.config["repo_name"] = self.console.input("[cyan]Repository Name (default: your-repo): [/cyan]") or "your-repo"
@@ -686,28 +602,6 @@ class readmex:
         if not self.config.get("project_title"):
             self.config["project_title"] = self.config["repo_name"]
             self.console.print(f"[green]✔ Project Title: {self.config['project_title']}[/green]")
-=======
-            self.console.print(
-                "[yellow]GitHub username not found, please enter manually:[/yellow]"
-            )
-            self.config["github_username"] = (
-                self.console.input(
-                    "[cyan]GitHub Username (default: your-username): [/cyan]"
-                )
-                or "your-username"
-            )
-
-        if not repo_name_from_git:
-            self.console.print(
-                "[yellow]Repository name not found, please enter manually:[/yellow]"
-            )
-            self.config["repo_name"] = (
-                self.console.input(
-                    "[cyan]Repository Name (default: your-repo): [/cyan]"
-                )
-                or "your-repo"
-            )
->>>>>>> main4
 
     def _get_user_info(self):
         # Check which contact information is already configured
@@ -735,7 +629,6 @@ class readmex:
             self.console.print("[green]✔ Contact information (from config):[/green]")
             for field_key, field_name, value in configured_info:
                 self.console.print(f"[green]  {field_name}: {value}[/green]")
-<<<<<<< HEAD
         
         # Only ask for missing information (skip in silent mode)
         if missing_info:
@@ -748,21 +641,6 @@ class readmex:
                 self.console.print("Please enter missing contact information (or press Enter to use defaults):")
                 for field_key, field_name, default_value in missing_info:
                     self.config[field_key] = self.console.input(f"[cyan]{field_name} (default: {default_value}): [/cyan]") or default_value
-=======
-
-        # Only ask for missing information
-        if missing_info:
-            self.console.print(
-                "Please enter missing contact information (or press Enter to use defaults):"
-            )
-            for field_key, field_name, default_value in missing_info:
-                self.config[field_key] = (
-                    self.console.input(
-                        f"[cyan]{field_name} (default: {default_value}): [/cyan]"
-                    )
-                    or default_value
-                )
->>>>>>> main4
 
     def _get_project_dependencies(self):
         """Use DependencyAnalyzer to analyze project dependencies"""
@@ -1221,7 +1099,6 @@ Return only the additional information text, no explanations."""
                 f"**Additional Information:** {self.config['additional_info']}\n"
             )
 
-<<<<<<< HEAD
         # 构建logo处理指导
         logo_instruction = ""
         if logo_path:
@@ -1241,23 +1118,14 @@ Return only the additional information text, no explanations."""
         - Remove any logo-related HTML tags from the template
         """
 
-        prompt = f"""You are a readme.md generator. You need to return the readme text directly without any other speech.
-        Based on the following template, please generate a complete README.md file. 
-        Fill in any missing information based on the project context provided.
-
-        {logo_instruction}
-
-        Use the additional project information provided by the user to enhance the content, especially for:
-        - Project description and overview
-        - Entry file information
-        - Features section
-        - Any additional information provided by the user
-=======
         # 根据语言选择不同的提示词
         if self.config["readme_language"] == "cn":
             prompt = f"""你是一个README.md生成器，请用中文撰写README文件。你只需要返回README.md文件内容，不要输出任何其他内容。
             基于以下模板，请生成一个完整的README.md文件。
             根据用户提供的信息，填充任何缺失的信息。
+            
+            {logo_instruction}
+            
             使用用户提供的信息来增强内容，特别是：
             - 项目描述和概述
             - 入口文件信息
@@ -1266,7 +1134,6 @@ Return only the additional information text, no explanations."""
 
             **模板:**
             {template}
->>>>>>> main4
 
             **项目结构:**
             ```
@@ -1291,6 +1158,8 @@ Return only the additional information text, no explanations."""
             prompt = f"""You are a readme.md generator, please generate in English. You need to return the readme text directly without any other speech
             Based on the following template, please generate a complete README.md file. 
             Fill in any missing information based on the project context provided.
+
+            {logo_instruction}
 
             Use the additional project information provided by the user to enhance the content, especially for:
             - Project description and overview
@@ -1387,7 +1256,6 @@ Return only the additional information text, no explanations."""
 
         return readme
 
-<<<<<<< HEAD
     def _generate_debug_readme_content(self, structure, dependencies, descriptions, logo_path):
         """Generate README content in debug mode without LLM calls"""
         self.console.print("[yellow]Generating README content (debug mode - no LLM calls)...[/yellow]")
@@ -1448,7 +1316,7 @@ Return only the additional information text, no explanations."""
 
         self.console.print("[green]✔ README content generated (debug mode).[/green]")
         return template
-=======
+
     def _analyze_project_languages(self):
         """
         Analyze programming language distribution in the project
@@ -1498,5 +1366,3 @@ Return only the additional information text, no explanations."""
         except Exception as e:
             self.console.print(f"[red]❌ Error during language analysis: {e}[/red]")
             self.primary_language = None
-
->>>>>>> main4
