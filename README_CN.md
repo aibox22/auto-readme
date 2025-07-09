@@ -24,7 +24,7 @@
 <h3 align="center">readmex</h3>
 
   <p align="center">
-    🚀 AI智能README生成器：自动创建Markdown文档、Logo、徽章等。再也不用为文档编写而烦恼！
+    🚀 AI智能README生成器：自动为任何仓库创建精美的README和交互式Wiki！可以完全本地化运行，使用你自己的模型。
     <br />
     <a href="https://github.com/aibox22/readmex"><strong>探索文档 »</strong></a>
     <br />
@@ -231,6 +231,11 @@ python -m readmex
 
 QQ群：2161023585（欢迎加入我们的QQ群进行讨论和获取帮助！）
 
+<div align="center">
+  <img src="images/group_qr.png" alt="QQ群二维码" width="200">
+  <p><em>扫描二维码加入我们的QQ群</em></p>
+</div>
+
 <p align="right">(<a href="#readme-top">返回顶部</a>)</p>
 
 <!-- 参考链接 -->
@@ -257,4 +262,13 @@ QQ群：2161023585（欢迎加入我们的QQ群进行讨论和获取帮助！）
 [Flask]: https://img.shields.io/badge/Flask-000000?style=flat-round&logo=flask&logoColor=white
 [Flask-url]: https://flask.palletsprojects.com/
 [Rich]: https://img.shields.io/badge/Rich-000000?style=flat-round&logo=rich&logoColor=white
-[Rich-url]: https://rich.readthedocs.io/ 
+[Rich-url]: https://rich.readthedocs.io/
+
+<!-- 星标历史 -->
+## ⭐ 星标历史
+
+<div align="center">
+  <a href="https://star-history.com/#aibox22/readmex&Date">
+    <img src="https://api.star-history.com/svg?repos=aibox22/readmex&type=Date" alt="Star History Chart" width="800">
+  </a>
+</div> 
