@@ -1647,7 +1647,7 @@ print("Hello, {project_name}!")
         project_name = git_info.get('repo_name', Path(self.project_dir).name)
         
         # 获取贡献者信息
-        contributors = self._get_git_contributors(max_contributors=5)
+        contributors = self._get_git_contributors()[:5]  # 限制为前5个贡献者
         contributors_info = "\n项目贡献者：\n"
         for contributor in contributors:
             contributors_info += f"- {contributor['name']} ({contributor['commits']} commits)"

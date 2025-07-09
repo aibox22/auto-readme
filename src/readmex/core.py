@@ -13,12 +13,12 @@ from readmex.utils.file_handler import (
     get_project_structure,
     load_gitignore_patterns,
 )
-from .utils.dependency_analyzer import DependencyAnalyzer
+from readmex.utils.dependency_analyzer import DependencyAnalyzer
 from readmex.utils.logo_generator import generate_logo
 from readmex.utils.language_analyzer import LanguageAnalyzer
 from readmex.config import load_config
 
-from .config import (
+from readmex.config import (
     DEFAULT_IGNORE_PATTERNS,
     SCRIPT_PATTERNS,
     DOCUMENT_PATTERNS,
@@ -1055,17 +1055,39 @@ Return only the additional information text, no explanations."""
                 template,
             )
 
-        if logo_path:
-            # Logo 和 README 都在同一个输出目录中，使用相对路径
-            relative_logo_path = os.path.relpath(logo_path, self.output_dir)
-            # 替换整个logo img标签，使用新的属性
-            template = re.sub(
-                r'<img src="images/logo\.png"[^>]*>',
-                f'<img src="{relative_logo_path}" alt="Logo" width="25%" height="auto">',
-                template
-            )
-        else:
+        # 添加详细的logo处理调试信息
+        self.console.print(f"[cyan]DEBUG: Processing logo_path = {logo_path}[/cyan]")
+        self.console.print(f"[cyan]DEBUG: output_dir = {self.output_dir}[/cyan]")
+        
+        try:
+            if logo_path and os.path.exists(logo_path):
+                self.console.print(f"[cyan]DEBUG: Logo file exists, processing relative path...[/cyan]")
+                # Logo 和 README 都在同一个输出目录中，使用相对路径
+                if logo_path is None:
+                    raise ValueError(f"Logo path is None at line {1060}")
+                if self.output_dir is None:
+                    raise ValueError(f"Output directory is None at line {1060}")
+                    
+                relative_logo_path = os.path.relpath(logo_path, self.output_dir)
+                self.console.print(f"[cyan]DEBUG: Relative logo path = {relative_logo_path}[/cyan]")
+                
+                # 替换整个logo img标签，使用新的属性
+                template = re.sub(
+                    r'<img src="images/logo\.png"[^>]*>',
+                    f'<img src="{relative_logo_path}" alt="Logo" width="25%" height="auto">',
+                    template
+                )
+                self.console.print(f"[green]✔ Logo template updated successfully[/green]")
+            else:
+                self.console.print(f"[yellow]WARNING: Logo path does not exist or is None, removing logo references[/yellow]")
+                template = re.sub(r'<img src="images/logo.png".*>', "", template)
+        except Exception as e:
+            self.console.print(f"[red]ERROR in logo processing at line 1058-1066: {type(e).__name__}: {e}[/red]")
+            self.console.print(f"[red]DEBUG: logo_path type = {type(logo_path)}, value = {logo_path}[/red]")
+            self.console.print(f"[red]DEBUG: output_dir type = {type(self.output_dir)}, value = {self.output_dir}[/red]")
+            # 发生错误时移除logo引用
             template = re.sub(r'<img src="images/logo.png".*>', "", template)
+            raise
 
         # Remove screenshot section completely
         template = re.sub(
@@ -1101,9 +1123,20 @@ Return only the additional information text, no explanations."""
 
         # 构建logo处理指导
         logo_instruction = ""
-        if logo_path:
-            relative_logo_path = os.path.relpath(logo_path, self.output_dir)
-            logo_instruction = f"""**IMPORTANT LOGO HANDLING INSTRUCTIONS:**
+        self.console.print(f"[cyan]DEBUG: Building logo instruction, logo_path = {logo_path}[/cyan]")
+        
+        try:
+            if logo_path and os.path.exists(logo_path):
+                self.console.print(f"[cyan]DEBUG: Building logo instruction with existing logo...[/cyan]")
+                if logo_path is None:
+                    raise ValueError(f"Logo path is None at line {1126}")
+                if self.output_dir is None:
+                    raise ValueError(f"Output directory is None at line {1126}")
+                    
+                relative_logo_path = os.path.relpath(logo_path, self.output_dir)
+                self.console.print(f"[cyan]DEBUG: Logo instruction relative path = {relative_logo_path}[/cyan]")
+                
+                logo_instruction = f"""**IMPORTANT LOGO HANDLING INSTRUCTIONS:**
         - The template contains a project logo image reference: <img src="{relative_logo_path}" alt="Logo" width="25%" height="auto">
         - You MUST preserve this logo HTML tag exactly as provided in the template
         - Do NOT modify, remove, or change the logo image path, alt text, width, or height attributes
@@ -1111,12 +1144,25 @@ Return only the additional information text, no explanations."""
         - The logo should remain prominently displayed in the project header section
         - Keep the logo wrapped in the center-aligned div and link structure
         """
-        else:
+                self.console.print(f"[green]✔ Logo instruction built successfully[/green]")
+            else:
+                self.console.print(f"[yellow]WARNING: No logo available, building instruction without logo[/yellow]")
+                logo_instruction = """**LOGO HANDLING:**
+        - No logo is available for this project
+        - Do not add any logo references or placeholder images
+        - Remove any logo-related HTML tags from the template
+        """
+        except Exception as e:
+            self.console.print(f"[red]ERROR in logo instruction building at line 1124-1140: {type(e).__name__}: {e}[/red]")
+            self.console.print(f"[red]DEBUG: logo_path type = {type(logo_path)}, value = {logo_path}[/red]")
+            self.console.print(f"[red]DEBUG: output_dir type = {type(self.output_dir)}, value = {self.output_dir}[/red]")
+            # 发生错误时使用无logo的指导
             logo_instruction = """**LOGO HANDLING:**
         - No logo is available for this project
         - Do not add any logo references or placeholder images
         - Remove any logo-related HTML tags from the template
         """
+            raise
 
         # 根据语言选择不同的提示词
         if self.config["readme_language"] == "cn":
@@ -1190,7 +1236,40 @@ Return only the additional information text, no explanations."""
         """
         else:
             # TODO: 支持其他语言
-            pass
+            # 默认使用英文模板
+            prompt = f"""You are a readme.md generator, please generate in English. You need to return the readme text directly without any other speech
+            Based on the following template, please generate a complete README.md file. 
+            Fill in any missing information based on the project context provided.
+
+            {logo_instruction}
+
+            Use the additional project information provided by the user to enhance the content, especially for:
+            - Project description and overview
+            - Entry file information
+            - Features section
+            - Any additional information provided by the user
+
+            **Template:**
+            {template}
+
+            **Project Structure:**
+            ```
+            {structure}
+            ```
+
+            **Dependencies:**
+            ```
+            {dependencies}
+            ```
+
+            **Script Descriptions:**
+            {descriptions}
+
+            **Additional Project Information:**
+            {additional_info}
+
+            Please ensure the final README is well-structured, professional, and incorporates all the user-provided information appropriately.
+        """
             
         readme = self.model_client.get_answer(prompt)
         self.console.print("[green]✔ README content generated.[/green]")
@@ -1288,17 +1367,39 @@ Return only the additional information text, no explanations."""
                 template,
             )
 
-        if logo_path:
-            # Logo 和 README 都在同一个输出目录中，使用相对路径
-            relative_logo_path = os.path.relpath(logo_path, self.output_dir)
-            # 替换整个logo img标签，使用新的属性
-            template = re.sub(
-                r'<img src="images/logo\.png"[^>]*>',
-                f'<img src="{relative_logo_path}" alt="Logo" width="25%" height="auto">',
-                template
-            )
-        else:
+        # 添加详细的logo处理调试信息（调试模式）
+        self.console.print(f"[cyan]DEBUG (debug mode): Processing logo_path = {logo_path}[/cyan]")
+        self.console.print(f"[cyan]DEBUG (debug mode): output_dir = {self.output_dir}[/cyan]")
+        
+        try:
+            if logo_path and os.path.exists(logo_path):
+                self.console.print(f"[cyan]DEBUG (debug mode): Logo file exists, processing relative path...[/cyan]")
+                # Logo 和 README 都在同一个输出目录中，使用相对路径
+                if logo_path is None:
+                    raise ValueError(f"Logo path is None at line {1315} (debug mode)")
+                if self.output_dir is None:
+                    raise ValueError(f"Output directory is None at line {1315} (debug mode)")
+                    
+                relative_logo_path = os.path.relpath(logo_path, self.output_dir)
+                self.console.print(f"[cyan]DEBUG (debug mode): Relative logo path = {relative_logo_path}[/cyan]")
+                
+                # 替换整个logo img标签，使用新的属性
+                template = re.sub(
+                    r'<img src="images/logo\.png"[^>]*>',
+                    f'<img src="{relative_logo_path}" alt="Logo" width="25%" height="auto">',
+                    template
+                )
+                self.console.print(f"[green]✔ Logo template updated successfully (debug mode)[/green]")
+            else:
+                self.console.print(f"[yellow]WARNING (debug mode): Logo path does not exist or is None, removing logo references[/yellow]")
+                template = re.sub(r'<img src="images/logo.png".*>', "", template)
+        except Exception as e:
+            self.console.print(f"[red]ERROR in debug mode logo processing at line 1313-1321: {type(e).__name__}: {e}[/red]")
+            self.console.print(f"[red]DEBUG (debug mode): logo_path type = {type(logo_path)}, value = {logo_path}[/red]")
+            self.console.print(f"[red]DEBUG (debug mode): output_dir type = {type(self.output_dir)}, value = {self.output_dir}[/red]")
+            # 发生错误时移除logo引用
             template = re.sub(r'<img src="images/logo.png".*>', "", template)
+            raise
 
         # Remove screenshot section
         template = re.sub(

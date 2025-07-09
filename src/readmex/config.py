@@ -218,11 +218,35 @@ DOCUMENT_PATTERNS = ["*.md", "*.txt"]
 def get_readme_template_path():
     """Gets the path to the BLANK_README.md template."""
     from importlib import resources
+    import os
+    
     try:
-        with resources.files('readmex.templates').joinpath('BLANK_README.md') as p:
-            return str(p)
-    except FileNotFoundError:
-        raise FileNotFoundError("BLANK_README.md not found in package.")
+        # 尝试使用 importlib.resources (Python 3.9+)
+        template_files = resources.files('readmex.templates')
+        if template_files is not None:
+            template_path = template_files.joinpath('BLANK_README.md')
+            if template_path.is_file():
+                return str(template_path)
+    except (AttributeError, FileNotFoundError, TypeError):
+        pass
+    
+    # 备用方案：使用相对路径
+    try:
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        template_path = os.path.join(current_dir, 'templates', 'BLANK_README.md')
+        if os.path.exists(template_path):
+            return template_path
+    except Exception:
+        pass
+    
+    # 最后的备用方案：使用 pkg_resources (如果可用)
+    try:
+        import pkg_resources
+        return pkg_resources.resource_filename('readmex.templates', 'BLANK_README.md')
+    except (ImportError, FileNotFoundError):
+        pass
+    
+    raise FileNotFoundError("BLANK_README.md not found in package templates.")
 
 
 if __name__ == "__main__":
