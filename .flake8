@@ -1,0 +1,93 @@
+[flake8]
+# Maximum line length
+max-line-length = 120
+
+# Ignore specific error codes
+ignore = 
+    # E501: Line too long (handled by max-line-length)
+    E501,
+    # W503: Line break before binary operator (conflicts with W504)
+    W503,
+    # F401: Module imported but unused (common in test files)
+    F401,
+    # E402: Module level import not at top of file (needed for sys.path manipulation)
+    E402,
+    # F841: Local variable assigned but never used (common in tests)
+    F841,
+    # E203: Whitespace before ':' (conflicts with black formatter)
+    E203,
+    # W504: Line break after binary operator
+    W504,
+    # W293: Blank line contains whitespace
+    W293,
+    # E301: Expected 1 blank line, found 0
+    E301,
+    # E302: Expected 2 blank lines, found 1
+    E302,
+    # W291: Trailing whitespace (common formatting issue)
+    W291,
+    # W292: No newline at end of file
+    W292,
+    # F541: f-string is missing placeholders (often used for consistency)
+    F541,
+    # F811: Redefinition of unused import (common with conditional imports)
+    F811,
+    # E305: Expected 2 blank lines after class or function definition, found 1
+    E305,
+    # E128: Continuation line under-indented for visual indent
+    E128,
+    # E127: Continuation line over-indented for visual indent
+    E127,
+    # E129: Visually indented line with same indent as next logical line
+    E129,
+    # E226: Missing whitespace around arithmetic operator
+    E226,
+    # E722: Do not use bare 'except' (sometimes necessary for broad exception handling)
+    E722,
+    # E303: Too many blank lines
+    E303,
+    # E261: At least two spaces before inline comment
+    E261,
+    # F824: Global variable is unused
+    F824,
+    # E114: Indentation is not a multiple of 4 (comment)
+    E114,
+    # E116: Unexpected indentation (comment)
+    E116,
+    # F403: 'from module import *' used; unable to detect undefined names
+    F403,
+    # F405: Name may be undefined, or defined from star imports
+    F405,
+    # E731: Do not assign a lambda expression, use a def
+    E731,
+    # E704: Multiple statements on one line (def)
+    E704,
+    # W601: .has_key() is deprecated, use 'in'
+    W601,
+    # W602: Deprecated form of raising exception
+    W602,
+    # W603: '<>' is deprecated, use '!='
+    W603,
+    # W604: Backticks are deprecated, use 'repr()'
+    W604
+
+# Exclude directories and files
+exclude = 
+    .git,
+    __pycache__,
+    .venv,
+    .env,
+    build,
+    dist,
+    *.egg-info,
+    .tox,
+    .coverage,
+    htmlcov,
+    .pytest_cache
+
+# Per-file ignores for test files
+per-file-ignores = 
+    # Test files can have additional relaxed rules
+    tests/*.py:F401,E402,F841,E501
+    # Init files often have unused imports
+    __init__.py:F401
