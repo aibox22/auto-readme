@@ -130,3 +130,6 @@ Thumbs.db
 # PyCharm/IntelliJ IDEA
 .idea/
 .vscode/launch.json
+
+# Local configurations
+.readmex

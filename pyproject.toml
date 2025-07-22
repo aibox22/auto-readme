@@ -25,7 +25,8 @@ dependencies = [
     "requests>=2.25.0",
     "pytest>=6.0.0",
     "sentence-transformers>=2.0.0",
-    "faiss-cpu>=1.7.0"
+    "faiss-cpu>=1.7.0",
+    "flake8>=7.0.0"
 ]
 
 [tool.setuptools.packages.find]
@@ -40,3 +41,12 @@ readmex = "readmex.utils.cli:main"
 [project.urls]
 "Homepage" = "https://github.com/aibox22/readmex"
 "Bug Tracker" = "https://github.com/aibox22/readmex/issues"
+
+[tool.flake8]
+max-line-length = 120
+ignore = ["E501", "W503", "F401", "E402", "F841", "E203", "W504", "W293", "E301", "E302", "W291", "W292", "F541", "F811", "E305", "E128", "E127", "E129", "E226", "E722", "E303", "E261", "F824", "E114", "E116", "F403", "F405", "E731", "E704", "W601", "W602", "W603", "W604"]
+exclude = [".git", "__pycache__", ".venv", ".env", "build", "dist", "*.egg-info"]
+per-file-ignores = [
+    "tests/*.py:F401,E402,F841,E501,W293,E301,E302,W291,W292,F541,E305",
+    "__init__.py:F401"
+]
