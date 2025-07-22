@@ -1,7 +1,18 @@
 import argparse
 import os
+import sys
+from pathlib import Path
 from rich.console import Console
 from rich.table import Table
+
+# Add the src directory to the Python path when running directly
+if __name__ == '__main__':
+    # Get the project root directory (3 levels up from this file)
+    project_root = Path(__file__).parent.parent.parent.parent
+    src_path = project_root / "src"
+    if src_path not in sys.path:
+        sys.path.insert(0, str(src_path))
+
 from readmex.core import readmex
 from readmex.website_core import WebsiteGenerator
 from readmex.config import validate_config, get_config_sources
