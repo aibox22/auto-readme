@@ -104,6 +104,12 @@ def validate_config():
         # Interactive input for missing keys
         for key in missing_keys:
             config[key] = console.input(f"Please enter your [bold cyan]{key}[/bold cyan]: ").strip()
+            
+            # After LLM API key is entered, prompt for LLM base URL
+            if key == "llm_api_key":
+                llm_base_url = console.input("Please enter your llm_base_url(default is https://api.openai.com/v1): ").strip()
+                if llm_base_url:
+                    config["llm_base_url"] = llm_base_url
 
         # Save to config file
         CONFIG_DIR.mkdir(exist_ok=True)
