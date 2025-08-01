@@ -221,6 +221,9 @@ export EMBEDDING_API_KEY="your_embedding_api_key"     # Optional, for web embedd
 export EMBEDDING_BASE_URL="https://api.example.com/v1" # Optional, for web embedding models
 export EMBEDDING_MODEL_NAME="text-embedding-3-small"   # Optional, embedding model name
 export LOCAL_EMBEDDING="true"                         # Optional, use local embedding model (default: true)
+
+# Optional: Performance configuration
+export MAX_WORKERS="10"                               # Optional, max concurrent threads (default: 10)
 ```
 
 #### 2. Global Config File (Recommended for Local Use)
@@ -243,6 +246,7 @@ For convenience, you can create a global configuration file. The tool will autom
   "EMBEDDING_BASE_URL": "https://api.example.com/v1",
   "EMBEDDING_MODEL_NAME": "text-embedding-3-small",
   "LOCAL_EMBEDDING": "true",
+  "MAX_WORKERS": "10",
   "github_username": "your_github_username",
   "twitter_handle": "your_twitter_handle",
   "linkedin_username": "your_linkedin_username",

@@ -58,6 +58,7 @@ def load_config() -> Dict[str, str]:
         "EMBEDDING_BASE_URL": "embedding_base_url",
         "EMBEDDING_MODEL_NAME": "embedding_model_name",
         "LOCAL_EMBEDDING": "local_embedding",
+        "MAX_WORKERS": "max_workers",
         "GITHUB_USERNAME": "github_username",
         "TWITTER_HANDLE": "twitter_handle",
         "LINKEDIN_USERNAME": "linkedin_username",
@@ -87,6 +88,10 @@ def load_config() -> Dict[str, str]:
     for key, default_value in embedding_defaults.items():
         if key not in config:
             config[key] = default_value
+    
+    # Set defaults for max_workers if not provided
+    if "max_workers" not in config:
+        config["max_workers"] = "10"
 
     _config_cache = config
     _config_sources = sources
@@ -131,6 +136,7 @@ def validate_config():
                 "EMBEDDING_BASE_URL": "https://api.openai.com/v1",
                 "EMBEDDING_MODEL_NAME": "text-embedding-3-small",
                 "LOCAL_EMBEDDING": "true",
+                "MAX_WORKERS": "10",
                 "GITHUB_USERNAME": "",
                 "TWITTER_HANDLE": "",
                 "LINKEDIN_USERNAME": "",
@@ -190,6 +196,15 @@ def get_embedding_config() -> Dict[str, Union[str, bool]]:
         "api_key": config.get("embedding_api_key"),
         "local_embedding": config.get("local_embedding", "true").lower() == "true",
     }
+
+
+def get_max_workers() -> int:
+    """获取最大并发工作线程数"""
+    config = load_config()
+    try:
+        return int(config.get("max_workers", "10"))
+    except (ValueError, TypeError):
+        return 10
 
 
 # Keep original default configurations for use by other modules

@@ -9,6 +9,7 @@
   "EMBEDDING_BASE_URL": "https://api.openai.com/v1",
   "EMBEDDING_MODEL_NAME": "text-embedding-3-small",
   "LOCAL_EMBEDDING": "false",
+  "MAX_WORKERS": "10",
   "GITHUB_USERNAME": "",
   "TWITTER_HANDLE": "",
   "LINKEDIN_USERNAME": "",

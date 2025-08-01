@@ -223,7 +223,9 @@ class WebsiteGenerator:
         self._generate_api_documentation(project_analysis)
         
         # 使用线程池并行生成其他页面
-        with ThreadPoolExecutor(max_workers=20) as executor:
+        from readmex.config import get_max_workers
+        max_workers = get_max_workers()
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
             # 提交所有任务
             future_to_task = {}
             for page_type, stage_index, generator_func in page_tasks:
@@ -359,7 +361,9 @@ class WebsiteGenerator:
         
     def _generate_individual_api_pages(self, apis: List[Dict]) -> None:
         """为每个API生成独立的markdown页面"""
-        with ThreadPoolExecutor(max_workers=20) as executor:
+        from readmex.config import get_max_workers
+        max_workers = get_max_workers()
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
             futures = []
             
             for api in apis:
@@ -391,7 +395,9 @@ class WebsiteGenerator:
     def _generate_architecture_page(self, analysis: Dict) -> None:
         """生成架构页面 - 并行生成图表和文档内容"""
         # 使用线程池并行生成架构图和文档内容
-        with ThreadPoolExecutor(max_workers=20) as executor:
+        from readmex.config import get_max_workers
+        max_workers = get_max_workers()
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
             # 提交两个并行任务
             drawio_future = executor.submit(self._generate_drawio_diagram, analysis)
             content_future = executor.submit(self._generate_page_content, 'architecture', analysis)

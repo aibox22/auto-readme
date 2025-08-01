@@ -130,9 +130,21 @@ class readmex:
             logo_path = None
             self.console.print("[yellow]✔ Logo generation skipped (debug mode)[/yellow]")
         else:
-            logo_path = generate_logo(
-                self.output_dir, descriptions, self.model_client, self.console
-            )
+            # Ask user if they want to generate logo
+            if not self.silent:
+                generate_logo_choice = self.console.input("[cyan]Do you want to generate a project logo? (y/n): [/cyan]").strip().lower()
+                if generate_logo_choice not in ['y', 'yes', '是']:
+                    logo_path = None
+                    self.console.print("[yellow]✔ Logo generation skipped by user[/yellow]")
+                else:
+                    logo_path = generate_logo(
+                        self.output_dir, descriptions, self.model_client, self.console
+                    )
+            else:
+                # In silent mode, generate logo by default
+                logo_path = generate_logo(
+                    self.output_dir, descriptions, self.model_client, self.console
+                )
         
         # Generate README content
         if self.debug:
@@ -675,13 +687,17 @@ class readmex:
         )
         return structure
 
-    def _get_script_descriptions(self, max_workers=10):
+    def _get_script_descriptions(self, max_workers=None):
         """
         Generate script descriptions using multithreading
 
         Args:
-            max_workers (int): Maximum number of threads, default is 3
+            max_workers (int): Maximum number of threads, if None will use config value
         """
+        # Use config value if max_workers is not provided
+        if max_workers is None:
+            from readmex.config import get_max_workers
+            max_workers = get_max_workers()
         self.console.print("[cyan]🤖 Generating script and document descriptions...[/cyan]")
         from readmex.config import (
             SCRIPT_PATTERNS,

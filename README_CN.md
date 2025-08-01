@@ -213,6 +213,9 @@ export EMBEDDING_API_KEY="your_embedding_api_key"     # 可选，用于Web嵌入
 export EMBEDDING_BASE_URL="https://api.example.com/v1" # 可选，用于Web嵌入模型
 export EMBEDDING_MODEL_NAME="text-embedding-3-small"   # 可选，嵌入模型名称
 export LOCAL_EMBEDDING="true"                         # 可选，使用本地嵌入模型（默认：true）
+
+# 可选：性能配置
+export MAX_WORKERS="10"                               # 可选，最大并发线程数（默认：10）
 ```
 
 #### 2. 全局配置文件 (推荐在本地使用)
@@ -235,6 +238,7 @@ export LOCAL_EMBEDDING="true"                         # 可选，使用本地嵌
   "EMBEDDING_BASE_URL": "https://api.example.com/v1",
   "EMBEDDING_MODEL_NAME": "text-embedding-3-small",
   "LOCAL_EMBEDDING": "true",
+  "MAX_WORKERS": "10",
   "github_username": "您的GitHub用户名",
   "twitter_handle": "您的Twitter用户名",
   "linkedin_username": "您的LinkedIn用户名",
