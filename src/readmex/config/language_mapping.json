@@ -1,5 +1,5 @@
 {
-  "python": [".py", ".pyx", ".pyi", ".pyw"],
+  "python": [".py", ".pyx", ".pyi", ".pyw", ".ipynb"],
   "javascript": [".js", ".jsx", ".mjs"],
   "typescript": [".ts", ".tsx"],
   "java": [".java", ".jar", ".class"],

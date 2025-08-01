@@ -232,7 +232,7 @@ DEFAULT_IGNORE_PATTERNS = [
 ]
 
 # Patterns for script files to be described by the LLM
-SCRIPT_PATTERNS = ["*.py", "*.sh"]
+SCRIPT_PATTERNS = ["*.py", "*.sh", "*.ipynb"]
 DOCUMENT_PATTERNS = ["*.md", "*.txt"]
 
 

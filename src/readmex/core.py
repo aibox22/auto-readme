@@ -740,11 +740,41 @@ class readmex:
         descriptions = {}
         descriptions_lock = Lock()  # Thread lock to protect shared dictionary
 
+        def extract_python_from_ipynb(filepath):
+            """Extract Python code from Jupyter notebook file"""
+            try:
+                import json
+                with open(filepath, "r", encoding="utf-8") as f:
+                    notebook = json.load(f)
+                
+                python_code = []
+                for cell in notebook.get("cells", []):
+                    if cell.get("cell_type") == "code":
+                        source = cell.get("source", [])
+                        if isinstance(source, list):
+                            python_code.extend(source)
+                        else:
+                            python_code.append(source)
+                
+                return "".join(python_code)
+            except Exception as e:
+                self.console.print(f"[yellow]Warning: Failed to parse .ipynb file {filepath}: {e}[/yellow]")
+                return ""
+
         def process_file(filepath):
             """Function to process a single file"""
             try:
-                with open(filepath, "r", encoding="utf-8") as f:
-                    content = f.read()
+                # Handle different file types
+                if filepath.endswith('.ipynb'):
+                    # Extract Python code from Jupyter notebook
+                    content = extract_python_from_ipynb(filepath)
+                    if not content.strip():
+                        self.console.print(f"[yellow]Warning: No Python code found in {filepath}[/yellow]")
+                        return False
+                else:
+                    # Regular text file
+                    with open(filepath, "r", encoding="utf-8") as f:
+                        content = f.read()
 
                 prompt = f"Analyze the following script and provide a concise summary. Focus on:\n1. Main purpose and functionality\n2. Key functions/methods and their roles\n3. Important features or capabilities\n\nScript content:\n{content}"
                 description = self.model_client.get_answer(prompt)
